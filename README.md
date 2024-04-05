@@ -26,5 +26,5 @@ sequenceDiagram
     Main branch->>Dev branch: be created from main branch
     Dev branch->>Task demo: be created from dev branch
     Task demo->> Dev branch: After u finish developing, please create a pull request to be reviewed by at least another member in our team
-    Dev branch->> Main branch: After verifying, u can merge to dev branch and make sure that there are any bugs.
+    Dev branch->> Main branch: After verifying, u can merge to dev branch and make sure that there are no bugs.
 ```
