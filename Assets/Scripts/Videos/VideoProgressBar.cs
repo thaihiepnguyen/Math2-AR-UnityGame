@@ -28,7 +28,6 @@ public class VideoProgressBar : MonoBehaviour
     {
         if (player && isDragging)
         {
-
             player.time = value;
         }
     }
