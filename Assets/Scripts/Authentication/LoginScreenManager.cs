@@ -11,7 +11,7 @@ public class LoginScreenManager : MonoBehaviour
     public TMP_InputField EmailField;
     public TMP_InputField PasswordField;
     public Button LoginButton;
-    public Button SignUpButton;
+    public Button RegisterButton;
     public Button OkButton;
     public Canvas errorCanvas;
 
@@ -20,8 +20,10 @@ public class LoginScreenManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PasswordField.contentType = TMP_InputField.ContentType.Password;
+
         LoginButton.onClick.AddListener(OnClickLogin);
-        SignUpButton.onClick.AddListener(OnClickRegister);
+        RegisterButton.onClick.AddListener(OnClickRegister);
         OkButton.onClick.AddListener(OnClickOk);
         HideErrorCanvas();
     }
@@ -68,7 +70,7 @@ public class LoginScreenManager : MonoBehaviour
     void OnClickRegister()
     {
         Debug.Log("Register Button Clicked");
-        //SceneManager.LoadScene("SignUpScene");
+        SceneManager.LoadScene("RegisterScene");
     }
     void ShowErrorCanvas()
     {

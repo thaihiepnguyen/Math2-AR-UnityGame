@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,20 +13,23 @@ public class RegisterScreenManager : MonoBehaviour
     public TMP_InputField ConfirmPasswordField;
 
     public Button LoginButton;
-    public Button SignUpButton;
+    public Button RegisterButton;
 
     public Text ErrorMessage;
     
     public Button OkButton;
     public Canvas errorCanvas;
 
-    private string loginUrl = "http://localhost:3000/login-by-email";
+    private string registerUrl = "http://localhost:3000/register-by-email";
 
     // Start is called before the first frame update
     void Start()
     {
+        PasswordField.contentType = TMP_InputField.ContentType.Password;
+        ConfirmPasswordField.contentType = TMP_InputField.ContentType.Password;
+
         LoginButton.onClick.AddListener(OnClickLogin);
-        SignUpButton.onClick.AddListener(OnClickRegister);
+        RegisterButton.onClick.AddListener(OnClickRegister);
         OkButton.onClick.AddListener(OnClickOk);
         HideErrorCanvas();
     }
@@ -39,44 +42,61 @@ public class RegisterScreenManager : MonoBehaviour
 
     void OnClickLogin()
     {
-        string email = EmailField.text;
-        string password = PasswordField.text;
-
-        StartCoroutine(LoginRoutine(email, password));
+        Debug.Log("Login Button Clicked");
+        SceneManager.LoadScene("LoginScene");
     }
 
-    IEnumerator LoginRoutine(string email, string password)
+    void OnClickRegister()
     {
-        Debug.Log("Login Button Clicked");
+        string email = EmailField.text;
+        string password = PasswordField.text;
+        string confirmPassword = ConfirmPasswordField.text;
+
+        if (email == "" || email == null)
+        {
+            ShowErrorCanvas("Email không được để trống");
+        }else if (password == "" || password == null)
+        {
+            ShowErrorCanvas("Mật khẩu không được trống");
+        } else if (password != confirmPassword)
+        {
+            ShowErrorCanvas("Mật khẩu xác nhận không đúng");
+        }
+        else
+        {
+            StartCoroutine(RegisterRoutine(email, password));
+        }
+    }
+
+    IEnumerator RegisterRoutine(string email, string password)
+    {
+        Debug.Log("Register Button Clicked");
 
         WWWForm form = new WWWForm();
         form.AddField("email", email);
         form.AddField("password", password);
 
         // Send the request
-        using (UnityWebRequest www = UnityWebRequest.Post(loginUrl, form))
+        using (UnityWebRequest www = UnityWebRequest.Post(registerUrl, form))
         {
             yield return www.SendWebRequest();
 
             if (www.result == UnityWebRequest.Result.Success)
             {
-                Debug.Log("Login Successful");
-                SceneManager.LoadScene("MainScene");
+                Debug.Log("Register Successful");
+                SceneManager.LoadScene("Login");
             }
             else
             {
-                Debug.Log("Login Failed: " + www.error);
-                ShowErrorCanvas();
+                Debug.Log("Register Failed: " + www.error);
+                ShowErrorCanvas("Tài khoản đã tồn tại");
             }
         }
     }
-    void OnClickRegister()
+
+    void ShowErrorCanvas(string message)
     {
-        Debug.Log("Register Button Clicked");
-        //SceneManager.LoadScene("SignUpScene");
-    }
-    void ShowErrorCanvas()
-    {
+        ErrorMessage.text = message;
         errorCanvas.gameObject.SetActive(true);
     }
 

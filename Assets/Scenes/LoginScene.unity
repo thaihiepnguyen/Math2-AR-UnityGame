@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 114251783}
   - component: {fileID: 114251782}
   m_Layer: 5
-  m_Name: LoginBtn
+  m_Name: OkBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -896,7 +896,7 @@ MonoBehaviour:
   EmailField: {fileID: 1457710371}
   PasswordField: {fileID: 908775987}
   LoginButton: {fileID: 293975603}
-  SignUpButton: {fileID: 730640987}
+  RegisterButton: {fileID: 730640987}
   OkButton: {fileID: 114251782}
   errorCanvas: {fileID: 1279621161}
 --- !u!1 &569250251
