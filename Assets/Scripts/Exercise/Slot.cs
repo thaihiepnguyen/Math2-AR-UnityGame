@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour,IDropHandler
+public class Slot : MonoBehaviour, IDropHandler
 {
     
     public void OnDrop(PointerEventData eventData)
@@ -11,8 +11,8 @@ public class Slot : MonoBehaviour,IDropHandler
         if(transform.childCount== 0)
         {
             GameObject dropped = eventData.pointerDrag;
-            DragAndDrop draganddropItem = dropped.GetComponent<DragAndDrop>();
-            draganddropItem.parentAfterDrag = transform;
+            DragAndDrop dragDropItem = dropped.GetComponent<DragAndDrop>();
+            dragDropItem.parentAfterDrag = transform;
         }
       
     }
