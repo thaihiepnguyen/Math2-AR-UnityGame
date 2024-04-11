@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using EasyUI.Progress;
 
 public class RegisterScreenManager : MonoBehaviour
 {
@@ -18,9 +19,11 @@ public class RegisterScreenManager : MonoBehaviour
     public Text ErrorMessage;
     
     public Button OkButton;
+    public Button ReturnButton;
     public Canvas errorCanvas;
+    public Canvas successCanvas;
 
-    private string registerUrl = "http://localhost:3000/register-by-email";
+    private string registerUrl = "http://localhost:3000/account/register-by-email";
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +34,7 @@ public class RegisterScreenManager : MonoBehaviour
         LoginButton.onClick.AddListener(OnClickLogin);
         RegisterButton.onClick.AddListener(OnClickRegister);
         OkButton.onClick.AddListener(OnClickOk);
+        ReturnButton.onClick.AddListener(OnClickReturn);
         HideErrorCanvas();
     }
 
@@ -43,7 +47,7 @@ public class RegisterScreenManager : MonoBehaviour
     void OnClickLogin()
     {
         Debug.Log("Login Button Clicked");
-        SceneManager.LoadScene("LoginScene");
+        SceneManager.LoadScene(GlobalVariable.LOGIN_SCENE);
     }
 
     void OnClickRegister()
@@ -64,6 +68,8 @@ public class RegisterScreenManager : MonoBehaviour
         }
         else
         {
+
+            Progress.Show("Đang xử lý...", ProgressColor.Orange);
             StartCoroutine(RegisterRoutine(email, password));
         }
     }
@@ -80,15 +86,16 @@ public class RegisterScreenManager : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Post(registerUrl, form))
         {
             yield return www.SendWebRequest();
-
             if (www.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("Register Successful");
-                SceneManager.LoadScene("Login");
+                Progress.Hide();
+                ShowSuccessCanvas();
             }
             else
             {
                 Debug.Log("Register Failed: " + www.error);
+                Progress.Hide();
                 ShowErrorCanvas("Tài khoản đã tồn tại");
             }
         }
@@ -105,8 +112,24 @@ public class RegisterScreenManager : MonoBehaviour
         errorCanvas.gameObject.SetActive(false);
     }
 
+    void ShowSuccessCanvas()
+    {
+        successCanvas.gameObject.SetActive(true);
+    }
+
+    void HideSuccessCanvas()
+    {
+        successCanvas.gameObject.SetActive(false);
+    }
+
     public void OnClickOk()
     {
         HideErrorCanvas();
+    }
+
+    public void OnClickReturn()
+    {
+        HideSuccessCanvas();
+        SceneManager.LoadScene(GlobalVariable.LOGIN_SCENE);
     }
 }

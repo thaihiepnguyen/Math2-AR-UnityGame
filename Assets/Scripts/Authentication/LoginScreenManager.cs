@@ -6,8 +6,12 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
+
 public class LoginScreenManager : MonoBehaviour
-{   
+{
+    
+
     public TMP_InputField EmailField;
     public TMP_InputField PasswordField;
     public Button LoginButton;
@@ -15,7 +19,7 @@ public class LoginScreenManager : MonoBehaviour
     public Button OkButton;
     public Canvas errorCanvas;
 
-    private string loginUrl = "http://localhost:3000/login-by-email";
+    private string loginUrl = "http://localhost:3000/account/login-by-email";
 
     // Start is called before the first frame update
     void Start()
@@ -58,7 +62,7 @@ public class LoginScreenManager : MonoBehaviour
             if (www.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("Login Successful");
-                SceneManager.LoadScene("MainScene");
+                SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
             }
             else
             {
@@ -70,7 +74,7 @@ public class LoginScreenManager : MonoBehaviour
     void OnClickRegister()
     {
         Debug.Log("Register Button Clicked");
-        SceneManager.LoadScene("RegisterScene");
+        SceneManager.LoadScene(GlobalVariable.REGISTER_SCENE);
     }
     void ShowErrorCanvas()
     {
