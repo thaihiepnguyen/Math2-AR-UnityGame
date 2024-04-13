@@ -38,13 +38,14 @@ public class ExerciseMananger : MonoBehaviour
     }
     private  void Start()
     {
-        StartCoroutine(GetRequest(ConstantVariable.server_url + "/exercises", (response)=> { 
+        StartCoroutine(GetRequest(GlobalVariable.server_url + "/exercises", (response)=> { 
         
             UpdateUI();
         }
         ));
 
     }
+    //Send request
     public delegate void ExerciseResponseCallback(ExerciseResponseDTO response);
     IEnumerator GetRequest(string uri, ExerciseResponseCallback callback)
     {
@@ -77,11 +78,7 @@ public class ExerciseMananger : MonoBehaviour
     public void NextQuestion()
     {
         currentQuestion = currentQuestion + 1;
-        if (exercises[currentQuestion].type == ConstantVariable.DragDropType)
-        {
-
-
-        }
+        UpdateUI();
     }
     void ChangeDragDropObject(ExerciseDTO exercise)
     {
@@ -98,7 +95,7 @@ public class ExerciseMananger : MonoBehaviour
     }
     void UpdateUI()
     {
-        if (exercises[currentQuestion].type == ConstantVariable.DragDropType && exercises != null)
+        if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
         {
             DragDropExercise.enabled = true;
             ChangeDragDropObject(exercises[currentQuestion]);

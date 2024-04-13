@@ -32,8 +32,8 @@ public class ExerciseDAO
     {
         try
         {
-            var a = await API.getMethod($"/exercises/");
-            var exerciseResponse = JsonConvert.DeserializeObject<ExerciseResponseDTO>(a);
+            var result = await API.getMethod($"/exercises/");
+            var exerciseResponse = JsonConvert.DeserializeObject<ExerciseResponseDTO>(result);
 
             if (exerciseResponse != null)
             {

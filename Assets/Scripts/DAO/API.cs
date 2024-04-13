@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 public class API
 {
-    private static HttpClient _httpClient = new HttpClient { BaseAddress = new Uri(ConstantVariable.server_url) };
+    private static HttpClient _httpClient = new HttpClient { BaseAddress = new Uri(GlobalVariable.server_url) };
 
     public static async Task<Tuple<Boolean, String>> testConnection()
     {
