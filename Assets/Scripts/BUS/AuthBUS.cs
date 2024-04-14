@@ -3,9 +3,9 @@ using Unity.VisualScripting;
 
 public class AuthBUS
 {
-    private AuthDAO _authDao = new ();
+    private readonly AuthDAO _authDao = new();
     
-    public async Task<BaseDTO<object>> LoginByEmail(LoginDTO loginDto)
+    public async Task<BaseDTO<int>> LoginByEmail(LoginDTO loginDto)
     {
         return await _authDao.LoginByEmail(loginDto);
     }

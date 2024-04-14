@@ -23,8 +23,6 @@ public class RegisterScreenManager : MonoBehaviour
     public Canvas errorCanvas;
     public Canvas successCanvas;
 
-    private string registerUrl = "http://localhost:3000/account/register-by-email";
-
     // Start is called before the first frame update
     void Start()
     {

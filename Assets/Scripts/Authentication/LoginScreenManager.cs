@@ -42,7 +42,7 @@ public class LoginScreenManager : MonoBehaviour
         var password = PasswordField.text;
 
         var loginBus = new AuthBUS();
-        var response = await loginBus.LoginByEmail(new LoginDTO()
+        var response = await loginBus.LoginByEmail(new LoginDTO
         {
             email = email,
             password = password
@@ -51,11 +51,25 @@ public class LoginScreenManager : MonoBehaviour
         if (response.isSuccessful)
         {
             Debug.Log("Login Successful");
+            // Set uid 
+            
+            Debug.Log("Please take this uid in main screen to get profile of user" + response.data);
+            PlayerPrefs.SetInt("uid", response.data);
+            
+            // To explain how to use the uid in the future
+            var userBus = new UserBUS();
+            var me = await userBus.GetUserById(PlayerPrefs.GetInt("uid"));
+
+            if (me.isSuccessful)
+            {
+                Debug.Log(me.data.email);
+            }
+            
             SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
         }
         else
         {
-            Debug.Log("Login Failed: " + response.message);
+            Debug.Log($"Login Failed: {response.message}");
             ShowErrorCanvas();
         }
     }

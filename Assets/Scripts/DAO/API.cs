@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -13,33 +14,31 @@ using UnityEngine;
 public class API
 {
     private static HttpClient _httpClient = new HttpClient { BaseAddress = new Uri(GlobalVariable.server_url) };
-    public static Dictionary<string, string> Cookies = null;
+    public static Dictionary<string, string> Cookies = new Dictionary<string, string>();
     
-    private static Dictionary<string, string> ExtractCookie(HttpResponseMessage httpResponse)
+    private static void ExtractCookie(HttpResponseMessage httpResponse)
     {
-        Dictionary<string, string> results = new Dictionary<string, string>();
         var requestCookie = httpResponse.Headers
             .SingleOrDefault(header => header.Key == "Set-Cookie").Value;
+
+        if (requestCookie == null) return;
         
         var cookieList = requestCookie.ToList();
-        if (cookieList.Count == 0) return null;
-
+        
         foreach (var cookie in cookieList)
         {
+            Debug.Log(cookie);
             var decodeCookie = WebUtility.UrlDecode(cookie);
             var splitCookie = decodeCookie.Split("=");
             
             var key = splitCookie[0];
             var value = splitCookie[1].Split(";")[0];
-
-            results[key] = value;
+        
+            Cookies[key] = value;
         }
-
-        if (results["act"] == null) return null;
-
-        return results;
     }
     
+    // T: is data type of the data inside response from server
     public static async Task<BaseDTO<T>> Get<T>(string url)
     {
         try
@@ -60,6 +59,8 @@ public class API
         }
     }
 
+    // T: is data type that u wanna post to server
+    // U: is data type of the data inside response from server
     public static async Task<BaseDTO<U>> Post<T, U>(string url, T data)
     {
         try
@@ -67,27 +68,23 @@ public class API
             var json = JsonConvert.SerializeObject(data);
             var httpRequest = new StringContent(json, Encoding.UTF8, "application/json");
             var httpResponse = await _httpClient.PostAsync(url, httpRequest);
-            
-            // if (Cookies == null)
-            // {
-            //     Cookies = ExtractCookie(httpResponse);
-            //     if (Cookies != null && Cookies["act"] != null)
-            //     {
-            //         // Only set token if there is any cookies returned
-            //         var act = Cookies["act"];
-            //         Debug.Log("Set Access token Successfully");
-            //
-            //         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-            //             "Beare",
-            //             act
-            //         );
-            //     }
-            // }
-            
+                        
             var content = await httpResponse.Content.ReadAsStringAsync();
-            Debug.Log(content);
             var response = JsonConvert.DeserializeObject<BaseDTO<U>>(content);
-            Debug.Log(response);
+            if (Cookies.Count == 0)
+            {
+                ExtractCookie(httpResponse);
+                if (Cookies.ContainsKey("act"))
+                {
+                    // Only set token if there is any cookies returned
+                    var act = Cookies["act"];
+                
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                        "Beare",
+                        act
+                    );
+                }
+            }
 
             return response;
         }
@@ -95,7 +92,7 @@ public class API
         {
             return new BaseDTO<U>
             {
-                message = ex.Message,
+                message = "Internal Error Code",
                 isSuccessful = false
             };
         }
@@ -114,7 +111,8 @@ public class API
             return Tuple.Create<Boolean, String>(false, ex.Message);
         }
     }
-
+    
+    // Can use above function instead this.
     public static async Task<String> getMethod(string path)
     {
         try
@@ -129,6 +127,8 @@ public class API
         }
 
     }
+    
+    // Can use above function instead this.
     public static async Task<String> postMethod(string path, string content)
     {
         var data = new StringContent(content, Encoding.UTF8, "application/json");
