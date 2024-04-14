@@ -36,7 +36,7 @@ public class ExerciseMananger : MonoBehaviour
     {
         
     }
-    private  void Start()
+    private async void Start()
     {
         StartCoroutine(GetRequest(GlobalVariable.server_url + "/exercises", (response)=> { 
         
