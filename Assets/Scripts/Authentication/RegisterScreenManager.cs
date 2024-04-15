@@ -23,8 +23,6 @@ public class RegisterScreenManager : MonoBehaviour
     public Canvas errorCanvas;
     public Canvas successCanvas;
 
-    private string registerUrl = "http://localhost:3000/account/register-by-email";
-
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +48,7 @@ public class RegisterScreenManager : MonoBehaviour
         SceneManager.LoadScene(GlobalVariable.LOGIN_SCENE);
     }
 
-    void OnClickRegister()
+    async void OnClickRegister()
     {
         string email = EmailField.text;
         string password = PasswordField.text;
@@ -68,25 +66,16 @@ public class RegisterScreenManager : MonoBehaviour
         }
         else
         {
-
             Progress.Show("Đang xử lý...", ProgressColor.Orange);
-            StartCoroutine(RegisterRoutine(email, password));
-        }
-    }
+            var loginBus = new AuthBUS();
 
-    IEnumerator RegisterRoutine(string email, string password)
-    {
-        Debug.Log("Register Button Clicked");
+            var response = await loginBus.RegisterByEmail(new RegisterDTO()
+            {
+                email = email,
+                password = password
+            });
 
-        WWWForm form = new WWWForm();
-        form.AddField("email", email);
-        form.AddField("password", password);
-
-        // Send the request
-        using (UnityWebRequest www = UnityWebRequest.Post(registerUrl, form))
-        {
-            yield return www.SendWebRequest();
-            if (www.result == UnityWebRequest.Result.Success)
+            if (response.isSuccessful)
             {
                 Debug.Log("Register Successful");
                 Progress.Hide();
@@ -94,7 +83,7 @@ public class RegisterScreenManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Register Failed: " + www.error);
+                Debug.Log("Register Failed: " + response.message);
                 Progress.Hide();
                 ShowErrorCanvas("Tài khoản đã tồn tại");
             }

@@ -19,8 +19,6 @@ public class LoginScreenManager : MonoBehaviour
     public Button OkButton;
     public Canvas errorCanvas;
 
-    private string loginUrl = "http://localhost:3000/account/login-by-email";
-
     // Start is called before the first frame update
     void Start()
     {
@@ -38,39 +36,44 @@ public class LoginScreenManager : MonoBehaviour
         
     }
 
-    void OnClickLogin()
+    async void OnClickLogin()
     {
-        string email = EmailField.text;
-        string password = PasswordField.text;
+        var email = EmailField.text;
+        var password = PasswordField.text;
 
-        StartCoroutine(LoginRoutine(email, password));
-    }
-
-    IEnumerator LoginRoutine(string email, string password)
-    {
-        Debug.Log("Login Button Clicked");
-
-        WWWForm form = new WWWForm();
-        form.AddField("email", email);
-        form.AddField("password", password);
-
-        // Send the request
-        using (UnityWebRequest www = UnityWebRequest.Post(loginUrl, form))
+        var loginBus = new AuthBUS();
+        var response = await loginBus.LoginByEmail(new LoginDTO
         {
-            yield return www.SendWebRequest();
+            email = email,
+            password = password
+        });
+        
+        if (response.isSuccessful)
+        {
+            Debug.Log("Login Successful");
+            // Set uid 
+            
+            Debug.Log("Please take this uid in main screen to get profile of user" + response.data);
+            PlayerPrefs.SetInt("uid", response.data);
+            
+            // To explain how to use the uid in the future
+            var userBus = new UserBUS();
+            var me = await userBus.GetUserById(PlayerPrefs.GetInt("uid"));
 
-            if (www.result == UnityWebRequest.Result.Success)
+            if (me.isSuccessful)
             {
-                Debug.Log("Login Successful");
-                SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
+                Debug.Log(me.data.email);
             }
-            else
-            {
-                Debug.Log("Login Failed: " + www.error);
-                ShowErrorCanvas();
-            }
+            
+            SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
+        }
+        else
+        {
+            Debug.Log($"Login Failed: {response.message}");
+            ShowErrorCanvas();
         }
     }
+
     void OnClickRegister()
     {
         Debug.Log("Register Button Clicked");
