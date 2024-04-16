@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,6 +13,12 @@ public class ExerciseMananger : MonoBehaviour
     private List<ExerciseDTO> exercises;
     public int currentQuestion = 0;
     public int totalQuestion = 20;
+    private int currentRightAnswer = 0;
+    public TextMeshProUGUI progress;
+    public Button CheckButton;
+    TextMeshProUGUI textCheckBtn;
+    Timer timer;
+
     //Drag drop exercise  object
     //Question List
     [SerializeField]
@@ -34,51 +40,46 @@ public class ExerciseMananger : MonoBehaviour
     public Sprite incorrectSprite;
     private void Awake()
     {
-        
+        textCheckBtn= CheckButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        timer= GetComponent<Timer>();
     }
     private async void Start()
     {
-        StartCoroutine(GetRequest(GlobalVariable.server_url + "/exercises", (response)=> { 
-        
+        var exerciseBUS=new ExerciseBUS();
+        exercises= await exerciseBUS.GetAllExercises();
+        if (exercises != null)
+        {
+            totalQuestion= exercises.Count;
             UpdateUI();
         }
-        ));
 
-    }
-    //Send request
-    public delegate void ExerciseResponseCallback(ExerciseResponseDTO response);
-    IEnumerator GetRequest(string uri, ExerciseResponseCallback callback)
-    {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
-        {
-            // Request and wait for the desired page.
-            yield return webRequest.SendWebRequest();
-
-            string[] pages = uri.Split('/');
-            int page = pages.Length - 1;
-            if (webRequest.result == UnityWebRequest.Result.Success)
-            {
-                string json = webRequest.downloadHandler.text;
-                var exerciseResponse = JsonConvert.DeserializeObject<ExerciseResponseDTO>(json);
-                exercises = exerciseResponse.data;
-                callback?.Invoke(exerciseResponse);
-            }
-            else
-            {
-                Debug.LogError(webRequest.error);
-            }
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (currentQuestion + 1  >= totalQuestion)
+        {
+            textCheckBtn.text = "Nộp bài";
+        }
     }
-    public void NextQuestion()
+    IEnumerator  NextQuestion()
     {
+        yield return new WaitForSeconds(1f);
         currentQuestion = currentQuestion + 1;
-        UpdateUI();
+        if (currentQuestion >= totalQuestion)
+        {
+
+            Debug.Log($"Your result is: {currentRightAnswer}/{totalQuestion}");
+            timer.isStop= true;
+        }
+        else
+        {
+           
+            UpdateUI();
+        }
+        
+        
     }
     void ChangeDragDropObject(ExerciseDTO exercise)
     {
@@ -95,9 +96,10 @@ public class ExerciseMananger : MonoBehaviour
     }
     void UpdateUI()
     {
+        progress.text = string.Format("{0:00}/{1:00}", currentQuestion + 1, totalQuestion);
         if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
         {
-            DragDropExercise.enabled = true;
+            DragDropExercise.gameObject.SetActive(true);
             ChangeDragDropObject(exercises[currentQuestion]);
 
         }
@@ -105,26 +107,42 @@ public class ExerciseMananger : MonoBehaviour
     }
     public void CheckDragDropAnswer()
     {
+        bool isRight = true;
         var aslot = d_answerSlot.GetComponentsInChildren<TextMeshProUGUI>();
         
         var resultListImage = d_result.GetComponentsInChildren<Image>();
         if (aslot.Length != resultListImage.Length)
         {
-            
-            return;
+            isRight = false;
+            for (int i = 0; i < resultListImage.Length; i++)
+            {
+                
+                    resultListImage[i].sprite = incorrectSprite; 
+            }
         }
-        var rightAnswer= exercises[currentQuestion].right_answer.Split(",");
-        for (int i=0;i< resultListImage.Length;i++)
+        else
         {
-            if ( aslot[i] && rightAnswer[i] == aslot[i].text )
+            var rightAnswer = exercises[currentQuestion].right_answer.Split(",");
+            for (int i = 0; i < resultListImage.Length; i++)
             {
-                resultListImage[i].sprite=correctSprite;
+                if (aslot[i] && rightAnswer[i] == aslot[i].text)
+                {
+                    resultListImage[i].sprite = correctSprite;
+                }
+                else
+                {
+                    resultListImage[i].sprite = incorrectSprite;
+                    isRight = false;
+
+                }
             }
-            else
-            {
-                resultListImage[i].sprite = incorrectSprite;
-            }
+        }
+       
+        if(isRight )
+        {
+            currentRightAnswer += 1;
         }
         d_result.SetActive(true);
+        StartCoroutine(NextQuestion());
     }
 }

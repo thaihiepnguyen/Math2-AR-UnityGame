@@ -11,4 +11,6 @@ public class GlobalVariable
     public const string DragDropType = "DragDrop";
     public const string InputType = "Input";
     public const string MultipleChoiceType = "ABCD";
+    //PlayerPref variable string
+    public const string userID = "uid";
 }
