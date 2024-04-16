@@ -32,17 +32,27 @@ public class ExerciseMananger : MonoBehaviour
     GameObject d_answerSlot;
     public Sprite correctSprite;
     public Sprite incorrectSprite;
+
+    [SerializeField]
+    Canvas MultipleChoiceExercise;
+    [SerializeField]
+    GameObject m_answerList;
+    [SerializeField]
+    TMP_Text m_question;
+
     private void Awake()
     {
         
     }
     private async void Start()
     {
-        StartCoroutine(GetRequest(GlobalVariable.server_url + "/exercises", (response)=> { 
-        
+        StartCoroutine(GetRequest(GlobalVariable.server_url + "/exercises", (response) =>
+        {
+
             UpdateUI();
         }
         ));
+        UpdateUI();
 
     }
     //Send request
@@ -101,6 +111,11 @@ public class ExerciseMananger : MonoBehaviour
             ChangeDragDropObject(exercises[currentQuestion]);
 
         }
+        else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
+        {
+            MultipleChoiceExercise.enabled = true;
+            ChangeMultipleChoiceObject(exercises[currentQuestion]);
+        }
        
     }
     public void CheckDragDropAnswer()
@@ -126,5 +141,70 @@ public class ExerciseMananger : MonoBehaviour
             }
         }
         d_result.SetActive(true);
+    }
+
+
+    void ChangeMultipleChoiceObject(ExerciseDTO exercise)
+    {
+        var questions = exercise.question;
+        var answers = exercise.answer.Split(",");
+
+        m_question.text = questions;
+
+        Button[] buttons = m_answerList.GetComponentsInChildren<Button>();
+
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            TextMeshProUGUI tmp = buttons[i].GetComponentInChildren<TextMeshProUGUI>();
+            if (tmp != null)
+            {
+                tmp.text = answers[i];
+            }
+            else
+            {
+                Debug.LogError("TextMeshPro component not found in children of button.");
+            }
+        }
+
+    }
+
+    public void CheckMultipleChoiceAnswer()
+    {
+        var rightAnswer = exercises[currentQuestion].right_answer;
+
+        Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>();
+
+        for (int i = 0; i < answerObjects.Length; i++)
+        {
+            TextMeshProUGUI tmp = answerObjects[i].GetComponentInChildren<TextMeshProUGUI>();
+            if (tmp != null)
+            {
+                if (tmp.text == rightAnswer)
+                {
+                    answerObjects[i].color = HexToColor("#00FF1E");
+                }
+                else
+                {
+                    answerObjects[i].color = HexToColor("#FF0000");
+                }
+            }
+            else
+            {
+                Debug.LogError("TextMeshPro component not found in children of button.");
+            }
+        }
+    }
+    private Color HexToColor(string hex)
+    {
+        Color color = Color.white;
+        if (UnityEngine.ColorUtility.TryParseHtmlString(hex, out color))
+        {
+            return color;
+        }
+        else
+        {
+            Debug.LogError("Invalid hexadecimal color: " + hex);
+            return Color.white;
+        }
     }
 }
