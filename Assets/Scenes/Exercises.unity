@@ -3264,6 +3264,7 @@ MonoBehaviour:
   currentQuestion: 0
   totalQuestion: 20
   progress: {fileID: 988730900}
+  CheckButton: {fileID: 1433888000}
   DragDropExercise: {fileID: 329030410}
   d_questionList: {fileID: 121134234}
   d_title: {fileID: 1297288440}
@@ -3286,6 +3287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: {fileID: 692675544}
   timeValue: 20
+  isStop: 0
 --- !u!1 &1573923330
 GameObject:
   m_ObjectHideFlags: 0
