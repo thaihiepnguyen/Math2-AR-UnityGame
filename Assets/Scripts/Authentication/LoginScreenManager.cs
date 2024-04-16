@@ -1,3 +1,4 @@
+﻿using EasyUI.Progress;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -43,6 +44,7 @@ public class LoginScreenManager : MonoBehaviour
         string email = EmailField.text;
         string password = PasswordField.text;
 
+        Progress.Show("Đang xử lý...", ProgressColor.Orange);
         StartCoroutine(LoginRoutine(email, password));
     }
 
@@ -62,11 +64,13 @@ public class LoginScreenManager : MonoBehaviour
             if (www.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("Login Successful");
+                Progress.Hide();
                 SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
             }
             else
             {
                 Debug.Log("Login Failed: " + www.error);
+                Progress.Hide();
                 ShowErrorCanvas();
             }
         }
