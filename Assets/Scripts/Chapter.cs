@@ -24,7 +24,7 @@ public class Chapter : MonoBehaviour
     }
 
      public void Learning(){
-       LessonList.chapterId = (int) title[0];
+       LessonList.chapterId = title;
        SceneManager.LoadScene("LessonList");
     }
 

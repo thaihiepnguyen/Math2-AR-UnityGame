@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ChapterScene.unity
     guid: e68d86a3463114ecc8ddd30bf7022305
+  - enabled: 1
+    path: Assets/Scenes/LessonList.unity
+    guid: 34dfe55e547d14482a9d34534aa1255c
   m_configObjects: {}
