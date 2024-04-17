@@ -42,7 +42,7 @@ public class LoginScreenManager : MonoBehaviour
         var password = PasswordField.text;
 
         var loginBus = new AuthBUS();
-        var response = await loginBus.LoginByEmail(new LoginDTO
+        var response = await loginBus.LoginByEmail(new LoginEmailDTO
         {
             email = email,
             password = password
