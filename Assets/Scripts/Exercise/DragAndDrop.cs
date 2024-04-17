@@ -1,8 +1,12 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler,IDragHandler
@@ -10,9 +14,10 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     [HideInInspector]public Transform parentAfterDrag;
     Image image;
     public TextMeshProUGUI textMeshProUGUI;
-    private void Awake()
-    {
+    private  void Awake()
+    {  
        image= GetComponent<Image>();
+        
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
