@@ -1,26 +1,26 @@
 using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Rotate : MonoBehaviour
 {
-    public Button RotateButton;
+    public Button backBtn;
     // Start is called before the first frame update
     void Start()
     {
-        RotateButton.onClick.AddListener(OnClickRotateButton);
+        Screen.orientation = ScreenOrientation.Portrait;
+        backBtn.onClick.AddListener(OnClickBackBtn);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void OnClickRotateButton()
+    public void OnClickBackBtn()
     {
-        Debug.Log("Clicked!");
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
     }
 }
