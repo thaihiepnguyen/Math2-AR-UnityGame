@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LessonList.unity
     guid: 34dfe55e547d14482a9d34534aa1255c
+  - enabled: 1
+    path: Assets/Scenes/LessonScene.unity
+    guid: cfb9ad8b6fc9f426d90abf7ff8d170a7
   m_configObjects: {}

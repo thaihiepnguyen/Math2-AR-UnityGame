@@ -878,7 +878,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 996988281}
+      - m_Target: {fileID: 984506796}
         m_TargetAssemblyTypeName: Chapter, Assembly-CSharp
         m_MethodName: Learning
         m_Mode: 1
@@ -1089,6 +1089,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 814531006}
   m_CullTransparentMesh: 1
+--- !u!1 &984506794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 984506795}
+  - component: {fileID: 984506796}
+  m_Layer: 0
+  m_Name: ChapterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &984506795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984506794}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 492.09222, y: 1171.5323, z: 1.385093}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &984506796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984506794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8774345eb1fc5cc47b53cd74ecd11041, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chapterId: {fileID: 1425001638}
+  chapterName: {fileID: 1384016323}
 --- !u!1 &996988277
 GameObject:
   m_ObjectHideFlags: 0
@@ -1100,7 +1146,6 @@ GameObject:
   - component: {fileID: 996988278}
   - component: {fileID: 996988280}
   - component: {fileID: 996988279}
-  - component: {fileID: 996988281}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1172,20 +1217,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996988277}
   m_CullTransparentMesh: 1
---- !u!114 &996988281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996988277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cff4c4058a3334e47b9175e7c394d69d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chapterId: {fileID: 1425001638}
-  chapterName: {fileID: 1384016323}
 --- !u!1 &1087166800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1806,3 +1837,4 @@ SceneRoots:
   - {fileID: 1338312408}
   - {fileID: 54257339}
   - {fileID: 390459872}
+  - {fileID: 984506795}

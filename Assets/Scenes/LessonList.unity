@@ -966,7 +966,6 @@ GameObject:
   - component: {fileID: 915764365}
   - component: {fileID: 915764367}
   - component: {fileID: 915764366}
-  - component: {fileID: 915764368}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1038,19 +1037,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915764364}
   m_CullTransparentMesh: 1
---- !u!114 &915764368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915764364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26bd7ce7f34fc6b49b76079330f52361, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lessonPrefab: {fileID: 823598639}
 --- !u!1 &964650403
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,6 +1265,52 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4690968046931182684, guid: 56403edfea2e54f5b9af57302d8212b9, type: 3}
   m_PrefabInstance: {fileID: 1072971351}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1331895946
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1331895947}
+  - component: {fileID: 1331895948}
+  m_Layer: 0
+  m_Name: LessonListManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1331895947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331895946}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 492.09222, y: 1171.5323, z: 1.385093}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1331895948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331895946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fab10868b1410e408f0f72e2879e675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chapterId: {fileID: 1448336843}
+  lessonPrefab: {fileID: 823598639}
 --- !u!1 &1448336841
 GameObject:
   m_ObjectHideFlags: 0
@@ -1861,7 +1893,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2104538859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e04e0c3b821334edda85e915c10e7fe7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c880daf968cf134c9c8e31bc7a0c125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scrollbar: {fileID: 964650403}
@@ -1961,6 +1993,7 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1331895947}
   - {fileID: 52491523}
   - {fileID: 914638801}
   - {fileID: 221125767}

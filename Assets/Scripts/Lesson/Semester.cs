@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 public class Semester : MonoBehaviour
 {
     public void FirstSemester(){
-       ChapterList.semester = 1;
+   
        SceneManager.LoadScene("ChapterList");
     }
 
      public void SecondSemester(){
-       ChapterList.semester = 2;
+     
         SceneManager.LoadScene("ChapterList");
     }
 }
