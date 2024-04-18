@@ -65,7 +65,7 @@ public class LoginScreenManager : MonoBehaviour
                 Debug.Log(me.data.email);
             }
             
-            SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
+            SceneManager.LoadScene("Main");
         }
         else
         {
