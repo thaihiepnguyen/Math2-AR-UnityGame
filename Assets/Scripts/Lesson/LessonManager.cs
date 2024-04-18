@@ -72,7 +72,7 @@ public class LessonManager : MonoBehaviour
         semester = 2;
         var lessonBus = new LessonBUS();
         chapters = await lessonBus.GetChapterBySemester(2);
-        Debug.Log(chapters[0].name);
+      
         if (chapters !=null)
         { 
              SceneManager.LoadScene("ChapterList");
