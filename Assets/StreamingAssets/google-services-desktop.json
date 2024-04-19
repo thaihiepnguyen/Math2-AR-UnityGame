@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "916595177384",
+    "project_id": "armath2",
+    "storage_bucket": "armath2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916595177384:android:a2f1f85f9f70de28fa8f9d",
+        "android_client_info": {
+          "package_name": "com.fitus.armath2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "916595177384-as83nj5pl6u03dq5gcco6msbglm684hv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fitus.armath2",
+            "certificate_hash": "237da5308cb7e9869962e31258e7599bbd79153f"
+          }
+        },
+        {
+          "client_id": "916595177384-tsjvonfipit52orilsn3tokvlna36l9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHeCuniYBFSgDzqoogZ-exsqd_3cze_1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916595177384-tsjvonfipit52orilsn3tokvlna36l9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

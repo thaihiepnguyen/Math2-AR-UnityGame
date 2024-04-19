@@ -10,9 +10,14 @@ using UnityEngine;
 
 public class AuthDAO
 {
-    public async Task<BaseDTO<int>> LoginByEmail(LoginDTO loginDto)
+    public async Task<BaseDTO<int>> LoginByEmail(LoginEmailDTO loginDto)
     {
-        return await API.Post<LoginDTO, int>($"{GlobalVariable.server_url}/account/login-by-email", loginDto);
+        return await API.Post<LoginEmailDTO, int>($"{GlobalVariable.server_url}/account/login-by-email", loginDto);
+    }
+
+    public async Task<BaseDTO<int>> LoginExternalParty(LoginExternalDTO loginDto)
+    {
+        return await API.Post<LoginExternalDTO, int>($"{GlobalVariable.server_url}/account/login-external-party", loginDto);
     }
 
     public async Task<BaseDTO<object>> RegisterByEmail(RegisterDTO registerDto)

@@ -66,9 +66,10 @@ public class API
         try
         {
             var json = JsonConvert.SerializeObject(data);
+            Debug.Log(url);
             var httpRequest = new StringContent(json, Encoding.UTF8, "application/json");
             var httpResponse = await _httpClient.PostAsync(url, httpRequest);
-                        
+
             var content = await httpResponse.Content.ReadAsStringAsync();
             var response = JsonConvert.DeserializeObject<BaseDTO<U>>(content);
             if (Cookies.Count == 0)
