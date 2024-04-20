@@ -2133,7 +2133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &752725085
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2475,7 +2475,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &797523314
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4522,6 +4522,9 @@ MonoBehaviour:
   d_answerSlot: {fileID: 710121473}
   correctSprite: {fileID: 21300000, guid: 066a79572ac8ea94d86814b4d271167b, type: 3}
   incorrectSprite: {fileID: 21300000, guid: 1744932cc2d6b76429db9b9f83fc5257, type: 3}
+  MultipleChoiceExercise: {fileID: 797523317}
+  m_answerList: {fileID: 244395006}
+  m_question: {fileID: 780898060}
 --- !u!114 &1565313528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4537,9 +4540,6 @@ MonoBehaviour:
   timer: {fileID: 692675544}
   timeValue: 20
   isStop: 0
-  MultipleChoiceExercise: {fileID: 797523317}
-  m_answerList: {fileID: 244395006}
-  m_question: {fileID: 780898060}
 --- !u!1 &1573923330
 GameObject:
   m_ObjectHideFlags: 0

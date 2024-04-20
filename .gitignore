@@ -15,7 +15,6 @@
 /Assets/Firebase/
 /Assets/GoogleSignIn/
 /Assets/Plugins/
-/Assets/Scripts/GlobalVariable.cs
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data

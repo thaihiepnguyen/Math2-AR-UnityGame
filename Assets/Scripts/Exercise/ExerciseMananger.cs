@@ -60,8 +60,6 @@ public class ExerciseMananger : MonoBehaviour
             totalQuestion= exercises.Count;
             UpdateUI();
         }
-        ));
-
     }
 
     // Update is called once per frame
@@ -108,13 +106,15 @@ public class ExerciseMananger : MonoBehaviour
         progress.text = string.Format("{0:00}/{1:00}", currentQuestion + 1, totalQuestion);
         if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
         {
+            MultipleChoiceExercise.gameObject.SetActive(false);
             DragDropExercise.gameObject.SetActive(true);
             ChangeDragDropObject(exercises[currentQuestion]);
 
         }
         else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
         {
-            MultipleChoiceExercise.enabled = true;
+            DragDropExercise.gameObject.SetActive(false);
+            MultipleChoiceExercise.gameObject.SetActive(true);
             ChangeMultipleChoiceObject(exercises[currentQuestion]);
         }
        
