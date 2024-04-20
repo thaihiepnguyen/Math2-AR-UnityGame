@@ -9,7 +9,6 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
-/ProjectSettings/ProjectSettings.asset
 /Assets/Editor Default Resources/
 /Assets/ExternalDependencyManager/
 /Assets/GeneratedLocalRepo/
@@ -86,6 +85,5 @@ crashlytics-build.properties
 .vscode/*
 
 .idea/
-Assets/Scripts/GlobalVariable.cs
-Assets/Scripts/GlobalVariable.cs
-Assets/Scripts/GlobalVariable.cs
+
+ProjectSettings/ProjectSettings.asset
