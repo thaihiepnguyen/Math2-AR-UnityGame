@@ -9,6 +9,7 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+/ProjectSettings/ProjectSettings.asset
 /Assets/Editor Default Resources/
 /Assets/ExternalDependencyManager/
 /Assets/GeneratedLocalRepo/
@@ -16,7 +17,6 @@
 /Assets/GoogleSignIn/
 /Assets/Plugins/
 /Assets/PlayServicesResolver/
-/Assets/Scripts/GlobalVariable.cs
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data

@@ -38,6 +38,14 @@ public class ExerciseMananger : MonoBehaviour
     GameObject d_answerSlot;
     public Sprite correctSprite;
     public Sprite incorrectSprite;
+
+    [SerializeField]
+    Canvas MultipleChoiceExercise;
+    [SerializeField]
+    GameObject m_answerList;
+    [SerializeField]
+    TMP_Text m_question;
+
     private void Awake()
     {
         textCheckBtn= CheckButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -52,7 +60,6 @@ public class ExerciseMananger : MonoBehaviour
             totalQuestion= exercises.Count;
             UpdateUI();
         }
-
     }
 
     // Update is called once per frame
@@ -99,9 +106,16 @@ public class ExerciseMananger : MonoBehaviour
         progress.text = string.Format("{0:00}/{1:00}", currentQuestion + 1, totalQuestion);
         if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
         {
+            MultipleChoiceExercise.gameObject.SetActive(false);
             DragDropExercise.gameObject.SetActive(true);
             ChangeDragDropObject(exercises[currentQuestion]);
 
+        }
+        else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
+        {
+            DragDropExercise.gameObject.SetActive(false);
+            MultipleChoiceExercise.gameObject.SetActive(true);
+            ChangeMultipleChoiceObject(exercises[currentQuestion]);
         }
        
     }
@@ -144,5 +158,70 @@ public class ExerciseMananger : MonoBehaviour
         }
         d_result.SetActive(true);
         StartCoroutine(NextQuestion());
+    }
+
+
+    void ChangeMultipleChoiceObject(ExerciseDTO exercise)
+    {
+        var questions = exercise.question;
+        var answers = exercise.answer.Split(",");
+
+        m_question.text = questions;
+
+        Button[] buttons = m_answerList.GetComponentsInChildren<Button>();
+
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            TextMeshProUGUI tmp = buttons[i].GetComponentInChildren<TextMeshProUGUI>();
+            if (tmp != null)
+            {
+                tmp.text = answers[i];
+            }
+            else
+            {
+                Debug.LogError("TextMeshPro component not found in children of button.");
+            }
+        }
+
+    }
+
+    public void CheckMultipleChoiceAnswer()
+    {
+        var rightAnswer = exercises[currentQuestion].right_answer;
+
+        Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>();
+
+        for (int i = 0; i < answerObjects.Length; i++)
+        {
+            TextMeshProUGUI tmp = answerObjects[i].GetComponentInChildren<TextMeshProUGUI>();
+            if (tmp != null)
+            {
+                if (tmp.text == rightAnswer)
+                {
+                    answerObjects[i].color = HexToColor("#00FF1E");
+                }
+                else
+                {
+                    answerObjects[i].color = HexToColor("#FF0000");
+                }
+            }
+            else
+            {
+                Debug.LogError("TextMeshPro component not found in children of button.");
+            }
+        }
+    }
+    private Color HexToColor(string hex)
+    {
+        Color color = Color.white;
+        if (UnityEngine.ColorUtility.TryParseHtmlString(hex, out color))
+        {
+            return color;
+        }
+        else
+        {
+            Debug.LogError("Invalid hexadecimal color: " + hex);
+            return Color.white;
+        }
     }
 }

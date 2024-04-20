@@ -102,7 +102,8 @@ public class GoogleLogin : MonoBehaviour
             SignInWithGoogleOnFirebase(idToken);
             // Progress.Show("Đang xử lý...", ProgressColor.Orange);
             var loginBus = new AuthBUS();
-            var response = await loginBus.LoginExternalParty(new LoginExternalDTO{
+            var response = await loginBus.LoginExternalParty(new LoginExternalDTO
+            {
                 email = task.Result.Email,
                 uid = task.Result.UserId,
                 token = task.Result.IdToken,
@@ -110,10 +111,10 @@ public class GoogleLogin : MonoBehaviour
             if (response.isSuccessful)
             {
                 // // Set uid 
-                
+
                 // Debug.Log("Please take this uid in main screen to get profile of user" + response.data);
                 PlayerPrefs.SetInt("uid", response.data);
-                
+
                 // To explain how to use the uid in the future
                 var userBus = new UserBUS();
                 var me = await userBus.GetUserById(PlayerPrefs.GetInt("uid"));
@@ -122,7 +123,7 @@ public class GoogleLogin : MonoBehaviour
                 {
                     AddToInformation(me.data.email);
                 }
-                
+
                 SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
             }
             else
@@ -133,7 +134,7 @@ public class GoogleLogin : MonoBehaviour
         }
     }
 
-     void ShowErrorCanvas()
+    void ShowErrorCanvas()
     {
         errorCanvas.gameObject.SetActive(true);
     }
