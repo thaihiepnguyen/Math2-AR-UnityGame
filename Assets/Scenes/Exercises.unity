@@ -1081,7 +1081,6 @@ RectTransform:
   - {fileID: 1508784108}
   - {fileID: 1030256805}
   - {fileID: 151203692}
-  - {fileID: 1433887999}
   - {fileID: 1672445255}
   - {fileID: 1516717269}
   m_Father: {fileID: 1565313523}
@@ -2862,7 +2861,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -225.80005, y: 63.409912}
+  m_AnchoredPosition: {x: -225.7998, y: 63.409912}
   m_SizeDelta: {x: 246.9967, y: 108.83002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &988730900
@@ -3850,17 +3849,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433887998}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 153866212}
-  m_Father: {fileID: 329030407}
+  m_Father: {fileID: 1565313523}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -9, y: 124}
+  m_AnchoredPosition: {x: -0.0000066757, y: 143}
   m_SizeDelta: {x: 485, y: 153.13062}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1433888000
@@ -4401,6 +4400,7 @@ GameObject:
   - component: {fileID: 1565313525}
   - component: {fileID: 1565313524}
   - component: {fileID: 1565313527}
+  - component: {fileID: 1565313528}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -4425,6 +4425,7 @@ RectTransform:
   - {fileID: 2105544745}
   - {fileID: 692675543}
   - {fileID: 988730899}
+  - {fileID: 1433887999}
   - {fileID: 329030407}
   - {fileID: 797523314}
   m_Father: {fileID: 0}
@@ -4511,6 +4512,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentQuestion: 0
   totalQuestion: 20
+  progress: {fileID: 988730900}
+  CheckButton: {fileID: 1433888000}
   DragDropExercise: {fileID: 329030410}
   d_questionList: {fileID: 121134234}
   d_title: {fileID: 1297288440}
@@ -4519,6 +4522,21 @@ MonoBehaviour:
   d_answerSlot: {fileID: 710121473}
   correctSprite: {fileID: 21300000, guid: 066a79572ac8ea94d86814b4d271167b, type: 3}
   incorrectSprite: {fileID: 21300000, guid: 1744932cc2d6b76429db9b9f83fc5257, type: 3}
+--- !u!114 &1565313528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565313522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b5a9deff5e41a2428cfdd9c8142054f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: {fileID: 692675544}
+  timeValue: 20
+  isStop: 0
   MultipleChoiceExercise: {fileID: 797523317}
   m_answerList: {fileID: 244395006}
   m_question: {fileID: 780898060}
@@ -5403,7 +5421,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -16.414307, y: -36.765625}
+  m_AnchoredPosition: {x: -16.414062, y: -36.765625}
   m_SizeDelta: {x: -171.3276, y: -291.2045}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1936415779
@@ -6090,7 +6108,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.000030518, y: -70.88904}
+  m_AnchoredPosition: {x: 0.000030518, y: -70.888916}
   m_SizeDelta: {x: 910.8526, y: 143.77869}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2105544746

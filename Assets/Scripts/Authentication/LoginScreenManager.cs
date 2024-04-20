@@ -45,7 +45,7 @@ public class LoginScreenManager : MonoBehaviour
         Progress.Show("Đang xử lý...", ProgressColor.Orange);
 
         var loginBus = new AuthBUS();
-        var response = await loginBus.LoginByEmail(new LoginDTO
+        var response = await loginBus.LoginByEmail(new LoginEmailDTO
         {
             email = email,
             password = password
