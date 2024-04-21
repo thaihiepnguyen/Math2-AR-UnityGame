@@ -15,7 +15,7 @@
 /Assets/Firebase/
 /Assets/GoogleSignIn/
 /Assets/Plugins/
-/Assets/Scripts/GlobalVariable.cs
+/Assets/PlayServicesResolver/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -85,3 +85,5 @@ crashlytics-build.properties
 .vscode/*
 
 .idea/
+
+ProjectSettings/ProjectSettings.asset

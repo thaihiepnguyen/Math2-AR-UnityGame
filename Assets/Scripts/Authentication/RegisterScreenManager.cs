@@ -68,7 +68,6 @@ public class RegisterScreenManager : MonoBehaviour
         {
             Progress.Show("Đang xử lý...", ProgressColor.Orange);
             var loginBus = new AuthBUS();
-
             var response = await loginBus.RegisterByEmail(new RegisterDTO()
             {
                 email = email,

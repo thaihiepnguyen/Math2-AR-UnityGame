@@ -1,3 +1,4 @@
+﻿using EasyUI.Progress;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -41,8 +42,10 @@ public class LoginScreenManager : MonoBehaviour
         var email = EmailField.text;
         var password = PasswordField.text;
 
+        Progress.Show("Đang xử lý...", ProgressColor.Orange);
+
         var loginBus = new AuthBUS();
-        var response = await loginBus.LoginByEmail(new LoginDTO
+        var response = await loginBus.LoginByEmail(new LoginEmailDTO
         {
             email = email,
             password = password
@@ -64,12 +67,13 @@ public class LoginScreenManager : MonoBehaviour
             {
                 Debug.Log(me.data.email);
             }
-            
+            Progress.Hide();
             SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
         }
         else
         {
             Debug.Log($"Login Failed: {response.message}");
+            Progress.Hide();
             ShowErrorCanvas();
         }
     }

@@ -28,14 +28,14 @@ public class ExerciseDAO
             throw new Exception("Error: ", ex);
         }    
     }
-    public async Task<List<ExerciseDTO>> GetAllExercise()
+    public async Task<List<ExerciseDTO>> GetAllExercises()
     {
         try
         {
             var result = await API.getMethod($"/exercises/");
-            var exerciseResponse = JsonConvert.DeserializeObject<ExerciseResponseDTO>(result);
+            var exerciseResponse = JsonConvert.DeserializeObject<BaseDTO<List<ExerciseDTO>>>(result);
 
-            if (exerciseResponse != null)
+            if (exerciseResponse.data != null)
             {
                 return exerciseResponse.data;
             }
