@@ -65,31 +65,31 @@ public class ExerciseMananger : MonoBehaviour
     private async void Start()
     {
         var exerciseBUS=new ExerciseBUS();
-        // exercises= await exerciseBUS.GetAllExercises();
-        // if (exercises != null)
-        // {
-        //     totalQuestion= exercises.Count;
-        //     UpdateUI();
-        // }
-
-         var response = await exerciseBUS.GetExerciseByType(new ExerciseTypeDTO
+        exercises= await exerciseBUS.GetAllExercises();
+        if (exercises != null)
         {
-           type = "Input"
-        });
-
-         if (response.data !=null)
-        {
-            exercises = response.data;
-          
-            totalQuestion = exercises.Count;
+            totalQuestion= exercises.Count;
             UpdateUI();
+        }
+
+        //  var response = await exerciseBUS.GetExerciseByType(new ExerciseTypeDTO
+        // {
+        //    type = "Input"
+        // });
+
+        //  if (response.data !=null)
+        // {
+        //     exercises = response.data;
+          
+        //     totalQuestion = exercises.Count;
+        //     UpdateUI();
          
-        }
-        else
-        {
-            Debug.Log($"Error: {response.message}");
+        // }
+        // else
+        // {
+        //     Debug.Log($"Error: {response.message}");
            
-        }
+        // }
     }
 
     // Update is called once per frame
