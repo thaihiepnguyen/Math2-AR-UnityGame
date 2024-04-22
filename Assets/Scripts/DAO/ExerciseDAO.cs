@@ -11,6 +11,10 @@ public class ExerciseDAO
 {
     // Start is called before the first frame update
 
+     public async Task<BaseDTO<List<ExerciseDTO>>> GetExerciseByType(ExerciseTypeDTO exerciseTypeDTO)
+    {
+        return await API.Post<ExerciseTypeDTO, List<ExerciseDTO>>($"{GlobalVariable.server_url}/exercises/get-exercise-by-type", exerciseTypeDTO);
+    }
     public async Task<ExerciseDTO> GetExerciseByIdAsync(int exerciseId)
     {
         try

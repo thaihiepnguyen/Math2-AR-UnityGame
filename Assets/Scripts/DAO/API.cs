@@ -72,20 +72,20 @@ public class API
 
             var content = await httpResponse.Content.ReadAsStringAsync();
             var response = JsonConvert.DeserializeObject<BaseDTO<U>>(content);
-            if (Cookies.Count == 0)
-            {
-                ExtractCookie(httpResponse);
-                if (Cookies.ContainsKey("act"))
-                {
-                    // Only set token if there is any cookies returned
-                    var act = Cookies["act"];
+            // if (Cookies.Count == 0)
+            // {
+            //     ExtractCookie(httpResponse);
+            //     if (Cookies.ContainsKey("act"))
+            //     {
+            //         // Only set token if there is any cookies returned
+            //         var act = Cookies["act"];
                 
-                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                        "Beare",
-                        act
-                    );
-                }
-            }
+            //         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+            //             "Beare",
+            //             act
+            //         );
+            //     }
+            // }
 
             return response;
         }
