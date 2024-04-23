@@ -20,9 +20,9 @@ public class ChapterList : MonoBehaviour
     void Start()
     {
         title.text =String.Format("HỌC KÌ {0}", LessonManager.GetInstance().GetSemester());
-         first.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[0].chapter.ToCharArray()[0]);
-          second.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[1].chapter.ToCharArray()[0]);
-           third.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[2].chapter.ToCharArray()[0]);
+         first.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[0].name.ToCharArray()[0]);
+          second.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[1].name.ToCharArray()[0]);
+           third.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[2].name.ToCharArray()[0]);
     }
 
      
