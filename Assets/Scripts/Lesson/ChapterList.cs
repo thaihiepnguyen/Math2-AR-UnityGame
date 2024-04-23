@@ -28,28 +28,35 @@ public class ChapterList : MonoBehaviour
     // void Awake(){
     //   GetData();
     // }
-    void Start()
+    async void Start()
     {
-
-        GetData();
+        var lessonBus = new LessonBUS();
+        var data = await lessonBus.GetChapterBySemester(Semester.GetSemester());
+        chapters = data.data;
+        // GetData();
         // title.text =String.Format("HỌC KÌ {0}", LessonManager.GetInstance().GetSemester());
         //  first.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[0].name.ToCharArray()[0]);
         //   second.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[1].name.ToCharArray()[0]);
         //    third.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[2].name.ToCharArray()[0]);
 
-
-         title.text =String.Format("HỌC KÌ {0}", Semester.GetSemester());
+        if (chapters != null)
+        {
+            first.text = String.Format("Chương {0}", chapters[0].name.ToCharArray()[0]);
+            second.text = String.Format("Chương {0}", chapters[1].name.ToCharArray()[0]);
+            third.text = String.Format("Chương {0}", chapters[2].name.ToCharArray()[0]);
+        }
+        title.text =String.Format("HỌC KÌ {0}", Semester.GetSemester());
 
         
     }
 
 
     void Update(){
-       if (chapters!=null){
-         first.text = String.Format("Chương {0}", chapters[0].name.ToCharArray()[0]);
-          second.text = String.Format("Chương {0}", chapters[1].name.ToCharArray()[0]);
-           third.text = String.Format("Chương {0}", chapters[2].name.ToCharArray()[0]);
-         }
+     //  if (chapters!=null){
+      //   first.text = String.Format("Chương {0}", chapters[0].name.ToCharArray()[0]);
+     //     second.text = String.Format("Chương {0}", chapters[1].name.ToCharArray()[0]);
+     //      third.text = String.Format("Chương {0}", chapters[2].name.ToCharArray()[0]);
+     //   }
     }
 
 
