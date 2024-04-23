@@ -17,33 +17,69 @@ public class ChapterList : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI title;
 
+    
+    private List<ChapterResponseDTO> chapters;
+
+    static protected string chapterId=  "";
+    public static string GetChapterId(){
+      return chapterId;
+    }
+
+    // void Awake(){
+    //   GetData();
+    // }
     void Start()
     {
-        title.text =String.Format("HỌC KÌ {0}", LessonManager.GetInstance().GetSemester());
-         first.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[0].name.ToCharArray()[0]);
-          second.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[1].name.ToCharArray()[0]);
-           third.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[2].name.ToCharArray()[0]);
-    }
 
-     
-    // Update is called once per frame
-    void Update()
-    {
+        GetData();
+        // title.text =String.Format("HỌC KÌ {0}", LessonManager.GetInstance().GetSemester());
+        //  first.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[0].name.ToCharArray()[0]);
+        //   second.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[1].name.ToCharArray()[0]);
+        //    third.text = String.Format("Chương {0}", LessonManager.GetInstance().GetChapters()[2].name.ToCharArray()[0]);
+
+
+         title.text =String.Format("HỌC KÌ {0}", Semester.GetSemester());
+
         
     }
 
+
+    void Update(){
+       if (chapters!=null){
+         first.text = String.Format("Chương {0}", chapters[0].name.ToCharArray()[0]);
+          second.text = String.Format("Chương {0}", chapters[1].name.ToCharArray()[0]);
+           third.text = String.Format("Chương {0}", chapters[2].name.ToCharArray()[0]);
+         }
+    }
+
+
+    async void GetData(){
+       var lessonBus = new LessonBUS();
+        var dt = await lessonBus.GetChapterBySemester(Semester.GetSemester());
+        if (dt.data != null){
+            chapters = dt.data;
+            Debug.Log(chapters[0].name);
+        }
+    }
      public void FirstChapter(){
-        
-       LessonManager.GetInstance().Chapter(0);
+
+
+      chapterId = chapters[0].name;
+       SceneManager.LoadScene("ChapterScene");
+      //  LessonManager.GetInstance().Chapter(0);
      
     }
 
      public void SecondChapter(){
-      LessonManager.GetInstance().Chapter(1);
+      chapterId = chapters[1].name;
+       SceneManager.LoadScene("ChapterScene");
+      // LessonManager.GetInstance().Chapter(1);
     }
 
      public void ThirdChapter(){
-     LessonManager.GetInstance().Chapter(2);
+      chapterId = chapters[2].name;
+       SceneManager.LoadScene("ChapterScene");
+    //  LessonManager.GetInstance().Chapter(2);
     }
 
 

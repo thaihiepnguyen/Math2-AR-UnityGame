@@ -12,19 +12,38 @@ public class LessonList : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI chapterId;
     public GameObject lessonPrefab;
- 
+    private List<LessonDTO> lessons;
+
+    static protected string lessonName = "";
+
+    public static string GetLessonName(){
+        return lessonName;
+    }
+
+    public bool isDone = false;
+
     void Start()
     {   
 
-        var title = LessonManager.GetInstance().GetChapterId();
+        // var title = LessonManager.GetInstance().GetChapterId();
+
+        var title = ChapterList.GetChapterId();
         chapterId.text = String.Format("CHƯƠNG {0}",title[0]);
        
-        var chapters = LessonManager.GetInstance().GetLessons();
+        // var chapters = LessonManager.GetInstance().GetLessons();
+        GetData();
+
+       
+    }
+
+    void Update(){
+         if (lessons!=null){
+
          TextMeshProUGUI lessonText = lessonPrefab.GetComponentInChildren<TextMeshProUGUI>();
-         lessonText.text = chapters[0].name;
+         lessonText.text = lessons[0].name;
         
 
-         for (int i = 0; i < chapters.Count; i++){
+         for (int i = 0; i < lessons.Count; i++){
 
             int index = i;
              if (i == 0)
@@ -51,7 +70,7 @@ public class LessonList : MonoBehaviour
 
                 if (newLessonText != null)
                 {
-                    newLessonText.text = chapters[i].name;// Set button text 
+                    newLessonText.text = lessons[i].name;// Set button text 
 
                 }
                 if (newGetStart!=null){
@@ -61,13 +80,32 @@ public class LessonList : MonoBehaviour
 
               
                 newLesson.transform.SetParent(lessonPrefab.transform.parent.transform, false);
+
+                isDone = true;
+
          }
+        }
+    }
+    async void GetData(){
+        var lessonBus = new LessonBUS();
+       var response = await lessonBus.GetLessonByChapterId(new ChapterDTO
+        {
+           chapter = ChapterList.GetChapterId()
+        });
+
+         if (response.data !=null)
+        {
+            lessons = response.data;
+            Debug.Log(lessons[0].name);
+        }
     }
 
-
     public void LessonLearning(int index){
-         Debug.Log(index);
-        LessonManager.GetInstance().Lesson(index);
+       
+        // LessonManager.GetInstance().Lesson(index);
+
+         lessonName = lessons[index].name;
+        SceneManager.LoadScene("LessonScene");
     }
       
         
