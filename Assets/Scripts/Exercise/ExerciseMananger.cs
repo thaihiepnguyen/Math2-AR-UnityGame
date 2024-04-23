@@ -22,6 +22,8 @@ public class ExerciseMananger : MonoBehaviour
     //Drag drop exercise  object
     //Question List
     [SerializeField]
+    Image Notification;
+    [SerializeField]
     Canvas DragDropExercise;
     [SerializeField]
     GameObject d_questionList;
@@ -90,11 +92,30 @@ public class ExerciseMananger : MonoBehaviour
     }
     void ChangeDragDropObject(ExerciseDTO exercise)
     {
+        d_result.SetActive(false);
         var questions = exercise.question.Split(",");
         var answers=exercise.answer.Split(",");
+       
+        var aslotItem = d_answerSlot.GetComponentsInChildren<DragAndDrop>();
+        if (aslotItem.Length > 0)
+        {
+            var alist = d_answerList.transform.GetComponentsInChildren<Transform>();
+            int j = 0;
+            for (int i = 0; i < alist.Length; i++)
+            {
+                if (alist[i].name.Contains("ItemContain"))
+                {
+                    aslotItem[j].transform.SetParent(alist[i]);
+                    Debug.Log(alist[i].name);
+                    j++;
+                }
+
+            }
+        }
         var a = d_answerList.GetComponentsInChildren<TextMeshProUGUI>();
+
         var q = d_questionList.GetComponentsInChildren<TextMeshProUGUI>();
-        for(int i=0;i<a.Length;i++)
+        for (int i=0;i<a.Length;i++)
         {
             a[i].text = answers[i];
             q[i].text = questions[i];
@@ -110,6 +131,7 @@ public class ExerciseMananger : MonoBehaviour
             DragDropExercise.gameObject.SetActive(true);
             ChangeDragDropObject(exercises[currentQuestion]);
 
+
         }
         else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
         {
@@ -119,6 +141,10 @@ public class ExerciseMananger : MonoBehaviour
         }
        
     }
+    public void hideNotification()
+    {
+        Notification.gameObject.SetActive(false);
+    }
     public void CheckDragDropAnswer()
     {
         bool isRight = true;
@@ -127,12 +153,8 @@ public class ExerciseMananger : MonoBehaviour
         var resultListImage = d_result.GetComponentsInChildren<Image>();
         if (aslot.Length != resultListImage.Length)
         {
-            isRight = false;
-            for (int i = 0; i < resultListImage.Length; i++)
-            {
-                
-                    resultListImage[i].sprite = incorrectSprite; 
-            }
+            Notification.gameObject.SetActive(true);
+            return;
         }
         else
         {
@@ -156,8 +178,10 @@ public class ExerciseMananger : MonoBehaviour
         {
             currentRightAnswer += 1;
         }
-        d_result.SetActive(true);
         StartCoroutine(NextQuestion());
+        d_result.SetActive(true);
+        
+        
     }
 
 
