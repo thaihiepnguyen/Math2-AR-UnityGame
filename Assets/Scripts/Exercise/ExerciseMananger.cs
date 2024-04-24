@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ExerciseMananger : MonoBehaviour
@@ -18,6 +19,7 @@ public class ExerciseMananger : MonoBehaviour
     public Button CheckButton;
     TextMeshProUGUI textCheckBtn;
     Timer timer;
+
 
     //Drag drop exercise  object
     //Question List
@@ -55,14 +57,32 @@ public class ExerciseMananger : MonoBehaviour
     [SerializeField] private TMP_InputField i_answer;
 
     [SerializeField] private GameObject i_holder;
-     [SerializeField] private GameObject correct_answer;
-      [SerializeField] private GameObject incorrect_answer;
+    [SerializeField] private GameObject correct_answer;
+    [SerializeField] private GameObject incorrect_answer;
+
+    [SerializeField]
+    Canvas ReviewResult;
+    [SerializeField]
+    Canvas ReviewList;
+    [SerializeField]
+    Button NextBtn;
+    [SerializeField]
+    Button PrevBtn;
+    [SerializeField]
+    TMP_Text result;
+    private int currentResult = 0;
+    private List<GameObject> reviewList = new List<GameObject>();
 
 
     private void Awake()
     {
         textCheckBtn= CheckButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
         timer= GetComponent<Timer>();
+        NextBtn.gameObject.SetActive(false);
+        PrevBtn.gameObject.SetActive(false);
+        ReviewResult.gameObject.SetActive(false);
+        NextBtn.onClick.AddListener(OnClickNextButton);
+        PrevBtn.onClick.AddListener(OnClickPrevButton);
     }
     private async void Start()
     {
@@ -101,25 +121,31 @@ public class ExerciseMananger : MonoBehaviour
         {
             textCheckBtn.text = "Nộp bài";
         }
+        if (ReviewList.gameObject.activeSelf || ReviewResult.gameObject.activeSelf)
+        {
+            textCheckBtn.text = "Thoát";
+        }
     }
     IEnumerator  NextQuestion()
     {
         yield return new WaitForSeconds(1f);
-       
         currentQuestion = currentQuestion + 1;
         if (currentQuestion >= totalQuestion)
         {
-
-            Debug.Log($"Your result is: {currentRightAnswer}/{totalQuestion}");
+            
+            MultipleChoiceExercise.gameObject.SetActive(false);
+            InputExercise.gameObject.SetActive(false);
+            DragDropExercise.gameObject.SetActive(false);
+            ReviewResult.gameObject.SetActive(true);
+            result.text = $"{currentRightAnswer}/{totalQuestion}";
             timer.isStop= true;
+            yield return null;
         }
-        else
+        
+        if (currentQuestion < totalQuestion)
         {
-           
             UpdateUI();
-        }
-        
-        
+        }    
     }
     void ChangeDragDropObject(ExerciseDTO exercise)
     {
@@ -334,6 +360,10 @@ public class ExerciseMananger : MonoBehaviour
 
     public void CheckAnswers()
     {
+        if (currentQuestion >= totalQuestion)
+        {
+            SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
+        }
         if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
         {
             CheckDragDropAnswer();
@@ -347,6 +377,17 @@ public class ExerciseMananger : MonoBehaviour
 
             CheckInputAnswer();
         }
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("Exercise");
+        for (int i = 0;  i < objs.Length; i++)
+        {
+            if (objs[i].activeSelf)
+            {
+                GameObject reviewObj = Instantiate(objs[i]);
+                reviewObj.SetActive(false);
+                reviewObj.transform.SetParent(ReviewList.transform);
+                reviewList.Add(reviewObj);
+            }
+        }
     }
     private Color HexToColor(string hex)
     {
@@ -359,6 +400,34 @@ public class ExerciseMananger : MonoBehaviour
         {
             Debug.LogError("Invalid hexadecimal color: " + hex);
             return Color.white;
+        }
+    }
+
+    public void OnClickReview()
+    {
+        ReviewResult.gameObject.SetActive(false);
+        ReviewList.gameObject.SetActive(true);
+        NextBtn.gameObject.SetActive(true);
+        PrevBtn.gameObject.SetActive(true);
+        reviewList[0].gameObject.SetActive(true);
+    }
+
+    public void OnClickNextButton() 
+    {
+        if (currentResult < reviewList.Count - 1)
+        {
+            reviewList[currentResult].gameObject.SetActive(false);
+            currentResult++;
+            reviewList[currentResult].gameObject.SetActive(true);
+        }
+    }
+    public void OnClickPrevButton()
+    {
+        if (currentResult > 0)
+        {
+            reviewList[currentResult].gameObject.SetActive(false);
+            currentResult--;
+            reviewList[currentResult].gameObject.SetActive(true);
         }
     }
 }
