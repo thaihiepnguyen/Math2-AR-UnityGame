@@ -11,17 +11,20 @@ using UnityEngine.UI;
 
 public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler,IDragHandler
 {
-    [HideInInspector]public Transform parentAfterDrag;
+    [SerializeField]public Transform parentAfterDrag;
+    [SerializeField] public Transform parentBeforeDrag;
     Image image;
     public TextMeshProUGUI textMeshProUGUI;
     private  void Awake()
     {  
-       image= GetComponent<Image>();
-        
+        image= GetComponent<Image>();
+        parentBeforeDrag = transform.parent;
+        Debug.Log("before" + parentBeforeDrag.name);
+
+
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("On begin drag");
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
@@ -31,16 +34,17 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("On drag");
         transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("On end drag");
+        
         transform.SetParent(parentAfterDrag);
         image.raycastTarget = true;
         textMeshProUGUI.raycastTarget = true;
+        parentBeforeDrag = parentAfterDrag;
+        Debug.Log("after" + parentBeforeDrag.name);
     }
 
     public void OnPointerDown(PointerEventData eventData)
