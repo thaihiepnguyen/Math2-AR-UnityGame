@@ -16,7 +16,7 @@ public class LessonManager : MonoBehaviour
         return instance;
     }
 
-    private List<LessonDTO> chapters;
+    private List<ChapterResponseDTO> chapters;
     private int semester = 1;
     private string chapterId = "";
 
@@ -26,7 +26,7 @@ public class LessonManager : MonoBehaviour
     public int GetSemester(){
         return semester;
     }
-    public List<LessonDTO> GetChapters(){
+    public List<ChapterResponseDTO> GetChapters(){
         return chapters;
     }
 
@@ -57,12 +57,13 @@ public class LessonManager : MonoBehaviour
     public async void OnClickFirstSemesterButton(){
         semester = 1;
         var lessonBus = new LessonBUS();
-        chapters = await lessonBus.GetChapterBySemester(1);
-     
-        if (chapters !=null)
-        { 
-             SceneManager.LoadScene("ChapterList");
+        var dt = await lessonBus.GetChapterBySemester(1);
+        if (dt.data != null){
+            chapters = dt.data;
+            Debug.Log("hello" + dt.data[0].name);
+            SceneManager.LoadScene("ChapterList");
         }
+     
     
        
     }
@@ -71,18 +72,18 @@ public class LessonManager : MonoBehaviour
     public async void OnClickSecondSemesterButton(){
         semester = 2;
         var lessonBus = new LessonBUS();
-        chapters = await lessonBus.GetChapterBySemester(2);
-      
-        if (chapters !=null)
-        { 
-             SceneManager.LoadScene("ChapterList");
+        var dt = await lessonBus.GetChapterBySemester(2);
+        if (dt.data != null){
+            chapters = dt.data;
+              Debug.Log("hello" + chapters);
+            SceneManager.LoadScene("ChapterList");
         }
     }
 
 
      public void Chapter(int index){
         
-       chapterId = chapters[index].chapter;
+       chapterId = chapters[index].name;
        SceneManager.LoadScene("ChapterScene");
     }
 

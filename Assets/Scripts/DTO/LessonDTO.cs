@@ -21,3 +21,8 @@ public class LessonDTO
 public class ChapterDTO {
     public string chapter {get; set;}
 }
+
+public class ChapterResponseDTO {
+    public string name {get; set;}
+}
+

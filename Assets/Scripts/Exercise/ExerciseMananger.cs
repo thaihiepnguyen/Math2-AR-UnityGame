@@ -48,6 +48,17 @@ public class ExerciseMananger : MonoBehaviour
     [SerializeField]
     TMP_Text m_question;
 
+    [SerializeField] private Canvas InputExercise;
+
+    [SerializeField] private TMP_Text i_question;
+
+    [SerializeField] private TMP_InputField i_answer;
+
+    [SerializeField] private GameObject i_holder;
+     [SerializeField] private GameObject correct_answer;
+      [SerializeField] private GameObject incorrect_answer;
+
+
     private void Awake()
     {
         textCheckBtn= CheckButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -62,6 +73,25 @@ public class ExerciseMananger : MonoBehaviour
             totalQuestion= exercises.Count;
             UpdateUI();
         }
+
+        //  var response = await exerciseBUS.GetExerciseByType(new ExerciseTypeDTO
+        // {
+        //    type = "Input"
+        // });
+
+        //  if (response.data !=null)
+        // {
+        //     exercises = response.data;
+          
+        //     totalQuestion = exercises.Count;
+        //     UpdateUI();
+         
+        // }
+        // else
+        // {
+        //     Debug.Log($"Error: {response.message}");
+           
+        // }
     }
 
     // Update is called once per frame
@@ -75,6 +105,7 @@ public class ExerciseMananger : MonoBehaviour
     IEnumerator  NextQuestion()
     {
         yield return new WaitForSeconds(1f);
+       
         currentQuestion = currentQuestion + 1;
         if (currentQuestion >= totalQuestion)
         {
@@ -128,6 +159,7 @@ public class ExerciseMananger : MonoBehaviour
         if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
         {
             MultipleChoiceExercise.gameObject.SetActive(false);
+            InputExercise.gameObject.SetActive(false);
             DragDropExercise.gameObject.SetActive(true);
             ChangeDragDropObject(exercises[currentQuestion]);
 
@@ -136,10 +168,74 @@ public class ExerciseMananger : MonoBehaviour
         else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
         {
             DragDropExercise.gameObject.SetActive(false);
+            InputExercise.gameObject.SetActive(false);
             MultipleChoiceExercise.gameObject.SetActive(true);
             ChangeMultipleChoiceObject(exercises[currentQuestion]);
         }
+        else if (exercises[currentQuestion].type == GlobalVariable.INPUT_TYPE && exercises != null){
+            
+            InputExercise.gameObject.SetActive(true);
+            MultipleChoiceExercise.gameObject.SetActive(false);
+            DragDropExercise.gameObject.SetActive(false);
+             correct_answer.SetActive(false);
+            incorrect_answer.SetActive(false);
+            i_answer.text="";
+            ChangeInputObject(exercises[currentQuestion]);
+        }
        
+    }
+
+
+    public void ChangeInputObject(ExerciseDTO exercise){
+        var question = exercise.question;
+        var right_answers = exercise.right_answer.Split(",");
+        Debug.Log(right_answers.Length);
+
+        i_question.text = question;
+    
+        if (right_answers.Length > 1) {
+
+         for (int i = 1; i < right_answers.Length; i++){
+
+            
+             TMP_InputField newInput = Instantiate(i_answer);
+            newInput.transform.SetParent(i_answer.transform.parent.transform, false);
+            newInput.transform.SetSiblingIndex(i);
+            
+         }
+        }
+        else {
+           TMP_InputField[] inputList = i_holder.GetComponentsInChildren<TMP_InputField>();
+
+            for (int i = 1; i < inputList.Length; i++){
+                Destroy(inputList[i].gameObject);
+            }
+
+        }
+    }
+
+
+    public void CheckInputAnswer(){
+        var right_answers = exercises[currentQuestion].right_answer.Split(",");
+        TMP_InputField[] inputList = i_holder.GetComponentsInChildren<TMP_InputField>();
+            bool check = true;
+            for (int i = 0; i < inputList.Length; i++){
+               if (inputList[i].text != right_answers[i]){
+                    check = !check;
+                    break;
+               }
+            }
+
+            if (check){
+                currentRightAnswer+=1;
+                correct_answer.SetActive(true);
+            }
+            else {
+                incorrect_answer.SetActive(true);
+            }
+
+        
+            StartCoroutine(NextQuestion());
     }
     public void hideNotification()
     {
@@ -233,6 +329,23 @@ public class ExerciseMananger : MonoBehaviour
             {
                 Debug.LogError("TextMeshPro component not found in children of button.");
             }
+        }
+    }
+
+    public void CheckAnswers()
+    {
+        if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
+        {
+            CheckDragDropAnswer();
+        }
+        else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
+        {
+            CheckMultipleChoiceAnswer();
+        }
+        else if (exercises[currentQuestion].type == GlobalVariable.INPUT_TYPE && exercises != null)
+        {
+
+            CheckInputAnswer();
         }
     }
     private Color HexToColor(string hex)

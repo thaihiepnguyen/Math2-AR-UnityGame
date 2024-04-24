@@ -21,4 +21,10 @@ public class ExerciseBUS
     {
         return await _exerciseDAO.GetAllExercises();
     }
+
+    public async Task<BaseDTO<List<ExerciseDTO>>> GetExerciseByType(ExerciseTypeDTO exerciseTypeDTO){
+
+        return await _exerciseDAO.GetExerciseByType(exerciseTypeDTO);
+
+    }
 }

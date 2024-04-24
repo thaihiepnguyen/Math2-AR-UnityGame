@@ -24,3 +24,10 @@ public class ExerciseResponseDTO
     public string message;
     public List<ExerciseDTO> data;
 }
+
+
+[Serializable]
+
+public class ExerciseTypeDTO {
+    public string type {get; set;}
+}
