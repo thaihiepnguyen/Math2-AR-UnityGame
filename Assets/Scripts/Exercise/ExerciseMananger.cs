@@ -330,6 +330,23 @@ public class ExerciseMananger : MonoBehaviour
             }
         }
     }
+
+    public void CheckAnswers()
+    {
+        if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
+        {
+            CheckDragDropAnswer();
+        }
+        else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
+        {
+            CheckMultipleChoiceAnswer();
+        }
+        else if (exercises[currentQuestion].type == GlobalVariable.INPUT_TYPE && exercises != null)
+        {
+
+            CheckInputAnswer();
+        }
+    }
     private Color HexToColor(string hex)
     {
         Color color = Color.white;
