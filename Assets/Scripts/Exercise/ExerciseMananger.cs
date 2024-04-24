@@ -222,6 +222,7 @@ public class ExerciseMananger : MonoBehaviour
             for (int i = 0; i < inputList.Length; i++){
                if (inputList[i].text != right_answers[i]){
                     check = !check;
+                    break;
                }
             }
 
