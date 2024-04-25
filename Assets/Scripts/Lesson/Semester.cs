@@ -12,11 +12,11 @@ public class Semester : MonoBehaviour
     }
     public void FirstSemester(){
         semester = 1;
-       SceneManager.LoadScene("ChapterList");
+       SceneHistory.GetInstance().LoadScene("ChapterList");
     }
 
      public void SecondSemester(){
         semester = 2;
-        SceneManager.LoadScene("ChapterList");
+        SceneHistory.GetInstance().LoadScene("ChapterList");
     }
 }

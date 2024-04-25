@@ -5,6 +5,6 @@ using UnityEngine.SceneManagement;
 public class Main : MonoBehaviour
 {
     public void OnClickPlay(){
-        SceneManager.LoadScene("Semester");
+        SceneHistory.GetInstance().LoadScene("Semester");
     }
 }
