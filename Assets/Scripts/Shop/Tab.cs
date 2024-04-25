@@ -9,6 +9,8 @@ public class Tab : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] private  GameObject tabHeaderList;
     [SerializeField] private  GameObject tabContentList;
+
+    [SerializeField] private  GameObject boughtPanel;
     void Start()
     {
 
@@ -46,6 +48,12 @@ public class Tab : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void OnClickBought(){
+
+        if (boughtPanel.activeSelf) return;
+        boughtPanel.SetActive(true);
     }
 
     void TabOnClick(int index){
