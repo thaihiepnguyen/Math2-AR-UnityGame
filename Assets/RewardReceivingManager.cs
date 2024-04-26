@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class RewardReceivingManager : MonoBehaviour, IPointerClickHandler {
@@ -18,7 +19,8 @@ public class RewardReceivingManager : MonoBehaviour, IPointerClickHandler {
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-     
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
         m_Raycaster = transform.parent.GetComponent<GraphicRaycaster>();
         List<RaycastResult> results = new List<RaycastResult>();
         m_Raycaster.Raycast(eventData, results);

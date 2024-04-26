@@ -15,7 +15,7 @@ public class SceneHistory : MonoBehaviour
         return instance;
     }
 
-      void Awake()
+    void Awake()
     {
         sceneHistory.Add("Main");
         Debug.Log("Hello");

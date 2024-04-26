@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AchievementList : MonoBehaviour
 {
@@ -32,10 +33,6 @@ public class AchievementList : MonoBehaviour
 
                  int index = i;
               
-                  
-
-               
-
                 if (newAchievementText != null)
                 {
                     newAchievementText.text = response.data[i].name;// Set button text 
@@ -57,8 +54,12 @@ public class AchievementList : MonoBehaviour
                     if (receiveButton != null)
                     {
                   
-                        receiveButton.onClick.AddListener(() => {
-
+                        receiveButton.onClick.AddListener(async () => {
+                            AchievementBUS _achievementBUS = new();
+                            await _achievementBUS.GetReward(new RewardDTO {
+                                price = response.data[index].price,
+                                achievement_id = response.data[index].id
+                            });
                             ReceiveReward(response.data[index].price);
                         });
 
@@ -87,6 +88,7 @@ public class AchievementList : MonoBehaviour
 
         panel.GetComponent<RewardReceivingManager>().GetData(price);
 
-
+      //  string currentSceneName = SceneManager.GetActiveScene().name;
+      //  SceneManager.LoadScene(currentSceneName);
     }
 }
