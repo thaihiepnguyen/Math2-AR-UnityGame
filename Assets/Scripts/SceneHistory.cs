@@ -18,6 +18,7 @@ public class SceneHistory : MonoBehaviour
       void Awake()
     {
         sceneHistory.Add("Main");
+        Debug.Log("Hello");
         //  Scene scene = SceneManager.GetActiveScene();
 
        
@@ -34,6 +35,9 @@ public class SceneHistory : MonoBehaviour
       
 
         if (instance != null){
+            foreach( var x in sceneHistory) {
+            Debug.Log( x.ToString());
+            }
           Destroy(gameObject);
           return;
         }
@@ -41,7 +45,8 @@ public class SceneHistory : MonoBehaviour
           instance = this;
          DontDestroyOnLoad(gameObject);
     }
-  
+    
+
   
     public void LoadScene(string newScene)
     {
@@ -52,13 +57,14 @@ public class SceneHistory : MonoBehaviour
     
     public void OnClickHomeButton(){
         sceneHistory.Clear();
+        
         SceneManager.LoadScene("Main");
     }
    
     public void PreviousScene()
     {
        
-        if (sceneHistory.Count >= 1)  //Checking that we have actually switched scenes enough to go back to a previous scene
+        if (sceneHistory.Count >= 2)  //Checking that we have actually switched scenes enough to go back to a previous scene
         {
             sceneHistory.RemoveAt(sceneHistory.Count -1);
             SceneManager.LoadScene(sceneHistory[sceneHistory.Count -1]);

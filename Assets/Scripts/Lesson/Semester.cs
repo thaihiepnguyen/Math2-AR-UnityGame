@@ -19,4 +19,8 @@ public class Semester : MonoBehaviour
         semester = 2;
         SceneHistory.GetInstance().LoadScene("ChapterList");
     }
+
+     public void OnClickAchievementButton(){
+        SceneHistory.GetInstance().LoadScene("Achievement");
+    }
 }

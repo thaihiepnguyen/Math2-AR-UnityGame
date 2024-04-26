@@ -25,13 +25,14 @@ public class ChapterList : MonoBehaviour
       return chapterId;
     }
 
-    // void Awake(){
+    // async void Awake(){
     //   GetData();
     // }
     async void Start()
     {
         var lessonBus = new LessonBUS();
         var data = await lessonBus.GetChapterBySemester(Semester.GetSemester());
+        Debug.Log(data);
         chapters = data.data;
         // GetData();
         // title.text =String.Format("HỌC KÌ {0}", LessonManager.GetInstance().GetSemester());

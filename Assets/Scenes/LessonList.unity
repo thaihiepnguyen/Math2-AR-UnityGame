@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -749,27 +749,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8599405130292813681, guid: d7d5625828b04a74e851eae042e43f79, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8599405130292813681, guid: d7d5625828b04a74e851eae042e43f79, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8599405130292813681, guid: d7d5625828b04a74e851eae042e43f79, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 297.53455
       objectReference: {fileID: 0}
     - target: {fileID: 8599405130292813681, guid: d7d5625828b04a74e851eae042e43f79, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 129.04291
       objectReference: {fileID: 0}
     - target: {fileID: 8599405130292813681, guid: d7d5625828b04a74e851eae042e43f79, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 168.76727
       objectReference: {fileID: 0}
     - target: {fileID: 8599405130292813681, guid: d7d5625828b04a74e851eae042e43f79, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -84.52145
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1948,7 +1948,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
-  m_Spacing: 400
+  m_Spacing: 20
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0

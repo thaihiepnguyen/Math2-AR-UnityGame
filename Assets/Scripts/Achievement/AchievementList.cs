@@ -28,9 +28,20 @@ public class AchievementList : MonoBehaviour
 
                 }
 
-                if (response.data[i].is_completed)
+                if (response.data[i].status_type == 2)
                 {
                     newAchievement.transform.GetChild(2).gameObject.SetActive(true);
+                     newAchievement.transform.GetChild(3).gameObject.SetActive(false);
+
+                }
+                else if (response.data[i].status_type == 1)
+                {
+                     newAchievement.transform.GetChild(3).gameObject.SetActive(true);
+                       newAchievement.transform.GetChild(2).gameObject.SetActive(false);
+                }
+                else {
+                    newAchievement.transform.GetChild(3).gameObject.SetActive(false);
+                       newAchievement.transform.GetChild(2).gameObject.SetActive(false);
                 }
 
                 newAchievement.transform.SetParent(parent.transform, false);
