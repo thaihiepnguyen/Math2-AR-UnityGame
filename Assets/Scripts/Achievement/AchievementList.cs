@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class AchievementList : MonoBehaviour
 {
@@ -9,8 +10,16 @@ public class AchievementList : MonoBehaviour
     private GameObject prefab;
 
     [SerializeField]
+
+    private GameObject rewardPanel;
+
+    [SerializeField]
     private GameObject parent;
     // Start is called before the first frame update
+    
+    [SerializeField]
+    private GameObject canvas;
+    
     async void Start()
     {
         AchievementBUS _achievementBUS = new();
@@ -21,6 +30,12 @@ public class AchievementList : MonoBehaviour
             {
                 GameObject newAchievement = Instantiate(prefab);
                 TextMeshProUGUI newAchievementText = newAchievement.GetComponentInChildren<TextMeshProUGUI>();
+
+                 int index = i;
+              
+                  
+
+               
 
                 if (newAchievementText != null)
                 {
@@ -36,7 +51,19 @@ public class AchievementList : MonoBehaviour
                 }
                 else if (response.data[i].status_type == 1)
                 {
-                     newAchievement.transform.GetChild(3).gameObject.SetActive(true);
+                    var button = newAchievement.transform.GetChild(3).gameObject;
+                    button.SetActive(true);
+
+                       Button receiveButton = button.GetComponent<Button>();
+                    if (receiveButton != null)
+                    {
+                        receiveButton.onClick.AddListener(() => {
+
+                            ReceiveReward(index);
+                        });
+
+                    }
+                     
                        newAchievement.transform.GetChild(2).gameObject.SetActive(false);
                 }
                 else {
@@ -47,5 +74,15 @@ public class AchievementList : MonoBehaviour
                 newAchievement.transform.SetParent(parent.transform, false);
             }
         }
+    }
+
+
+    void ReceiveReward(int index){
+
+        Debug.Log(index);
+        var panel = Instantiate(rewardPanel);
+        panel.transform.SetParent(canvas.transform, false);
+
+        panel.SetActive(true);
     }
 }
