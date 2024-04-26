@@ -18,9 +18,6 @@ public class SceneHistory : MonoBehaviour
     void Awake()
     {
 
-     
-        sceneHistory.Add("Main");
-    
         if (instance != null){
             foreach( var x in sceneHistory) {
             Debug.Log( x.ToString());
@@ -30,6 +27,7 @@ public class SceneHistory : MonoBehaviour
         }
 
           instance = this;
+          sceneHistory.Add("Main");
          DontDestroyOnLoad(gameObject);
     }
     
