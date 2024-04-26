@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,6 +10,12 @@ public class RewardReceivingManager : MonoBehaviour, IPointerClickHandler {
 
 
     GraphicRaycaster m_Raycaster;
+    [SerializeField] private TextMeshProUGUI text;
+    
+
+    public void GetData(int price){
+        text.text =  string.Format("x{0}",price.ToString());
+    }
     public void OnPointerClick(PointerEventData eventData)
     {
      
@@ -30,6 +38,7 @@ public class RewardReceivingManager : MonoBehaviour, IPointerClickHandler {
 
 
     }
+
 }
 
  

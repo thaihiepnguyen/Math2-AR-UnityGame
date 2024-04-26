@@ -19,7 +19,6 @@ public class AchievementList : MonoBehaviour
     
     [SerializeField]
     private GameObject canvas;
-    
     async void Start()
     {
         AchievementBUS _achievementBUS = new();
@@ -57,9 +56,10 @@ public class AchievementList : MonoBehaviour
                        Button receiveButton = button.GetComponent<Button>();
                     if (receiveButton != null)
                     {
+                  
                         receiveButton.onClick.AddListener(() => {
 
-                            ReceiveReward(index);
+                            ReceiveReward(response.data[index].price);
                         });
 
                     }
@@ -77,12 +77,16 @@ public class AchievementList : MonoBehaviour
     }
 
 
-    void ReceiveReward(int index){
+    void ReceiveReward(int price){
 
-        Debug.Log(index);
+      
         var panel = Instantiate(rewardPanel);
         panel.transform.SetParent(canvas.transform, false);
 
         panel.SetActive(true);
+
+        panel.GetComponent<RewardReceivingManager>().GetData(price);
+
+
     }
 }
