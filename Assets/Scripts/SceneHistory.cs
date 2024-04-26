@@ -17,23 +17,10 @@ public class SceneHistory : MonoBehaviour
 
     void Awake()
     {
+
+     
         sceneHistory.Add("Main");
-        Debug.Log("Hello");
-        //  Scene scene = SceneManager.GetActiveScene();
-
-       
-        // if (scene.name == "Main")
-        // {
-        // GameObject.FindGameObjectWithTag("ReturnButton").SetActive(false);
-        //  GameObject.FindGameObjectWithTag("HomeButton").SetActive(false);
-       
-        // }
-        // else {
-        // GameObject.FindGameObjectWithTag("ReturnButton").SetActive(true);
-        //  GameObject.FindGameObjectWithTag("HomeButton").SetActive(true);
-        // }
-      
-
+    
         if (instance != null){
             foreach( var x in sceneHistory) {
             Debug.Log( x.ToString());
@@ -58,7 +45,7 @@ public class SceneHistory : MonoBehaviour
     public void OnClickHomeButton(){
         sceneHistory.Clear();
         
-        SceneManager.LoadScene("Main");
+        LoadScene("Main");
     }
    
     public void PreviousScene()
