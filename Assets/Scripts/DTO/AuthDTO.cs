@@ -15,6 +15,7 @@ public class LoginExternalDTO
     public string email { get; set; }
     public string uid { get; set; }
     public string token { get; set; }
+    public string platform { get; set; }
 
 }
 
