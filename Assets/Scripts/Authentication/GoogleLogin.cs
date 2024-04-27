@@ -99,11 +99,14 @@ public class GoogleLogin : MonoBehaviour
                     return;
                 }
                 var temp = task.Result.ProviderData.AsReadOnlyCollection().ToArray();
-                user = temp[0];
+                foreach(var i in temp){
+                    if(!string.IsNullOrWhiteSpace(i.Email)){
+                        user = i;
+                    }
+                }
             });
             if(user != null){
                 var loginBus = new AuthBUS();
-                Debug.Log("uid: " + user.UserId);
                 var response = await loginBus.LoginExternalParty(new LoginExternalDTO
                 {
                     email = user.Email,
