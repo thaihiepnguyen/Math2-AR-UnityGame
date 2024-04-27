@@ -12,6 +12,8 @@ public class GlobalVariable
     public const string MULTIPLE_CHOICE_TYPE = "MultipleChoice";
     public const string InputType = "Input";
     public const string MultipleChoiceType = "ABCD";
+
+    public const string INPUT_TYPE = "Input";
     //PlayerPref variable string
     public const string userID = "uid";
 }

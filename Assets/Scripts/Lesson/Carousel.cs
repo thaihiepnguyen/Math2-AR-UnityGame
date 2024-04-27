@@ -10,20 +10,25 @@ public class Carousel : MonoBehaviour
     float[]pos;
     float distance;
 
+    LessonList manager;
     public bool checkMove = false;
     // Start is called before the first frame update
-    void Start()
-    {
+
+    void Start(){
+        manager = GameObject.Find("LessonListManager").GetComponent<LessonList>();
+    }
+    void Created(){
         pos = new float [transform.childCount];
        distance = 1f/ (pos.Length - 1);
        for (int i = 0 ; i < pos.Length; i++){
             pos[i] = distance * i;
        }
     }
-
     // Update is called once per frame
     void Update()
     {
+         if (!manager.isDone) return;
+         else Created();
          if (checkMove) return;
 
          if(Input.touchCount > 0)

@@ -6,7 +6,7 @@ public class LessonBUS
 {
     private readonly LessonDAO _lessonDao = new(); 
     
-    public async Task<List<LessonDTO>> GetChapterBySemester (int semester)
+    public async Task<BaseDTO<List<ChapterResponseDTO>>> GetChapterBySemester (int semester)
     {
         return await _lessonDao.GetChapterBySemester(semester);
     }

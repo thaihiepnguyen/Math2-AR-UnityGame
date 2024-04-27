@@ -8,24 +8,10 @@ using UnityEngine;
 
 public class LessonDAO
 {
-    public async Task<List<LessonDTO>> GetChapterBySemester(int semester)
+    public async Task<BaseDTO<List<ChapterResponseDTO>>> GetChapterBySemester(int semester)
     {
-       
+       return await API.Get<List<ChapterResponseDTO>>($"{GlobalVariable.server_url}/lessons/get-chapter-by-semester/{semester}");
 
-         try
-        {
-            var a =  await API.getMethod($"{GlobalVariable.server_url}/lessons/get-chapter-by-semester/{semester}");
-            var lessonResponse = JsonConvert.DeserializeObject<BaseDTO<List<LessonDTO>>>(a);
-
-            if (lessonResponse.data != null)
-            {
-                return lessonResponse.data;
-            }
-            return null;
-        }
-        catch(Exception ex) {
-            throw new Exception("Error: ", ex);
-        }    
     }
 
     public async Task<BaseDTO<List<LessonDTO>>> GetLessonByChapterId(ChapterDTO chapterDto)
