@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ExerciseMananger : MonoBehaviour
+public partial class ExerciseMananger : MonoBehaviour
 {
     // Start is called before the first frame update
     private List<ExerciseDTO> exercises;
@@ -44,12 +44,6 @@ public class ExerciseMananger : MonoBehaviour
     public Sprite correctSprite;
     public Sprite incorrectSprite;
 
-    [SerializeField]
-    Canvas MultipleChoiceExercise;
-    [SerializeField]
-    GameObject m_answerList;
-    [SerializeField]
-    TMP_Text m_question;
 
     [SerializeField] private Canvas InputExercise;
 
@@ -61,18 +55,7 @@ public class ExerciseMananger : MonoBehaviour
     [SerializeField] private GameObject correct_answer;
     [SerializeField] private GameObject incorrect_answer;
 
-    [SerializeField]
-    Canvas ReviewResult;
-    [SerializeField]
-    Canvas ReviewList;
-    [SerializeField]
-    Button NextBtn;
-    [SerializeField]
-    Button PrevBtn;
-    [SerializeField]
-    TMP_Text result;
-    private int currentResult = 0;
-    private List<GameObject> reviewList = new List<GameObject>();
+    
 
 
     private bool blockIO = false;
@@ -87,6 +70,7 @@ public class ExerciseMananger : MonoBehaviour
         NextBtn.onClick.AddListener(OnClickNextButton);
         PrevBtn.onClick.AddListener(OnClickPrevButton);
     }
+    
     private async void Start()
     {
         var exerciseBUS=new ExerciseBUS();
@@ -132,6 +116,7 @@ public class ExerciseMananger : MonoBehaviour
             }
         }
     }
+    
     IEnumerator  NextQuestion()
     {
         blockIO = true;
@@ -155,6 +140,7 @@ public class ExerciseMananger : MonoBehaviour
             UpdateUI();
         }    
     }
+    
     void ChangeDragDropObject(ExerciseDTO exercise)
     {
         d_result.SetActive(false);
@@ -187,6 +173,7 @@ public class ExerciseMananger : MonoBehaviour
         }
        
     }
+    
     void UpdateUI()
     {
         progress.text = string.Format("{0:00}/{1:00}", currentQuestion + 1, totalQuestion);
@@ -219,7 +206,6 @@ public class ExerciseMananger : MonoBehaviour
        
     }
 
-
     public void ChangeInputObject(ExerciseDTO exercise){
         var question = exercise.question;
         var right_answers = exercise.right_answer.Split(",");
@@ -248,7 +234,6 @@ public class ExerciseMananger : MonoBehaviour
         }
     }
 
-
     public void CheckInputAnswer(){
         var right_answers = exercises[currentQuestion].right_answer.Split(",");
         TMP_InputField[] inputList = i_holder.GetComponentsInChildren<TMP_InputField>();
@@ -271,10 +256,12 @@ public class ExerciseMananger : MonoBehaviour
         
             StartCoroutine(NextQuestion());
     }
+    
     public void hideNotification()
     {
         Notification.gameObject.SetActive(false);
     }
+    
     public void CheckDragDropAnswer()
     {
         bool isRight = true;
@@ -314,74 +301,6 @@ public class ExerciseMananger : MonoBehaviour
         
     }
 
-
-    void ChangeMultipleChoiceObject(ExerciseDTO exercise)
-    {
-        var questions = exercise.question;
-        var answers = exercise.answer.Split(",");
-
-        m_question.text = questions;
-
-        Button[] buttons = m_answerList.GetComponentsInChildren<Button>();
-
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            TextMeshProUGUI tmp = buttons[i].GetComponentInChildren<TextMeshProUGUI>();
-            if (tmp != null)
-            {
-                tmp.text = answers[i];
-            }
-            else
-            {
-                Debug.LogError("TextMeshPro component not found in children of button.");
-            }
-        }
-
-    }
-
-    private void checkAnswerOfAChoice(Image btn, string rightAnswer)
-    {
-        TextMeshProUGUI answer = btn.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        if (answer != null)
-        {
-            if (answer.text == rightAnswer)
-            {
-                btn.color = HexToColor("#00FF1E");
-                currentRightAnswer += 1;
-            }
-            else
-            {
-                btn.color = HexToColor("#FF0000");
-            }
-        }
-    }
-    private void ResetMultipleChoiceAnswerListColor()
-    {
-        Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>();
-
-        for (int i = 0; i < answerObjects.Length; i++)
-        {
-            answerObjects[i].color = HexToColor("#FFFFFF");
-        }
-    }
-    public void CheckMultipleChoiceAnswer()
-    {
-        if (!blockIO)
-        {
-            var rightAnswer = exercises[currentQuestion].right_answer;
-
-            Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>();
-
-            for (int i = 0; i < answerObjects.Length; i++)
-            {
-                checkAnswerOfAChoice(answerObjects[i], rightAnswer);
-            }
-            AddExerciseToReviewList();
-            StartCoroutine(NextQuestion());
-        }
-        
-    }
-
     public void CheckAnswers()
     {
         if (!blockIO)
@@ -407,61 +326,5 @@ public class ExerciseMananger : MonoBehaviour
             }
         }
             
-    }
-
-    private void AddExerciseToReviewList()
-    {
-        GameObject[] objs = GameObject.FindGameObjectsWithTag("Exercise");
-        for (int i = 0; i < objs.Length; i++)
-        {
-            if (objs[i].activeSelf)
-            {
-                GameObject reviewObj = Instantiate(objs[i]);
-                reviewObj.SetActive(false);
-                reviewObj.transform.SetParent(ReviewList.transform);
-                reviewList.Add(reviewObj);
-            }
-        }
-    }
-    private Color HexToColor(string hex)
-    {
-        Color color = Color.white;
-        if (UnityEngine.ColorUtility.TryParseHtmlString(hex, out color))
-        {
-            return color;
-        }
-        else
-        {
-            Debug.LogError("Invalid hexadecimal color: " + hex);
-            return Color.white;
-        }
-    }
-
-    public void OnClickReview()
-    {
-        ReviewResult.gameObject.SetActive(false);
-        ReviewList.gameObject.SetActive(true);
-        NextBtn.gameObject.SetActive(true);
-        PrevBtn.gameObject.SetActive(true);
-        reviewList[0].gameObject.SetActive(true);
-    }
-
-    public void OnClickNextButton() 
-    {
-        if (currentResult < reviewList.Count - 1)
-        {
-            reviewList[currentResult].gameObject.SetActive(false);
-            currentResult++;
-            reviewList[currentResult].gameObject.SetActive(true);
-        }
-    }
-    public void OnClickPrevButton()
-    {
-        if (currentResult > 0)
-        {
-            reviewList[currentResult].gameObject.SetActive(false);
-            currentResult--;
-            reviewList[currentResult].gameObject.SetActive(true);
-        }
     }
 }
