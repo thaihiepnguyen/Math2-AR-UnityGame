@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -74,6 +75,8 @@ public class ExerciseMananger : MonoBehaviour
     private List<GameObject> reviewList = new List<GameObject>();
 
 
+    private bool blockIO = false;
+
     private void Awake()
     {
         textCheckBtn= CheckButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -117,18 +120,23 @@ public class ExerciseMananger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentQuestion + 1  >= totalQuestion)
+        if (!blockIO)
         {
-            textCheckBtn.text = "Nộp bài";
-        }
-        if (ReviewList.gameObject.activeSelf || ReviewResult.gameObject.activeSelf)
-        {
-            textCheckBtn.text = "Thoát";
+            if (currentQuestion + 1 >= totalQuestion)
+            {
+                textCheckBtn.text = "Nộp bài";
+            }
+            if (ReviewList.gameObject.activeSelf || ReviewResult.gameObject.activeSelf)
+            {
+                textCheckBtn.text = "Thoát";
+            }
         }
     }
     IEnumerator  NextQuestion()
     {
+        blockIO = true;
         yield return new WaitForSeconds(1f);
+        blockIO = false;
         currentQuestion = currentQuestion + 1;
         if (currentQuestion >= totalQuestion)
         {
@@ -193,13 +201,13 @@ public class ExerciseMananger : MonoBehaviour
         }
         else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
         {
+            ResetMultipleChoiceAnswerListColor();
             DragDropExercise.gameObject.SetActive(false);
             InputExercise.gameObject.SetActive(false);
             MultipleChoiceExercise.gameObject.SetActive(true);
             ChangeMultipleChoiceObject(exercises[currentQuestion]);
         }
         else if (exercises[currentQuestion].type == GlobalVariable.INPUT_TYPE && exercises != null){
-            
             InputExercise.gameObject.SetActive(true);
             MultipleChoiceExercise.gameObject.SetActive(false);
             DragDropExercise.gameObject.SetActive(false);
@@ -331,54 +339,80 @@ public class ExerciseMananger : MonoBehaviour
 
     }
 
-    public void CheckMultipleChoiceAnswer()
+    private void checkAnswerOfAChoice(Image btn, string rightAnswer)
     {
-        var rightAnswer = exercises[currentQuestion].right_answer;
-
+        TextMeshProUGUI answer = btn.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        if (answer != null)
+        {
+            if (answer.text == rightAnswer)
+            {
+                btn.color = HexToColor("#00FF1E");
+                currentRightAnswer += 1;
+            }
+            else
+            {
+                btn.color = HexToColor("#FF0000");
+            }
+        }
+    }
+    private void ResetMultipleChoiceAnswerListColor()
+    {
         Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>();
 
         for (int i = 0; i < answerObjects.Length; i++)
         {
-            TextMeshProUGUI tmp = answerObjects[i].GetComponentInChildren<TextMeshProUGUI>();
-            if (tmp != null)
-            {
-                if (tmp.text == rightAnswer)
-                {
-                    answerObjects[i].color = HexToColor("#00FF1E");
-                }
-                else
-                {
-                    answerObjects[i].color = HexToColor("#FF0000");
-                }
-            }
-            else
-            {
-                Debug.LogError("TextMeshPro component not found in children of button.");
-            }
+            answerObjects[i].color = HexToColor("#FFFFFF");
         }
+    }
+    public void CheckMultipleChoiceAnswer()
+    {
+        if (!blockIO)
+        {
+            var rightAnswer = exercises[currentQuestion].right_answer;
+
+            Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>();
+
+            for (int i = 0; i < answerObjects.Length; i++)
+            {
+                checkAnswerOfAChoice(answerObjects[i], rightAnswer);
+            }
+            AddExerciseToReviewList();
+            StartCoroutine(NextQuestion());
+        }
+        
     }
 
     public void CheckAnswers()
     {
-        if (currentQuestion >= totalQuestion)
+        if (!blockIO)
         {
-            SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
-        }
-        if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
-        {
-            CheckDragDropAnswer();
-        }
-        else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
-        {
-            CheckMultipleChoiceAnswer();
-        }
-        else if (exercises[currentQuestion].type == GlobalVariable.INPUT_TYPE && exercises != null)
-        {
+            if (currentQuestion >= totalQuestion)
+            {
+                SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
+            }
+            if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
+            {
+                CheckDragDropAnswer();
+                AddExerciseToReviewList();
+            }
+            else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
+            {
+                CheckMultipleChoiceAnswer();
+            }
+            else if (exercises[currentQuestion].type == GlobalVariable.INPUT_TYPE && exercises != null)
+            {
 
-            CheckInputAnswer();
+                CheckInputAnswer();
+                AddExerciseToReviewList();
+            }
         }
+            
+    }
+
+    private void AddExerciseToReviewList()
+    {
         GameObject[] objs = GameObject.FindGameObjectsWithTag("Exercise");
-        for (int i = 0;  i < objs.Length; i++)
+        for (int i = 0; i < objs.Length; i++)
         {
             if (objs[i].activeSelf)
             {
