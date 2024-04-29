@@ -8,4 +8,8 @@ public class Main : MonoBehaviour
     public void OnClickAchievementButton(){
         SceneHistory.GetInstance().LoadScene("Achievement");
     }
+
+    public void OnClickStore(){
+        SceneHistory.GetInstance().LoadScene("Store");
+    }
 }

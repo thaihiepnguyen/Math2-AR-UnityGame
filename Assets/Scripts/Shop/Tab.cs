@@ -10,7 +10,7 @@ public class Tab : MonoBehaviour
     [SerializeField] private  GameObject tabHeaderList;
     [SerializeField] private  GameObject tabContentList;
 
-    [SerializeField] private  GameObject boughtPanel;
+
     void Start()
     {
 
@@ -50,11 +50,7 @@ public class Tab : MonoBehaviour
         
     }
 
-    public void OnClickBought(){
 
-        if (boughtPanel.activeSelf) return;
-        boughtPanel.SetActive(true);
-    }
 
     void TabOnClick(int index){
             for (int i = 0; i < tabHeaderList.transform.childCount; i++)
