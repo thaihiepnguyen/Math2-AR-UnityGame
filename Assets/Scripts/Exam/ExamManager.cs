@@ -16,14 +16,14 @@ public class ExamManager : MonoBehaviour
     public List<ExerciseDTO> exercises;
     public int currentQuestion = 0;
     public int totalQuestion = 20;
-    private int currentRightAnswer = 0;
+    public int currentRightAnswer = 0;
     public TextMeshProUGUI progress;
     public Button CheckButton;
     TextMeshProUGUI textCheckBtn;
-    Timer timer;
+    [HideInInspector]public Timer timer;
     public List<QuestionResultDTO> questionResultList;
     TestResultDTO testResult;
-
+    [SerializeField] Canvas reviewUI; 
     //Drag drop exercise  object
     //Question List
     [SerializeField]
@@ -67,7 +67,8 @@ public class ExamManager : MonoBehaviour
 
     private void Awake()
     {
-        textCheckBtn= CheckButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        questionResultList = new List<QuestionResultDTO>();
+        textCheckBtn = CheckButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
         timer= GetComponent<Timer>();
         buttonList=m_answerList.GetComponentsInChildren<Button>();
         for (int i = 0; i < buttonList.Length; i++)
@@ -107,7 +108,7 @@ public class ExamManager : MonoBehaviour
             exercises = response.data;
 
             totalQuestion = exercises.Count;
-            questionResultList = new List<QuestionResultDTO>();
+            
             UpdateUI();
 
         }
@@ -125,25 +126,73 @@ public class ExamManager : MonoBehaviour
         {
             textCheckBtn.text = "Nộp bài";
         }
+        if(timer.timeValue == 0f)
+        {
+            if (currentQuestion + 1 <= totalQuestion)
+            {
+               
+                if (questionResultList.Count <= totalQuestion)
+                {
+                    for(int i=currentQuestion; i<totalQuestion; i++)
+                    {
+                        var temp = new QuestionResultDTO()
+                        {
+                            exercise_id = exercises[i].exercise_id,
+                            test_result_id = testResult.test_result_id,
+                            user_answer = "",
+                        };
+                        questionResultList.Add(temp);
+                    }
+                    currentQuestion= totalQuestion;
+                    NextQuestion();
+                    ShowReviewUI();
+                }
+                
+                return;
+            }
+            
+            
+        }
     }
-    IEnumerator  NextQuestion()
+    void ShowReviewUI()
     {
-        yield return new WaitForSeconds(1f);
-       
+        var border = GameObject.Find("Border");
+        if (border != null)
+        {
+            border.SetActive(false);
+        }
+        reviewUI.gameObject.SetActive(true);
+        DragDropExercise.gameObject.SetActive(false);
+        InputExercise.gameObject.SetActive(false);
+        MultipleChoiceExercise.gameObject.SetActive(false);
+        CheckButton.gameObject.SetActive(false);
+        CheckButton.gameObject.SetActive(false);
+
+    }
+    async void  NextQuestion()
+    {
         currentQuestion = currentQuestion + 1;
         if (currentQuestion >= totalQuestion)
         {
-
+            for (int i = 0;i< questionResultList.Count; i++)
+            {
+                var response = await questionResultBus.AddQuestionResult(questionResultList[i]);
+                if (questionResultList[i].user_answer == exercises[i].right_answer)
+                {
+                    currentRightAnswer += 1;
+                }
+            }
             Debug.Log($"Your result is: {currentRightAnswer}/{totalQuestion}");
             timer.isStop= true;
+            ShowReviewUI();
         }
         else
         {
-           
+            
             UpdateUI();
         }
         
-        
+
     }
     
     void UpdateUI()
@@ -223,7 +272,7 @@ public class ExamManager : MonoBehaviour
         };
 
         questionResultList.Add(temp);
-        StartCoroutine(NextQuestion());
+        NextQuestion();
     }
     public void hideNotification()
     {
@@ -286,7 +335,7 @@ public class ExamManager : MonoBehaviour
         }
        
         
-        StartCoroutine(NextQuestion());   
+        NextQuestion();   
     }
 
     private void OnSelectedAnswer(int buttonIndex)
@@ -360,14 +409,11 @@ public class ExamManager : MonoBehaviour
                 };
                 questionResultList.Add(temp);
             }
-            else
-            {
-                Debug.LogError("TextMeshPro component not found in children of button.");
-            }
+           
         }
 
 
-        StartCoroutine(NextQuestion());
+        NextQuestion();
     }
 
     public void CheckAnswers()
@@ -384,7 +430,6 @@ public class ExamManager : MonoBehaviour
         {
 
             CheckInputAnswer();
-            StartCoroutine(NextQuestion());
         }
     }
     private Color HexToColor(string hex)
