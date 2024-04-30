@@ -78,8 +78,10 @@ public class StoreManager : MonoBehaviour
                 {
                     if (skins[i].is_purchased)
                     {
-                        var price = button.GetComponentInChildren<TextMeshProUGUI>();
-                        price.text = "Đã mua";
+                         button.gameObject.SetActive(false);
+                         newProduct.transform.GetChild(5).gameObject.SetActive(true);
+                         newProduct.GetComponent<Image>().color = new Color32(176,176,176,255);
+                          imageProduct.GetComponent<Image>().color = new Color32(255,255,255,146);
                     }
                     else
                     {
@@ -122,8 +124,10 @@ public class StoreManager : MonoBehaviour
                 {
                     if (frames[i].is_purchased)
                     {
-                        var price = button.GetComponentInChildren<TextMeshProUGUI>();
-                        price.text = "Đã mua";
+                         button.gameObject.SetActive(false);
+                        newProduct.transform.GetChild(5).gameObject.SetActive(true);
+                         newProduct.GetComponent<Image>().color = new Color32(176,176,176,255);
+                         imageProduct.GetComponent<Image>().color = new Color32(255,255,255,146);
                     }
                     else
                     {
@@ -166,8 +170,10 @@ public class StoreManager : MonoBehaviour
             {
                 if (tests[i].is_purchased)
                 {
-                    var price = button.GetComponentInChildren<TextMeshProUGUI>();
-                    price.text = "Đã mua";
+                   button.gameObject.SetActive(false);
+                   newProduct.transform.GetChild(5).gameObject.SetActive(true);
+                    newProduct.GetComponent<Image>().color = new Color32(176,176,176,255);
+                     imageProduct.GetComponent<Image>().color = new Color32(255,255,255,146);
                 }
                 else
                 {
