@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using EasyUI.Toast;
 public class StoreManager : MonoBehaviour
 {
     private StoreDTO store;
@@ -237,6 +237,8 @@ public class StoreManager : MonoBehaviour
         var button = panel.transform.GetChild(0).transform.GetChild(3).transform.GetComponentInChildren<Button>();
 
         button.onClick.AddListener(async () => {
+            if  (CollectibleManager.GetCoin() >= price) {
+
             await storeBUS.Purchase(new PurchaseDTO {
               type = type,
               id = id
@@ -244,6 +246,10 @@ public class StoreManager : MonoBehaviour
 
             string currentSceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(currentSceneName);
+            }
+            else {
+                Toast.Show("Bạn không đủ tiền để mua sản phẩm này.", .3f,ToastPosition.MiddleCenter);
+            }
         });
 
         panel.transform.SetParent(canvas.transform, false);

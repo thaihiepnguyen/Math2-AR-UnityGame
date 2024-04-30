@@ -7,6 +7,10 @@ public class CollectibleManager : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text coinText;
+    static protected int coin;
+   public static int GetCoin(){
+    return coin;
+   }
     // Start is called before the first frame update
     async void Start() {
         UserBUS userBus = new();
@@ -17,6 +21,7 @@ public class CollectibleManager : MonoBehaviour
             var me = response.data;
             Debug.Log(response.data.coin);
             coinText.text = me.coin.ToString();
+            coin = me.coin;
         }
     }
 }
