@@ -10,5 +10,8 @@ public class StoreDAO
 
     }
 
-
+    public async Task<BaseDTO<object>> Purchase(PurchaseDTO purchaseDTO) 
+    {
+        return await API.Post<PurchaseDTO, object>($"{GlobalVariable.server_url}/shop/purchase", purchaseDTO);
+    }
 }

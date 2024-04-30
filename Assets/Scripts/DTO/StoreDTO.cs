@@ -31,6 +31,8 @@ public class SkinDTO
 
      public string skin_name {get;set;}
 
+     public bool is_purchased { get; set;}
+
 }
 
 [Serializable]
@@ -44,6 +46,7 @@ public class TestDTO
      public int price {get;set;}
 
      public string test_name {get;set;}
+     public bool is_purchased { get; set;}
 
 }
 
@@ -59,5 +62,6 @@ public class FrameDTO
      public int price {get;set;}
 
      public string frame_name {get;set;}
+     public bool is_purchased { get; set;}
 
 }

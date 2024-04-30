@@ -11,4 +11,8 @@ public class StoreBUS
         return await _storeDao.GetAll();
     }
 
+    public async Task<BaseDTO<object>> Purchase(PurchaseDTO purchaseDTO) 
+    {
+        return await _storeDao.Purchase(purchaseDTO);
+    }
 }
