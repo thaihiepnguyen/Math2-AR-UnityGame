@@ -8,6 +8,7 @@ TagManager:
   - ReturnButton
   - HomeButton
   - Outsider
+  - Exercise
   layers:
   - Default
   - TransparentFX

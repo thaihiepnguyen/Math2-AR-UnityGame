@@ -1,13 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ExerciseMananger : MonoBehaviour
+public partial class ExerciseMananger : MonoBehaviour
 {
     // Start is called before the first frame update
     private List<ExerciseDTO> exercises;
@@ -18,6 +20,7 @@ public class ExerciseMananger : MonoBehaviour
     public Button CheckButton;
     TextMeshProUGUI textCheckBtn;
     Timer timer;
+
 
     //Drag drop exercise  object
     //Question List
@@ -41,12 +44,6 @@ public class ExerciseMananger : MonoBehaviour
     public Sprite correctSprite;
     public Sprite incorrectSprite;
 
-    [SerializeField]
-    Canvas MultipleChoiceExercise;
-    [SerializeField]
-    GameObject m_answerList;
-    [SerializeField]
-    TMP_Text m_question;
 
     [SerializeField] private Canvas InputExercise;
 
@@ -55,15 +52,25 @@ public class ExerciseMananger : MonoBehaviour
     [SerializeField] private TMP_InputField i_answer;
 
     [SerializeField] private GameObject i_holder;
-     [SerializeField] private GameObject correct_answer;
-      [SerializeField] private GameObject incorrect_answer;
+    [SerializeField] private GameObject correct_answer;
+    [SerializeField] private GameObject incorrect_answer;
 
+    
+
+
+    private bool blockIO = false;
 
     private void Awake()
     {
         textCheckBtn= CheckButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
         timer= GetComponent<Timer>();
+        NextBtn.gameObject.SetActive(false);
+        PrevBtn.gameObject.SetActive(false);
+        ReviewResult.gameObject.SetActive(false);
+        NextBtn.onClick.AddListener(OnClickNextButton);
+        PrevBtn.onClick.AddListener(OnClickPrevButton);
     }
+    
     private async void Start()
     {
         var exerciseBUS=new ExerciseBUS();
@@ -97,30 +104,43 @@ public class ExerciseMananger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentQuestion + 1  >= totalQuestion)
+        if (!blockIO)
         {
-            textCheckBtn.text = "Nộp bài";
+            if (currentQuestion + 1 >= totalQuestion)
+            {
+                textCheckBtn.text = "Nộp bài";
+            }
+            if (ReviewList.gameObject.activeSelf || ReviewResult.gameObject.activeSelf)
+            {
+                textCheckBtn.text = "Thoát";
+            }
         }
     }
+    
     IEnumerator  NextQuestion()
     {
+        blockIO = true;
         yield return new WaitForSeconds(1f);
-       
+        blockIO = false;
         currentQuestion = currentQuestion + 1;
         if (currentQuestion >= totalQuestion)
         {
-
-            Debug.Log($"Your result is: {currentRightAnswer}/{totalQuestion}");
+            
+            MultipleChoiceExercise.gameObject.SetActive(false);
+            InputExercise.gameObject.SetActive(false);
+            DragDropExercise.gameObject.SetActive(false);
+            ReviewResult.gameObject.SetActive(true);
+            result.text = $"{currentRightAnswer}/{totalQuestion}";
             timer.isStop= true;
+            yield return null;
         }
-        else
+        
+        if (currentQuestion < totalQuestion)
         {
-           
             UpdateUI();
-        }
-        
-        
+        }    
     }
+    
     void ChangeDragDropObject(ExerciseDTO exercise)
     {
         d_result.SetActive(false);
@@ -153,6 +173,7 @@ public class ExerciseMananger : MonoBehaviour
         }
        
     }
+    
     void UpdateUI()
     {
         progress.text = string.Format("{0:00}/{1:00}", currentQuestion + 1, totalQuestion);
@@ -167,13 +188,13 @@ public class ExerciseMananger : MonoBehaviour
         }
         else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
         {
+            ResetMultipleChoiceAnswerListColor();
             DragDropExercise.gameObject.SetActive(false);
             InputExercise.gameObject.SetActive(false);
             MultipleChoiceExercise.gameObject.SetActive(true);
             ChangeMultipleChoiceObject(exercises[currentQuestion]);
         }
         else if (exercises[currentQuestion].type == GlobalVariable.INPUT_TYPE && exercises != null){
-            
             InputExercise.gameObject.SetActive(true);
             MultipleChoiceExercise.gameObject.SetActive(false);
             DragDropExercise.gameObject.SetActive(false);
@@ -184,7 +205,6 @@ public class ExerciseMananger : MonoBehaviour
         }
        
     }
-
 
     public void ChangeInputObject(ExerciseDTO exercise){
         var question = exercise.question;
@@ -214,7 +234,6 @@ public class ExerciseMananger : MonoBehaviour
         }
     }
 
-
     public void CheckInputAnswer(){
         var right_answers = exercises[currentQuestion].right_answer.Split(",");
         TMP_InputField[] inputList = i_holder.GetComponentsInChildren<TMP_InputField>();
@@ -237,10 +256,12 @@ public class ExerciseMananger : MonoBehaviour
         
             StartCoroutine(NextQuestion());
     }
+    
     public void hideNotification()
     {
         Notification.gameObject.SetActive(false);
     }
+    
     public void CheckDragDropAnswer()
     {
         bool isRight = true;
@@ -280,85 +301,30 @@ public class ExerciseMananger : MonoBehaviour
         
     }
 
-
-    void ChangeMultipleChoiceObject(ExerciseDTO exercise)
-    {
-        var questions = exercise.question;
-        var answers = exercise.answer.Split(",");
-
-        m_question.text = questions;
-
-        Button[] buttons = m_answerList.GetComponentsInChildren<Button>();
-
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            TextMeshProUGUI tmp = buttons[i].GetComponentInChildren<TextMeshProUGUI>();
-            if (tmp != null)
-            {
-                tmp.text = answers[i];
-            }
-            else
-            {
-                Debug.LogError("TextMeshPro component not found in children of button.");
-            }
-        }
-
-    }
-
-    public void CheckMultipleChoiceAnswer()
-    {
-        var rightAnswer = exercises[currentQuestion].right_answer;
-
-        Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>();
-
-        for (int i = 0; i < answerObjects.Length; i++)
-        {
-            TextMeshProUGUI tmp = answerObjects[i].GetComponentInChildren<TextMeshProUGUI>();
-            if (tmp != null)
-            {
-                if (tmp.text == rightAnswer)
-                {
-                    answerObjects[i].color = HexToColor("#00FF1E");
-                }
-                else
-                {
-                    answerObjects[i].color = HexToColor("#FF0000");
-                }
-            }
-            else
-            {
-                Debug.LogError("TextMeshPro component not found in children of button.");
-            }
-        }
-    }
-
     public void CheckAnswers()
     {
-        if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
+        if (!blockIO)
         {
-            CheckDragDropAnswer();
-        }
-        else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
-        {
-            CheckMultipleChoiceAnswer();
-        }
-        else if (exercises[currentQuestion].type == GlobalVariable.INPUT_TYPE && exercises != null)
-        {
+            if (currentQuestion >= totalQuestion)
+            {
+                SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
+            }
+            if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
+            {
+                CheckDragDropAnswer();
+                AddExerciseToReviewList();
+            }
+            else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
+            {
+                CheckMultipleChoiceAnswer();
+            }
+            else if (exercises[currentQuestion].type == GlobalVariable.INPUT_TYPE && exercises != null)
+            {
 
-            CheckInputAnswer();
+                CheckInputAnswer();
+                AddExerciseToReviewList();
+            }
         }
-    }
-    private Color HexToColor(string hex)
-    {
-        Color color = Color.white;
-        if (UnityEngine.ColorUtility.TryParseHtmlString(hex, out color))
-        {
-            return color;
-        }
-        else
-        {
-            Debug.LogError("Invalid hexadecimal color: " + hex);
-            return Color.white;
-        }
+            
     }
 }
