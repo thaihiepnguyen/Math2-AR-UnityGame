@@ -71,19 +71,16 @@ public class API
             var response = JsonConvert.DeserializeObject<BaseDTO<U>>(content);
             var requestCookie = httpResponse.Headers
             .SingleOrDefault(header => header.Key == "Set-Cookie").Value;
-            if (Cookies.Count == 0)
+            ExtractCookie(requestCookie);
+            if (Cookies.ContainsKey("act"))
             {
-                ExtractCookie(requestCookie);
-                if (Cookies.ContainsKey("act"))
-                {
-                    // Only set token if there is any cookies returned
-                    var act = Cookies["act"];
-                
-                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                        "Beare",
-                        act
-                    );
-                }
+                // Only set token if there is any cookies returned
+                var act = Cookies["act"];
+            
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Beare",
+                    act
+                );
             }
 
             return response;
