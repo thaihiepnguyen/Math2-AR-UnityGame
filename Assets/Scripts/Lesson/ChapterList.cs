@@ -25,13 +25,14 @@ public class ChapterList : MonoBehaviour
       return chapterId;
     }
 
-    // void Awake(){
+    // async void Awake(){
     //   GetData();
     // }
     async void Start()
     {
         var lessonBus = new LessonBUS();
         var data = await lessonBus.GetChapterBySemester(Semester.GetSemester());
+        Debug.Log(data);
         chapters = data.data;
         // GetData();
         // title.text =String.Format("HỌC KÌ {0}", LessonManager.GetInstance().GetSemester());
@@ -72,20 +73,20 @@ public class ChapterList : MonoBehaviour
 
 
       chapterId = chapters[0].name;
-       SceneManager.LoadScene("ChapterScene");
+       SceneHistory.GetInstance().LoadScene("ChapterScene");
       //  LessonManager.GetInstance().Chapter(0);
      
     }
 
      public void SecondChapter(){
       chapterId = chapters[1].name;
-       SceneManager.LoadScene("ChapterScene");
+       SceneHistory.GetInstance().LoadScene("ChapterScene");
       // LessonManager.GetInstance().Chapter(1);
     }
 
      public void ThirdChapter(){
       chapterId = chapters[2].name;
-       SceneManager.LoadScene("ChapterScene");
+       SceneHistory.GetInstance().LoadScene("ChapterScene");
     //  LessonManager.GetInstance().Chapter(2);
     }
 

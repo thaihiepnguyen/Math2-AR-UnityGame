@@ -32,4 +32,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 697daae3b1b25444e955b7b912f48a97
+  - enabled: 1
+    path: Assets/Scenes/Store.unity
+    guid: 0745becc196c2d3409810c0b8dce6bca
+  - enabled: 1
+    path: Assets/Scenes/Achievement.unity
+    guid: ac57eb3f10e608e41bec2c3efa217499
   m_configObjects: {}

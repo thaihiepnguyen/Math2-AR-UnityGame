@@ -16,11 +16,8 @@ public class API
     private static HttpClient _httpClient = new HttpClient { BaseAddress = new Uri(GlobalVariable.server_url) };
     public static Dictionary<string, string> Cookies = new Dictionary<string, string>();
     
-    private static void ExtractCookie(HttpResponseMessage httpResponse)
+    private static void ExtractCookie(IEnumerable<string> requestCookie)
     {
-        var requestCookie = httpResponse.Headers
-            .SingleOrDefault(header => header.Key == "Set-Cookie").Value;
-
         if (requestCookie == null) return;
         
         var cookieList = requestCookie.ToList();
@@ -72,9 +69,11 @@ public class API
 
             var content = await httpResponse.Content.ReadAsStringAsync();
             var response = JsonConvert.DeserializeObject<BaseDTO<U>>(content);
+            var requestCookie = httpResponse.Headers
+            .SingleOrDefault(header => header.Key == "Set-Cookie").Value;
             if (Cookies.Count == 0)
             {
-                ExtractCookie(httpResponse);
+                ExtractCookie(requestCookie);
                 if (Cookies.ContainsKey("act"))
                 {
                     // Only set token if there is any cookies returned

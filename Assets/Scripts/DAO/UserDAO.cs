@@ -8,4 +8,8 @@ public class UserDAO
     {
         return await API.Get<UserDTO>($"{GlobalVariable.server_url}/users/get-by-id/{id}");
     }
+
+    public async Task<BaseDTO<UserDTO>> GetMe() {
+        return await API.Get<UserDTO>($"{GlobalVariable.server_url}/users/get-me");
+    }
 }
