@@ -12,6 +12,7 @@ public class ExamManager : MonoBehaviour
     ExerciseBUS exerciseBUS;
     QuestionResultBUS questionResultBus; 
     TestResultBUS testResultBus; 
+    TestBUS testBus;
     // Start is called before the first frame update
     public List<ExerciseDTO> exercises;
     public int currentQuestion = 0;
@@ -24,7 +25,9 @@ public class ExamManager : MonoBehaviour
     [HideInInspector]public Timer timer;
     public List<QuestionResultDTO> questionResultList;
     TestResultDTO testResult;
-    [SerializeField] Canvas reviewUI; 
+    [SerializeField] Canvas reviewUI;
+    [SerializeField] TextMeshProUGUI title;
+    
     //Drag drop exercise  object
     //Question List
     [SerializeField]
@@ -65,9 +68,10 @@ public class ExamManager : MonoBehaviour
      [SerializeField] private GameObject correct_answer;
       [SerializeField] private GameObject incorrect_answer;
 
-
+    private int test_id;
     private void Awake()
     {
+        test_id=ExamListManager.GetTestID();
         questionResultList = new List<QuestionResultDTO>();
         textCheckBtn = CheckButton.gameObject.GetComponentInChildren<TextMeshProUGUI>();
         timer= GetComponent<Timer>();
@@ -84,18 +88,21 @@ public class ExamManager : MonoBehaviour
         exerciseBUS = new ExerciseBUS();
         questionResultBus = new QuestionResultBUS();
         testResultBus = new TestResultBUS();
-
+        testBus = new TestBUS();
         testResult = new TestResultDTO()
         {
-            test_id = 1,
+            test_id = test_id,
             user_id = 38,
             //user_id = PlayerPrefs.GetInt(GlobalVariable.userID),
         };
         var testResultResponse= await testResultBus.GetById(1);
+        //  testResultResponse= await testResultBus.AddTestResult(testResult);
+        var testResponse = await testBus.GetById(test_id);
         if(testResultResponse.data != null)
         {
             testResult = testResultResponse.data;
             Debug.Log("testResultResponse " + testResultResponse.data.test_id.ToString());
+            title.text = $"Bài thi học kỳ {Semester.GetSemester()} - {testResponse.data.test_name}";
         }
         
         var response = await exerciseBUS.GetExerciseByTestId(1);
