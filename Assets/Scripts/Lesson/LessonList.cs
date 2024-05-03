@@ -118,7 +118,7 @@ public class LessonList : MonoBehaviour
         // LessonManager.GetInstance().Lesson(index);
 
          lessonName = lessons[index].name;
-        SceneManager.LoadScene("LessonScene");
+        SceneHistory.GetInstance().LoadScene("LessonScene");
     }
       
         

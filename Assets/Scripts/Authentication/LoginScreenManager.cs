@@ -55,18 +55,8 @@ public class LoginScreenManager : MonoBehaviour
         {
             Debug.Log("Login Successful");
             // Set uid 
-            
-            Debug.Log("Please take this uid in main screen to get profile of user" + response.data);
             PlayerPrefs.SetInt("uid", response.data);
-            
-            // To explain how to use the uid in the future
-            var userBus = new UserBUS();
-            var me = await userBus.GetUserById(PlayerPrefs.GetInt("uid"));
-
-            if (me.isSuccessful)
-            {
-                Debug.Log(me.data.email);
-            }
+           
             Progress.Hide();
             SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
         }

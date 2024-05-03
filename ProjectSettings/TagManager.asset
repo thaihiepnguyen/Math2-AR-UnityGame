@@ -4,6 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - IsCompleted
+  - ReturnButton
+  - HomeButton
+  - Outsider
   - Exercise
   layers:
   - Default

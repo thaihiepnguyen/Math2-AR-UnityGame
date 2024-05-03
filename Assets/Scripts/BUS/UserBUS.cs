@@ -9,4 +9,9 @@ public class UserBUS
     {
         return await _userDao.GetUserById(id);
     }
+
+    public async Task<BaseDTO<UserDTO>> GetMe()
+    {
+        return await _userDao.GetMe();
+    }
 }

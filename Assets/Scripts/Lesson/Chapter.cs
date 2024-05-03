@@ -27,7 +27,7 @@ public class Chapter : MonoBehaviour
 
      public void Learning(){
     //    LessonList.chapterId = title;
-        SceneManager.LoadScene("LessonList");
+       SceneHistory.GetInstance().LoadScene("LessonList");
       // LessonManager.GetInstance().OnClickChapterLearningButton();
     }
 
