@@ -18,6 +18,7 @@ public class ExamManager : MonoBehaviour
     public int totalQuestion = 20;
     public int currentRightAnswer = 0;
     public TextMeshProUGUI progress;
+    public TextMeshProUGUI time;
     public Button CheckButton;
     TextMeshProUGUI textCheckBtn;
     [HideInInspector]public Timer timer;
@@ -167,6 +168,9 @@ public class ExamManager : MonoBehaviour
         MultipleChoiceExercise.gameObject.SetActive(false);
         CheckButton.gameObject.SetActive(false);
         CheckButton.gameObject.SetActive(false);
+        time.gameObject.SetActive(false);
+        progress.gameObject.SetActive(false);
+        
 
     }
     async void  NextQuestion()
@@ -263,7 +267,23 @@ public class ExamManager : MonoBehaviour
         for (int i = 1; i < inputList.Length; i++){
             user_answer = user_answer + "," + inputList[i].text; 
         }
-
+        if(inputList.Length>1)
+        {
+            if (inputList[0].text == "" || inputList[1].text == "")
+            {
+                Notification.gameObject.SetActive(true);
+                return;
+            }
+            
+        }
+        else
+        {
+            if (inputList[0].text == "")
+            {
+                Notification.gameObject.SetActive(true);
+                return;
+            }
+        }
         var temp = new QuestionResultDTO()
         {
             exercise_id = exercises[currentQuestion].exercise_id,
@@ -393,7 +413,7 @@ public class ExamManager : MonoBehaviour
         var rightAnswer = exercises[currentQuestion].right_answer;
 
         Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>();
-
+        bool isAnswer = false;
         for (int i = 0; i < answerObjects.Length; i++)
         {
             TextMeshProUGUI tmp = answerObjects[i].GetComponentInChildren<TextMeshProUGUI>();
@@ -408,8 +428,14 @@ public class ExamManager : MonoBehaviour
                     user_answer = user_answer,
                 };
                 questionResultList.Add(temp);
+                isAnswer = true;
             }
            
+        }
+        if (!isAnswer)
+        {
+            Notification.gameObject.SetActive(true);
+            return;
         }
 
 
@@ -443,6 +469,23 @@ public class ExamManager : MonoBehaviour
         {
             Debug.LogError("Invalid hexadecimal color: " + hex);
             return Color.white;
+        }
+    }
+    private IEnumerator LoadImage(Image image, string url)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+
+        yield return request.SendWebRequest();
+
+        if (request.result ==UnityWebRequest.Result.ConnectionError || request.result==UnityWebRequest.Result.ProtocolError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            Texture2D myTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            Sprite newSprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height), new Vector2(0.5f, 0.5f));
+            image.sprite = newSprite;
         }
     }
 }
