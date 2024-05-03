@@ -102,9 +102,13 @@ public class ExamManager : MonoBehaviour
         {
             testResult = testResultResponse.data;
             Debug.Log("testResultResponse " + testResultResponse.data.test_id.ToString());
-            title.text = $"Bài thi học kỳ {Semester.GetSemester()} - {testResponse.data.test_name}";
+            
         }
-        
+        if(testResponse.data != null)
+        {
+            title.text = $"Bài thi học kỳ {Semester.GetSemester()} - {testResponse.data.test_name}";
+            Debug.Log("testResponse " + testResponse.data.test_id.ToString());
+        }
         var response = await exerciseBUS.GetExerciseByTestId(1);
         //var response = await exerciseBUS.GetExerciseByType(new ExerciseTypeDTO
         //{
