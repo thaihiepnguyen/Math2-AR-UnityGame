@@ -90,5 +90,8 @@ public class ChapterList : MonoBehaviour
     //  LessonManager.GetInstance().Chapter(2);
     }
 
-
+    public void onReview()
+    {
+        SceneManager.LoadScene("ExamListScene");
+    }
 }
