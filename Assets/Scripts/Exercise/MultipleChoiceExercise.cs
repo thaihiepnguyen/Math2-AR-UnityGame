@@ -1,5 +1,7 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public partial class ExerciseMananger : MonoBehaviour
@@ -10,12 +12,24 @@ public partial class ExerciseMananger : MonoBehaviour
     GameObject m_answerList;
     [SerializeField]
     TMP_Text m_question;
-
+    [SerializeField]
+    Image imageQuestion;
+    private bool isImageQuestion = false;
 
     void ChangeMultipleChoiceObject(ExerciseDTO exercise)
     {
         var questions = exercise.question;
         var answers = exercise.answer.Split(",");
+
+        if (exercise.image_url != null)
+        {
+            isImageQuestion = true;
+            StartCoroutine(LoadImage(imageQuestion, exercise.image_url));
+            Vector3 currentPosition = m_answerList.transform.position;
+            currentPosition.x += 500f;
+            m_answerList.transform.position = currentPosition;
+            imageQuestion.gameObject.SetActive(true);
+        }
 
         m_question.text = questions;
 
@@ -34,6 +48,14 @@ public partial class ExerciseMananger : MonoBehaviour
             }
         }
 
+        
+
+    }
+
+    public void markAnswer(Image btn)
+    {
+        ResetMultipleChoiceAnswerAttribute();
+        btn.color = HexToColor("#FFB45D");
     }
 
     private void checkAnswerOfAChoice(Image btn, string rightAnswer)
@@ -43,17 +65,20 @@ public partial class ExerciseMananger : MonoBehaviour
         {
             if (answer.text == rightAnswer)
             {
+                if (btn.color != HexToColor("#FFFFFF"))
+                {
+                    currentRightAnswer += 1;
+                }
                 btn.color = HexToColor("#00FF1E");
-                currentRightAnswer += 1;
             }
-            else
+            else if (btn.color != HexToColor("#FFFFFF"))
             {
                 btn.color = HexToColor("#FF0000");
             }
         }
     }
 
-    private void ResetMultipleChoiceAnswerListColor()
+    private void ResetMultipleChoiceAnswerAttribute()
     {
         Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>();
 
@@ -76,6 +101,14 @@ public partial class ExerciseMananger : MonoBehaviour
                 checkAnswerOfAChoice(answerObjects[i], rightAnswer);
             }
             AddExerciseToReviewList();
+            if (isImageQuestion == true)
+            {
+                isImageQuestion = false;
+                imageQuestion.gameObject.SetActive(false);
+                Vector3 currentPosition = m_answerList.transform.position;
+                currentPosition.x -= 500f;
+                m_answerList.transform.position = currentPosition;
+            }
             StartCoroutine(NextQuestion());
         }
 
@@ -92,6 +125,24 @@ public partial class ExerciseMananger : MonoBehaviour
         {
             Debug.LogError("Invalid hexadecimal color: " + hex);
             return Color.white;
+        }
+    }
+
+    private IEnumerator LoadImage(Image image, string url)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+
+        yield return request.SendWebRequest();
+
+        if (request.isNetworkError || request.isHttpError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            Texture2D myTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            Sprite newSprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height), new Vector2(0.5f, 0.5f));
+            image.sprite = newSprite;
         }
     }
 }

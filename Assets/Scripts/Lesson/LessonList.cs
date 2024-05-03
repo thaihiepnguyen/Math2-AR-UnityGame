@@ -20,6 +20,13 @@ public class LessonList : MonoBehaviour
         return lessonName;
     }
 
+    static protected string lessonId = "1";
+
+    public static string GetLessonId()
+    {
+        return lessonId;
+    }
+
     public bool isDone = false;
 
     async void Start()
@@ -110,14 +117,15 @@ public class LessonList : MonoBehaviour
         {
             lessons = response.data;
             Debug.Log(lessons[0].name);
-        }
+          }
     }
 
     public void LessonLearning(int index){
        
         // LessonManager.GetInstance().Lesson(index);
 
-         lessonName = lessons[index].name;
+        lessonName = lessons[index].name;
+        lessonId = lessons[index].lesson_id.ToString();
         SceneHistory.GetInstance().LoadScene("LessonScene");
     }
       

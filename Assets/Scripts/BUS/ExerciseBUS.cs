@@ -33,4 +33,11 @@ public class ExerciseBUS
         return await _exerciseDAO.GetExerciseByTestId(test_id);
 
     }
+
+    public async Task<List<ExerciseDTO>> GetExercisesByLessonId(string lessonId)
+    {
+
+        return await _exerciseDAO.GetExercisesByLessonId(lessonId);
+
+    }
 }

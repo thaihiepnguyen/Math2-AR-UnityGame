@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,7 @@ public partial class ExerciseMananger : MonoBehaviour
 
 
     private bool blockIO = false;
+    private bool hasHandledTimeout = false;
 
     private void Awake()
     {
@@ -73,32 +75,22 @@ public partial class ExerciseMananger : MonoBehaviour
     
     private async void Start()
     {
-        var exerciseBUS=new ExerciseBUS();
-        exercises= await exerciseBUS.GetAllExercises();
+        var exerciseBUS = new ExerciseBUS();
+        string lessonId = LessonList.GetLessonId();
+        try
+        {
+            exercises = await exerciseBUS.GetExercisesByLessonId(lessonId);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError(ex);
+        }
+   
         if (exercises != null)
         {
             totalQuestion= exercises.Count;
             UpdateUI();
         }
-
-        //  var response = await exerciseBUS.GetExerciseByType(new ExerciseTypeDTO
-        // {
-        //    type = "Input"
-        // });
-
-        //  if (response.data !=null)
-        // {
-        //     exercises = response.data;
-          
-        //     totalQuestion = exercises.Count;
-        //     UpdateUI();
-         
-        // }
-        // else
-        // {
-        //     Debug.Log($"Error: {response.message}");
-           
-        // }
     }
 
     // Update is called once per frame
@@ -114,9 +106,24 @@ public partial class ExerciseMananger : MonoBehaviour
             {
                 textCheckBtn.text = "Thoát";
             }
+            if (timer.timeValue == 0 && !hasHandledTimeout)
+            {
+                StartCoroutine(HandleTimeOut());
+                hasHandledTimeout = true;
+            }
         }
     }
     
+    private void ShowResult()
+    {
+        MultipleChoiceExercise.gameObject.SetActive(false);
+        InputExercise.gameObject.SetActive(false);
+        DragDropExercise.gameObject.SetActive(false);
+        ReviewResult.gameObject.SetActive(true);
+        result.text = $"{currentRightAnswer}/{totalQuestion}";
+        timer.isStop = true;
+    }
+
     IEnumerator  NextQuestion()
     {
         blockIO = true;
@@ -124,14 +131,8 @@ public partial class ExerciseMananger : MonoBehaviour
         blockIO = false;
         currentQuestion = currentQuestion + 1;
         if (currentQuestion >= totalQuestion)
-        {
-            
-            MultipleChoiceExercise.gameObject.SetActive(false);
-            InputExercise.gameObject.SetActive(false);
-            DragDropExercise.gameObject.SetActive(false);
-            ReviewResult.gameObject.SetActive(true);
-            result.text = $"{currentRightAnswer}/{totalQuestion}";
-            timer.isStop= true;
+        {       
+            ShowResult();
             yield return null;
         }
         
@@ -140,7 +141,21 @@ public partial class ExerciseMananger : MonoBehaviour
             UpdateUI();
         }    
     }
-    
+
+    IEnumerator HandleTimeOut()
+    {
+        while(currentQuestion < totalQuestion)
+        {
+            UpdateUI();
+            AddExerciseToReviewList();
+            currentQuestion += 1;
+            
+
+        }
+        ShowResult();
+        yield return null;
+    }
+
     void ChangeDragDropObject(ExerciseDTO exercise)
     {
         d_result.SetActive(false);
@@ -188,7 +203,7 @@ public partial class ExerciseMananger : MonoBehaviour
         }
         else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
         {
-            ResetMultipleChoiceAnswerListColor();
+            ResetMultipleChoiceAnswerAttribute();
             DragDropExercise.gameObject.SetActive(false);
             InputExercise.gameObject.SetActive(false);
             MultipleChoiceExercise.gameObject.SetActive(true);
@@ -295,6 +310,7 @@ public partial class ExerciseMananger : MonoBehaviour
         {
             currentRightAnswer += 1;
         }
+        AddExerciseToReviewList();
         StartCoroutine(NextQuestion());
         d_result.SetActive(true);
         
@@ -307,12 +323,11 @@ public partial class ExerciseMananger : MonoBehaviour
         {
             if (currentQuestion >= totalQuestion)
             {
-                SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
+                SceneHistory.GetInstance().LoadScene(GlobalVariable.MAIN_SCENE);
             }
             if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
             {
-                CheckDragDropAnswer();
-                AddExerciseToReviewList();
+                CheckDragDropAnswer();               
             }
             else if (exercises[currentQuestion].type == GlobalVariable.MULTIPLE_CHOICE_TYPE && exercises != null)
             {
