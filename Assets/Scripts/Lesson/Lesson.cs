@@ -5,16 +5,19 @@ using UnityEngine;
 
 public class Lesson : MonoBehaviour
 {
-     [SerializeField] private TextMeshProUGUI lessonId;
     void Start()
     {
-        // lessonId.text = LessonManager.GetInstance().GetLessonName();
-        lessonId.text = LessonList.GetLessonName();
+
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void OnClickDoingExercise()
+    {
+        SceneHistory.GetInstance().LoadScene(GlobalVariable.EXERCISES_SCENE);
     }
 }

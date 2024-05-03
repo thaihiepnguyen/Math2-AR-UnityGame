@@ -50,4 +50,22 @@ public class ExerciseDAO
             throw new Exception("Error: ", ex);
         }
     }
+    public async Task<List<ExerciseDTO>> GetExercisesByLessonId(string lessonId)
+    {
+        try
+        {
+            var result = await API.getMethod($"/exercises/lesson/{lessonId}");
+            var exerciseResponse = JsonConvert.DeserializeObject<BaseDTO<List<ExerciseDTO>>>(result);
+
+            if (exerciseResponse.data != null)
+            {
+                return exerciseResponse.data;
+            }
+            return null;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error: ", ex);
+        }
+    }
 }
