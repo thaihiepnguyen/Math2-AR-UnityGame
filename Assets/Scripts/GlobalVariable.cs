@@ -16,4 +16,6 @@ public class GlobalVariable
     public const string INPUT_TYPE = "Input";
     //PlayerPref variable string
     public const string userID = "uid";
+    //Scene number
+    public const int EXAM_SCENE = 9;
 }

@@ -27,4 +27,10 @@ public class ExerciseBUS
         return await _exerciseDAO.GetExerciseByType(exerciseTypeDTO);
 
     }
+    public async Task<BaseDTO<List<ExerciseDTO>>> GetExerciseByTestId(int test_id)
+    {
+
+        return await _exerciseDAO.GetExerciseByTestId(test_id);
+
+    }
 }
