@@ -20,5 +20,6 @@ public class GlobalVariable
     //PlayerPref variable string
     public const string userID = "uid";
     //Scene number
-    public const int EXAM_SCENE = 9;
+    public const string EXAM_SCENE = "ExamScene";
+    public const string EXAM_LIST_SCENE = "ExamListScene";
 }

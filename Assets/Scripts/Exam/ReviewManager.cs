@@ -105,7 +105,7 @@ public partial class ReviewManager : MonoBehaviour
     }
     public void onExit()
     {
-        //SceneManager.LoadScene(GlobalVariable.EXAM_LIST);
+        SceneManager.LoadScene(GlobalVariable.EXAM_LIST_SCENE);
     }
     public void NextQuestion()
     {
