@@ -56,7 +56,10 @@ public class ExamManager : MonoBehaviour
     GameObject m_answerList;
     [SerializeField]
     TMP_Text m_question;
+    [SerializeField]
+    Image imageQuestion;
     private Button[] buttonList;
+    private bool isImageQuestion = false;
 
     [SerializeField] private Canvas InputExercise;
 
@@ -378,7 +381,7 @@ public class ExamManager : MonoBehaviour
         Image buttonImage = buttonList[buttonIndex].GetComponent<Image>();
         if (buttonImage != null)
         {
-            buttonImage.color = Color.blue;
+            buttonImage.color = HexToColor("#FFB45D");
         }
         else
         {
@@ -400,6 +403,15 @@ public class ExamManager : MonoBehaviour
         var answers = exercise.answer.Split(",");
 
         m_question.text = questions;
+        if (exercise.image_url != null)
+        {
+            isImageQuestion = true;
+            StartCoroutine(LoadImage(imageQuestion, exercise.image_url));
+            Vector3 currentPosition = m_answerList.transform.position;
+            currentPosition.x += 460f;
+            m_answerList.transform.position = currentPosition;
+            imageQuestion.gameObject.SetActive(true);
+        }
 
         Button[] buttons = m_answerList.GetComponentsInChildren<Button>();
 
@@ -429,7 +441,7 @@ public class ExamManager : MonoBehaviour
         {
             TextMeshProUGUI tmp = answerObjects[i].GetComponentInChildren<TextMeshProUGUI>();
             Image img = answerObjects[i].GetComponent<Image>();
-            if (img != null && img.color == Color.blue)
+            if (img != null && img.color == HexToColor("#FFB45D"))
             {
                 var user_answer = tmp.text;
                 var temp = new QuestionResultDTO()
@@ -440,8 +452,16 @@ public class ExamManager : MonoBehaviour
                 };
                 questionResultList.Add(temp);
                 isAnswer = true;
-            }
-           
+            }  
+
+        }
+        if (isImageQuestion == true)
+        {
+            isImageQuestion = false;
+            imageQuestion.gameObject.SetActive(false);
+            Vector3 currentPosition = m_answerList.transform.position;
+            currentPosition.x -= 460f;
+            m_answerList.transform.position = currentPosition;
         }
         if (!isAnswer)
         {

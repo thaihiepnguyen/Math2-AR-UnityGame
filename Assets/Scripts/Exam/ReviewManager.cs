@@ -33,6 +33,9 @@ public partial class ReviewManager : MonoBehaviour
 
      void Start()
     {
+        AnswersPosition = m_answerList.transform.position;
+        ImageQuestionAnswerPosition= m_answerList.transform.position;
+        ImageQuestionAnswerPosition.x += 500f;
         examManager = mainCanvas.GetComponent<ExamManager>();
         if(examManager!= null )
         {
@@ -102,7 +105,7 @@ public partial class ReviewManager : MonoBehaviour
     }
     public void onExit()
     {
-        //SceneManager.LoadScene(GlobalVariable.EXAM_LIST);
+        SceneManager.LoadScene(GlobalVariable.EXAM_LIST_SCENE);
     }
     public void NextQuestion()
     {
@@ -110,6 +113,7 @@ public partial class ReviewManager : MonoBehaviour
         
         if (currentQuestion >= examManager.totalQuestion)
         {
+            currentQuestion=examManager.totalQuestion-1;
             return;
         }
         updateUI();
