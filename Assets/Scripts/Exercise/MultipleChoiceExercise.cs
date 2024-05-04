@@ -94,7 +94,7 @@ public partial class ExerciseMananger : MonoBehaviour
         {
             var rightAnswer = exercises[currentQuestion].right_answer;
 
-            Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>();
+            Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>( );
 
             for (int i = 0; i < answerObjects.Length; i++)
             {
