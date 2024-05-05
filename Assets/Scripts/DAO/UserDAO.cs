@@ -12,4 +12,8 @@ public class UserDAO
     public async Task<BaseDTO<UserDTO>> GetMe() {
         return await API.Get<UserDTO>($"{GlobalVariable.server_url}/users/get-me");
     }
+
+    public async Task<BaseDTO<PersonalDTO>> GetProfile() {
+        return await API.Get<PersonalDTO>($"{GlobalVariable.server_url}/users/get-personal-by-id");
+    }
 }

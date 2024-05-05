@@ -14,4 +14,9 @@ public class UserBUS
     {
         return await _userDao.GetMe();
     }
+
+    public async Task<BaseDTO<PersonalDTO>> GetProfile()
+    {
+        return await _userDao.GetProfile();
+    }
 }

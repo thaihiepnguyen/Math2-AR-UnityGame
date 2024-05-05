@@ -45,6 +45,11 @@ public class SceneHistory : MonoBehaviour
         
         LoadScene("Main");
     }
+
+    public void OnClickLogoutButton() {
+        sceneHistory.Clear();
+        LoadScene("LoginScene");
+    }
    
     public void PreviousScene()
     {
