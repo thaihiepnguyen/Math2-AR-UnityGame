@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/RegisterScene.unity
     guid: 45a479e0866cec14cbe1fc7b973f6b41
   - enabled: 1
+    path: Assets/Scenes/PersonalScene.unity
+    guid: 3b887a9147c779a46a535e2514c6cd8f
+  - enabled: 1
     path: Assets/Scenes/Semester.unity
     guid: f4b6a0b0e5876d64da689124fb0a8969
   - enabled: 1
@@ -30,9 +33,6 @@ EditorBuildSettings:
     path: Assets/Scenes/LessonScene.unity
     guid: cfb9ad8b6fc9f426d90abf7ff8d170a7
   - enabled: 1
-    path: Assets/Scenes/Main.unity
-    guid: 697daae3b1b25444e955b7b912f48a97
-  - enabled: 1
     path: Assets/Scenes/Store.unity
     guid: 0745becc196c2d3409810c0b8dce6bca
   - enabled: 1
@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Exercises.unity
     guid: 6bece2daf51a671479b10cbc04038277
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 697daae3b1b25444e955b7b912f48a97
   m_configObjects: {}

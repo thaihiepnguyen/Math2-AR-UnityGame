@@ -12,4 +12,8 @@ public class Main : MonoBehaviour
     public void OnClickStore(){
         SceneHistory.GetInstance().LoadScene("Store");
     }
+
+    public void OnClickPersonalButton() {
+        SceneHistory.GetInstance().LoadScene("PersonalScene");
+    }
 }
