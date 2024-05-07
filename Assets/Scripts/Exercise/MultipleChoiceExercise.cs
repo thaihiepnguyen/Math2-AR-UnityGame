@@ -105,9 +105,9 @@ public partial class ExerciseMananger : MonoBehaviour
             {
                 isImageQuestion = false;
                 imageQuestion.gameObject.SetActive(false);
-                Vector3 currentPosition = m_answerList.transform.position;
-                currentPosition.x -= 500f;
-                m_answerList.transform.position = currentPosition;
+                // Vector3 currentPosition = m_answerList.transform.position;
+                // currentPosition.x -= 500f;
+                // m_answerList.transform.position = currentPosition;
             }
             StartCoroutine(NextQuestion());
         }
