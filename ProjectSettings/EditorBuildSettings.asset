@@ -39,6 +39,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Achievement.unity
     guid: ac57eb3f10e608e41bec2c3efa217499
   - enabled: 1
+    path: Assets/Scenes/ExamScene.unity
+    guid: e0cd6ed86074d664cb9c0f56f563351e
+  - enabled: 1
+    path: Assets/Scenes/ExamListScene.unity
+    guid: e8aac2a180738fc4284fa95364e013ed
+  - enabled: 1
+    path: Assets/Scenes/Exercises.unity
+    guid: 6bece2daf51a671479b10cbc04038277
+  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 697daae3b1b25444e955b7b912f48a97
   m_configObjects: {}

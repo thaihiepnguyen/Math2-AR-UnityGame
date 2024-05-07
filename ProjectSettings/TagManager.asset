@@ -9,6 +9,7 @@ TagManager:
   - HomeButton
   - Outsider
   - Exercise
+  - MultipleChoiceQuestion
   layers:
   - Default
   - TransparentFX

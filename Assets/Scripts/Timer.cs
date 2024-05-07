@@ -6,12 +6,14 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     public TextMeshProUGUI timer;
-    public float timeValue = 20;
+    [SerializeField]public float timeValue = 0.5f;
     public bool isStop = false;
+    private float baseTimeValue = 0f;
     // Start is called before the first frame update
     void Start()
     {
         timeValue *= 60;
+        baseTimeValue = timeValue;
     }
 
     // Update is called once per frame
@@ -39,5 +41,18 @@ public class Timer : MonoBehaviour
         float minutes=Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
         timer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+    public string toTimeString()
+    {
+        if (timeValue < 0)
+        {
+            timeValue = 0;
+        }
+        
+        float realtime = baseTimeValue- timeValue;
+        float minutes = Mathf.FloorToInt(realtime / 60);
+        float seconds = Mathf.FloorToInt(realtime % 60);
+        var res = string.Format("{0:00}:{1:00}", minutes, seconds);
+        return res;
     }
 }

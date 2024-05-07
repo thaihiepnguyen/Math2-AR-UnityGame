@@ -1,38 +1,44 @@
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public partial class ExerciseMananger : MonoBehaviour
+public partial class ReviewManager : MonoBehaviour
 {
-    [SerializeField]
-    Canvas MultipleChoiceExercise;
     [SerializeField]
     GameObject m_answerList;
     [SerializeField]
     TMP_Text m_question;
     [SerializeField]
     Image imageQuestion;
+    
     private bool isImageQuestion = false;
-
-    void ChangeMultipleChoiceObject(ExerciseDTO exercise)
+    private Vector3 AnswersPosition= Vector3.zero;
+    private Vector3 ImageQuestionAnswerPosition= Vector3.zero;
+    void ChangeMultipleChoiceObject(ExerciseDTO exercise,QuestionResultDTO questionResult)
     {
         var questions = exercise.question;
         var answers = exercise.answer.Split(",");
+
+        m_question.text = questions;
 
         if (exercise.image_url != null)
         {
             isImageQuestion = true;
             StartCoroutine(LoadImage(imageQuestion, exercise.image_url));
-            Vector3 currentPosition = m_answerList.transform.position;
-            currentPosition.x += 500f;
-            m_answerList.transform.position = currentPosition;
+        
+            m_answerList.gameObject.GetComponent<RectTransform>().position = ImageQuestionAnswerPosition;
             imageQuestion.gameObject.SetActive(true);
         }
-
-        m_question.text = questions;
-
+        else
+        {
+            m_answerList.gameObject.GetComponent<RectTransform>().position=AnswersPosition;
+            imageQuestion.gameObject.SetActive(false);
+        }
+        Debug.Log("TransformAnswer " + m_answerList.transform.position.ToString());
         Button[] buttons = m_answerList.GetComponentsInChildren<Button>();
 
         for (int i = 0; i < buttons.Length; i++)
@@ -47,73 +53,35 @@ public partial class ExerciseMananger : MonoBehaviour
                 Debug.LogError("TextMeshPro component not found in children of button.");
             }
         }
+        var rightAnswer = exercises[currentQuestion].right_answer;
 
-        
-
-    }
-
-    public void markAnswer(Image btn)
-    {
-        ResetMultipleChoiceAnswerAttribute();
-        btn.color = HexToColor("#FFB45D");
-    }
-
-    private void checkAnswerOfAChoice(Image btn, string rightAnswer)
-    {
-        TextMeshProUGUI answer = btn.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        if (answer != null)
-        {
-            if (answer.text == rightAnswer)
-            {
-                if (btn.color != HexToColor("#FFFFFF"))
-                {
-                    currentRightAnswer += 1;
-                }
-                btn.color = HexToColor("#00FF1E");
-            }
-            else if (btn.color != HexToColor("#FFFFFF"))
-            {
-                btn.color = HexToColor("#FF0000");
-            }
-        }
-    }
-
-    private void ResetMultipleChoiceAnswerAttribute()
-    {
         Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>();
 
         for (int i = 0; i < answerObjects.Length; i++)
         {
-            answerObjects[i].color = HexToColor("#FFFFFF");
-        }
-    }
-
-    public void CheckMultipleChoiceAnswer()
-    {
-        if (!blockIO)
-        {
-            var rightAnswer = exercises[currentQuestion].right_answer;
-
-            Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>( );
-
-            for (int i = 0; i < answerObjects.Length; i++)
+            TextMeshProUGUI tmp = answerObjects[i].GetComponentInChildren<TextMeshProUGUI>();
+            if (tmp != null)
             {
-                checkAnswerOfAChoice(answerObjects[i], rightAnswer);
+                if (tmp.text == rightAnswer)
+                {
+                    answerObjects[i].color = Color.green;
+                }
+                else if (tmp.text == questionResult.user_answer)
+                {
+                    answerObjects[i].color = HexToColor("#FFB45D");
+                }
+                else
+                {
+                    answerObjects[i].color = Color.red;
+                }
             }
-            AddExerciseToReviewList();
-            if (isImageQuestion == true)
+            else
             {
-                isImageQuestion = false;
-                imageQuestion.gameObject.SetActive(false);
-                Vector3 currentPosition = m_answerList.transform.position;
-                currentPosition.x -= 500f;
-                m_answerList.transform.position = currentPosition;
+                Debug.LogError("TextMeshPro component not found in children of button.");
             }
-            StartCoroutine(NextQuestion());
         }
-
+        
     }
-
     private Color HexToColor(string hex)
     {
         Color color = Color.white;
@@ -127,14 +95,13 @@ public partial class ExerciseMananger : MonoBehaviour
             return Color.white;
         }
     }
-
     private IEnumerator LoadImage(Image image, string url)
     {
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
 
         yield return request.SendWebRequest();
 
-        if (request.isNetworkError || request.isHttpError)
+        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
         {
             Debug.Log(request.error);
         }
