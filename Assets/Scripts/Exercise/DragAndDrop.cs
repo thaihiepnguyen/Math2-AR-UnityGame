@@ -15,11 +15,10 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     [SerializeField] public Transform parentBeforeDrag;
     Image image;
     public TextMeshProUGUI textMeshProUGUI;
-    private  void Awake()
+    private  void Start()
     {  
         image= GetComponent<Image>();
         parentBeforeDrag = transform.parent;
-        Debug.Log("before" + parentBeforeDrag.name);
 
 
     }
