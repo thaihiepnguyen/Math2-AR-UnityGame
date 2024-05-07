@@ -19,7 +19,6 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     {  
         image= GetComponent<Image>();
         parentBeforeDrag = transform.parent;
-        // Debug.Log("before" + parentBeforeDrag.name);
 
 
     }
