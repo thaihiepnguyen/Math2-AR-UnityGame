@@ -1,4 +1,5 @@
 using System.Collections;
+using EasyUI.Toast;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -52,10 +53,12 @@ public partial class ExerciseMananger : MonoBehaviour
 
     }
 
+       bool checkAnswer = false;
     public void markAnswer(Image btn)
     {
         ResetMultipleChoiceAnswerAttribute();
         btn.color = HexToColor("#FFB45D");
+        checkAnswer = true;
     }
 
     private void checkAnswerOfAChoice(Image btn, string rightAnswer)
@@ -96,6 +99,8 @@ public partial class ExerciseMananger : MonoBehaviour
 
             Image[] answerObjects = m_answerList.GetComponentsInChildren<Image>( );
 
+         
+            if (checkAnswer){
             for (int i = 0; i < answerObjects.Length; i++)
             {
                 checkAnswerOfAChoice(answerObjects[i], rightAnswer);
@@ -110,6 +115,10 @@ public partial class ExerciseMananger : MonoBehaviour
                 // m_answerList.transform.position = currentPosition;
             }
             StartCoroutine(NextQuestion());
+            }
+            else {
+                  Toast.Show("Bạn hãy hoàn thành câu hỏi của mình nhé", .7f,ToastPosition.MiddleCenter);
+            }
         }
 
     }
