@@ -26,12 +26,12 @@ public class ExamListManager : MonoBehaviour
     {
         semester=Semester.GetSemester();
         title.text = $"Đề Kiểm Tra Học Kỳ {semester}";
-        //var test_response = await testBUS.GetTestsBySemester(semester);
-        var test_response = await testBUS.GetTestsBySemester(1);
+        var test_response = await testBUS.GetTestsBySemester(semester);
+        //var test_response = await testBUS.GetTestsBySemester(1);
         int uid = PlayerPrefs.GetInt(GlobalVariable.userID);
         Debug.Log(uid);
-        var testPurchase_response= await testPurchaseBUS.GetByUserId(36);
-        //var testPurchase_response= await testPurchaseBUS.GetByUserId(uid);
+        //var testPurchase_response= await testPurchaseBUS.GetByUserId(36);
+        var testPurchase_response= await testPurchaseBUS.GetByUserId(uid);
         if (test_response.data != null)
         {
             testList= test_response.data;

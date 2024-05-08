@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EasyUI.Toast;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -261,6 +262,13 @@ public partial class ExerciseMananger : MonoBehaviour
     public void CheckInputAnswer(){
         var right_answers = exercises[currentQuestion].right_answer.Split(",");
         TMP_InputField[] inputList = i_holder.GetComponentsInChildren<TMP_InputField>();
+             for (int i = 0; i < inputList.Length; i++){
+                if (inputList[i].text == ""){
+                      Toast.Show("Bạn hãy hoàn thành câu hỏi của mình nhé", .7f,ToastPosition.MiddleCenter);
+                      return;
+                }
+             }
+            
             bool check = true;
             for (int i = 0; i < inputList.Length; i++){
                if (inputList[i].text != right_answers[i]){
@@ -294,7 +302,9 @@ public partial class ExerciseMananger : MonoBehaviour
         var resultListImage = d_result.GetComponentsInChildren<Image>();
         if (aslot.Length != resultListImage.Length)
         {
-            Notification.gameObject.SetActive(true);
+            // Notification.gameObject.SetActive(true);
+
+               Toast.Show("Bạn hãy hoàn thành câu hỏi của mình nhé", .7f,ToastPosition.MiddleCenter);
             return;
         }
         else
@@ -319,11 +329,12 @@ public partial class ExerciseMananger : MonoBehaviour
         {
             currentRightAnswer += 1;
         }
-        AddExerciseToReviewList();
+        
         StartCoroutine(NextQuestion());
         d_result.SetActive(true);
-        
-        
+        AddExerciseToReviewList();
+
+
     }
 
     public void CheckAnswers()
@@ -332,7 +343,8 @@ public partial class ExerciseMananger : MonoBehaviour
         {
             if (currentQuestion >= totalQuestion)
             {
-                SceneHistory.GetInstance().LoadScene(GlobalVariable.MAIN_SCENE);
+                SceneHistory.GetInstance().PreviousScene();
+                return;
             }
             if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
             {
