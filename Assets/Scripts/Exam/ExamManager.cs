@@ -97,11 +97,11 @@ public class ExamManager : MonoBehaviour
         testResult = new TestResultDTO()
         {
             test_id = test_id,
-            user_id = 38,
-            //user_id = PlayerPrefs.GetInt(GlobalVariable.userID),
+            //user_id = 38,
+            user_id = PlayerPrefs.GetInt(GlobalVariable.userID),
         };
-        var testResultResponse= await testResultBus.GetById(1);
-        //  testResultResponse= await testResultBus.AddTestResult(testResult);
+        //var testResultResponse= await testResultBus.GetById(1);
+          var testResultResponse= await testResultBus.AddTestResult(testResult);
         var testResponse = await testBus.GetById(test_id);
         if(testResultResponse.data != null)
         {
@@ -114,7 +114,7 @@ public class ExamManager : MonoBehaviour
             title.text = $"Bài thi học kỳ {Semester.GetSemester()} - {testResponse.data.test_name}";
             Debug.Log("testResponse " + testResponse.data.test_id.ToString());
         }
-        var response = await exerciseBUS.GetExerciseByTestId(1);
+        var response = await exerciseBUS.GetExerciseByTestId(test_id);
         //var response = await exerciseBUS.GetExerciseByType(new ExerciseTypeDTO
         //{
         //    type = GlobalVariable.MULTIPLE_CHOICE_TYPE

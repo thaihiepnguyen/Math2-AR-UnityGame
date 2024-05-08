@@ -92,6 +92,6 @@ public class ChapterList : MonoBehaviour
 
     public void onReview()
     {
-        SceneManager.LoadScene("ExamListScene");
+        SceneHistory.GetInstance().LoadScene("ExamListScene");
     }
 }
