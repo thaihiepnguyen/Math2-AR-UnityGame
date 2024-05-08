@@ -6,6 +6,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using EasyUI;
+using EasyUI.Toast;
 
 public class ExamManager : MonoBehaviour
 {
@@ -95,11 +97,11 @@ public class ExamManager : MonoBehaviour
         testResult = new TestResultDTO()
         {
             test_id = test_id,
-            user_id = 38,
-            //user_id = PlayerPrefs.GetInt(GlobalVariable.userID),
+            //user_id = 38,
+            user_id = PlayerPrefs.GetInt(GlobalVariable.userID),
         };
-        var testResultResponse= await testResultBus.GetById(1);
-        //  testResultResponse= await testResultBus.AddTestResult(testResult);
+        //var testResultResponse= await testResultBus.GetById(1);
+          var testResultResponse= await testResultBus.AddTestResult(testResult);
         var testResponse = await testBus.GetById(test_id);
         if(testResultResponse.data != null)
         {
@@ -112,7 +114,7 @@ public class ExamManager : MonoBehaviour
             title.text = $"Bài thi học kỳ {Semester.GetSemester()} - {testResponse.data.test_name}";
             Debug.Log("testResponse " + testResponse.data.test_id.ToString());
         }
-        var response = await exerciseBUS.GetExerciseByTestId(1);
+        var response = await exerciseBUS.GetExerciseByTestId(test_id);
         //var response = await exerciseBUS.GetExerciseByType(new ExerciseTypeDTO
         //{
         //    type = GlobalVariable.MULTIPLE_CHOICE_TYPE
@@ -176,7 +178,7 @@ public class ExamManager : MonoBehaviour
         {
             border.SetActive(false);
         }
-        reviewUI.gameObject.SetActive(true);
+        
         DragDropExercise.gameObject.SetActive(false);
         InputExercise.gameObject.SetActive(false);
         MultipleChoiceExercise.gameObject.SetActive(false);
@@ -184,7 +186,8 @@ public class ExamManager : MonoBehaviour
         CheckButton.gameObject.SetActive(false);
         time.gameObject.SetActive(false);
         progress.gameObject.SetActive(false);
-        
+        reviewUI.gameObject.SetActive(true);
+
 
     }
     async void  NextQuestion()
@@ -285,7 +288,8 @@ public class ExamManager : MonoBehaviour
         {
             if (inputList[0].text == "" || inputList[1].text == "")
             {
-                Notification.gameObject.SetActive(true);
+                
+                Toast.Show("Bạn hãy hoàn thành câu hỏi của mình nhé", .7f, ToastPosition.MiddleCenter);
                 return;
             }
             
@@ -294,7 +298,7 @@ public class ExamManager : MonoBehaviour
         {
             if (inputList[0].text == "")
             {
-                Notification.gameObject.SetActive(true);
+                Toast.Show("Bạn hãy hoàn thành câu hỏi của mình nhé", .7f, ToastPosition.MiddleCenter);
                 return;
             }
         }
@@ -352,7 +356,7 @@ public class ExamManager : MonoBehaviour
         var resultListImage = d_result.GetComponentsInChildren<Image>();
         if (aslot.Length != resultListImage.Length)
         {
-            Notification.gameObject.SetActive(true);
+            Toast.Show("Bạn hãy hoàn thành câu hỏi của mình nhé", .7f, ToastPosition.MiddleCenter);
             return;
         }
         else
@@ -465,7 +469,7 @@ public class ExamManager : MonoBehaviour
         }
         if (!isAnswer)
         {
-            Notification.gameObject.SetActive(true);
+            Toast.Show("Bạn hãy hoàn thành câu hỏi của mình nhé", .7f, ToastPosition.MiddleCenter);
             return;
         }
 
@@ -508,15 +512,28 @@ public class ExamManager : MonoBehaviour
 
         yield return request.SendWebRequest();
 
-        if (request.result ==UnityWebRequest.Result.ConnectionError || request.result==UnityWebRequest.Result.ProtocolError)
+        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
         {
             Debug.Log(request.error);
         }
         else
         {
             Texture2D myTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            myTexture = ResizeTexture(myTexture, 500, 200);
             Sprite newSprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height), new Vector2(0.5f, 0.5f));
             image.sprite = newSprite;
         }
+    }
+    Texture2D ResizeTexture(Texture2D source, int newWidth, int newHeight)
+    {
+        RenderTexture rt = RenderTexture.GetTemporary(newWidth, newHeight);
+        rt.filterMode = FilterMode.Bilinear;
+        RenderTexture.active = rt;
+        Graphics.Blit(source, rt);
+        Texture2D result = new Texture2D(newWidth, newHeight);
+        result.ReadPixels(new Rect(0, 0, newWidth, newHeight), 0, 0);
+        result.Apply();
+        RenderTexture.ReleaseTemporary(rt);
+        return result;
     }
 }
