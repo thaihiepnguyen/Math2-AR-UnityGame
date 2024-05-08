@@ -40,4 +40,10 @@ public class ExerciseBUS
         return await _exerciseDAO.GetExercisesByLessonId(lessonId);
 
     }
+    public async Task<List<ExerciseDTO>> GetExercisesByChapterId(char chapterId)
+    {
+
+        return await _exerciseDAO.GetExercisesByChapterId(chapterId);
+
+    }
 }

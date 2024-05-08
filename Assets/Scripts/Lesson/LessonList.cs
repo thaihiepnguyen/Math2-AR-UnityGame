@@ -16,7 +16,8 @@ public class LessonList : MonoBehaviour
 
     static protected string lessonName = "";
 
-    public static string GetLessonName(){
+    public static string GetLessonName()
+    {
         return lessonName;
     }
 
@@ -30,18 +31,18 @@ public class LessonList : MonoBehaviour
     public bool isDone = false;
 
     async void Start()
-    {   
+    {
 
         // var title = LessonManager.GetInstance().GetChapterId();
 
-        var title = ChapterList.GetChapterId();
-        chapterId.text = String.Format("CHƯƠNG {0}",title[0]);
+        var title = ChapterList.GetChapterName();
+        chapterId.text = String.Format("CHƯƠNG {0}", title[0]);
 
         // var chapters = LessonManager.GetInstance().GetLessons();
         var lessonBus = new LessonBUS();
         var response = await lessonBus.GetLessonByChapterId(new ChapterDTO
         {
-            chapter = ChapterList.GetChapterId()
+            chapter = ChapterList.GetChapterName()
         });
 
         if (response.data != null)
@@ -66,7 +67,8 @@ public class LessonList : MonoBehaviour
                     Button getStart = lessonPrefab.GetComponentInChildren<Button>();
                     if (getStart != null)
                     {
-                        getStart.onClick.AddListener(() => {
+                        getStart.onClick.AddListener(() =>
+                        {
 
                             LessonLearning(index);
                         });
@@ -103,32 +105,32 @@ public class LessonList : MonoBehaviour
         }
     }
 
-    void Update(){
-         
+    void Update()
+    {
+
     }
-    async void GetData(){
+    async void GetData()
+    {
         var lessonBus = new LessonBUS();
-       var response = await lessonBus.GetLessonByChapterId(new ChapterDTO
+        var response = await lessonBus.GetLessonByChapterId(new ChapterDTO
         {
-           chapter = ChapterList.GetChapterId()
+            chapter = ChapterList.GetChapterName()
         });
 
-         if (response.data !=null)
+        if (response.data != null)
         {
             lessons = response.data;
             Debug.Log(lessons[0].name);
-          }
+        }
     }
 
-    public void LessonLearning(int index){
-       
+    public void LessonLearning(int index)
+    {
+
         // LessonManager.GetInstance().Lesson(index);
 
         lessonName = lessons[index].name;
         lessonId = lessons[index].lesson_id.ToString();
         SceneHistory.GetInstance().LoadScene("LessonScene");
     }
-      
-        
-    
 }

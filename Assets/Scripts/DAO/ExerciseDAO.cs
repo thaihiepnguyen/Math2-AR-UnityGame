@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-public class ExerciseDAO 
+public class ExerciseDAO
 {
     // Start is called before the first frame update
 
-     public async Task<BaseDTO<List<ExerciseDTO>>> GetExerciseByType(ExerciseTypeDTO exerciseTypeDTO)
+    public async Task<BaseDTO<List<ExerciseDTO>>> GetExerciseByType(ExerciseTypeDTO exerciseTypeDTO)
     {
         return await API.Post<ExerciseTypeDTO, List<ExerciseDTO>>($"{GlobalVariable.server_url}/exercises/get-exercise-by-type", exerciseTypeDTO);
     }
@@ -32,10 +32,11 @@ public class ExerciseDAO
             }
             return null;
         }
-        catch(Exception ex) {
+        catch (Exception ex)
+        {
             Debug.LogException(ex);
             return null;
-        }    
+        }
     }
     public async Task<List<ExerciseDTO>> GetAllExercises()
     {
@@ -72,6 +73,25 @@ public class ExerciseDAO
         catch (Exception ex)
         {
             throw new Exception("Error: ", ex);
+        }
+    }
+    public async Task<List<ExerciseDTO>> GetExercisesByChapterId(char chaperId)
+    {
+        try
+        {
+            var result = await API.getMethod($"/exercises/chapter/{chaperId}");
+            var exerciseResponse = JsonConvert.DeserializeObject<BaseDTO<List<ExerciseDTO>>>(result);
+
+            if (exerciseResponse.data != null)
+            {
+                return exerciseResponse.data;
+            }
+            return null;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error: ", ex);
+
         }
     }
 }
