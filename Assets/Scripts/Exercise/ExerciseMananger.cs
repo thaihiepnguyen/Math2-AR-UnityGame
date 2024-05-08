@@ -333,7 +333,8 @@ public partial class ExerciseMananger : MonoBehaviour
         {
             if (currentQuestion >= totalQuestion)
             {
-                SceneHistory.GetInstance().LoadScene(GlobalVariable.MAIN_SCENE);
+                SceneHistory.GetInstance().PreviousScene();
+                return;
             }
             if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
             {
