@@ -320,11 +320,12 @@ public partial class ExerciseMananger : MonoBehaviour
         {
             currentRightAnswer += 1;
         }
-        AddExerciseToReviewList();
+        
         StartCoroutine(NextQuestion());
         d_result.SetActive(true);
-        
-        
+        AddExerciseToReviewList();
+
+
     }
 
     public void CheckAnswers()
