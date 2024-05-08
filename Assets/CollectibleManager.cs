@@ -19,7 +19,6 @@ public class CollectibleManager : MonoBehaviour
 
         if (response.isSuccessful) {
             var me = response.data;
-            Debug.Log(response.data.coin);
             coinText.text = me.coin.ToString();
             coin = me.coin;
         }
