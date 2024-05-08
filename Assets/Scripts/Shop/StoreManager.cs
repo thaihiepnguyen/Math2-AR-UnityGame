@@ -248,7 +248,7 @@ public class StoreManager : MonoBehaviour
             SceneManager.LoadScene(currentSceneName);
             }
             else {
-                Toast.Show("Bạn không đủ tiền để mua sản phẩm này.", .3f,ToastPosition.MiddleCenter);
+                Toast.Show("Bạn không đủ tiền để mua sản phẩm này.", .7f,ToastPosition.MiddleCenter);
             }
         });
 
