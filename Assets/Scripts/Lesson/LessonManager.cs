@@ -60,7 +60,6 @@ public class LessonManager : MonoBehaviour
         var dt = await lessonBus.GetChapterBySemester(1);
         if (dt.data != null){
             chapters = dt.data;
-            Debug.Log("hello" + dt.data[0].name);
             SceneManager.LoadScene("ChapterList");
         }
      
@@ -75,7 +74,6 @@ public class LessonManager : MonoBehaviour
         var dt = await lessonBus.GetChapterBySemester(2);
         if (dt.data != null){
             chapters = dt.data;
-              Debug.Log("hello" + chapters);
             SceneManager.LoadScene("ChapterList");
         }
     }

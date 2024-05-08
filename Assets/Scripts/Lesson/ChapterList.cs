@@ -63,7 +63,6 @@ public class ChapterList : MonoBehaviour
         if (dt.data != null)
         {
             chapters = dt.data;
-            Debug.Log(chapters[0].name);
         }
     }
     public void FirstChapter()

@@ -22,10 +22,8 @@ public partial class ExerciseMananger : MonoBehaviour
         var questions = exercise.question;
         var answers = exercise.answer.Split(",");
 
-        Debug.Log(exercise.image_url);
         if (exercise.image_url != null)
         {
-            Debug.Log(exercise.image_url);
             isImageQuestion = true;
             StartCoroutine(LoadImage(imageQuestion, exercise.image_url));
             Vector3 currentPosition = m_answerList.transform.position;

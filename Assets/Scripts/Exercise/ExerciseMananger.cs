@@ -183,7 +183,6 @@ public partial class ExerciseMananger : MonoBehaviour
                 if (alist[i].name.Contains("ItemContain"))
                 {
                     aslotItem[j].transform.SetParent(alist[i]);
-                    Debug.Log(alist[i].name);
                     j++;
                 }
 

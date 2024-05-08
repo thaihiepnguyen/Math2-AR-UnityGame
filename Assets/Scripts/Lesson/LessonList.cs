@@ -48,7 +48,6 @@ public class LessonList : MonoBehaviour
         if (response.data != null)
         {
             lessons = response.data;
-            Debug.Log(lessons[0].name);
         }
 
         if (lessons != null)
@@ -120,7 +119,6 @@ public class LessonList : MonoBehaviour
         if (response.data != null)
         {
             lessons = response.data;
-            Debug.Log(lessons[0].name);
         }
     }
 
