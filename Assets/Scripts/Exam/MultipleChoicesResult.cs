@@ -16,8 +16,7 @@ public partial class ReviewManager : MonoBehaviour
     Image imageQuestion;
     
     private bool isImageQuestion = false;
-    private Vector3 AnswersPosition= Vector3.zero;
-    private Vector3 ImageQuestionAnswerPosition= Vector3.zero;
+    
     void ChangeMultipleChoiceObject(ExerciseDTO exercise,QuestionResultDTO questionResult)
     {
         var questions = exercise.question;
@@ -30,12 +29,12 @@ public partial class ReviewManager : MonoBehaviour
             isImageQuestion = true;
             StartCoroutine(LoadImage(imageQuestion, exercise.image_url));
         
-            m_answerList.gameObject.GetComponent<RectTransform>().position = ImageQuestionAnswerPosition;
+            
             imageQuestion.gameObject.SetActive(true);
         }
         else
         {
-            m_answerList.gameObject.GetComponent<RectTransform>().position=AnswersPosition;
+            
             imageQuestion.gameObject.SetActive(false);
         }
         Debug.Log("TransformAnswer " + m_answerList.transform.position.ToString());
@@ -108,8 +107,21 @@ public partial class ReviewManager : MonoBehaviour
         else
         {
             Texture2D myTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            myTexture = ResizeTexture(myTexture, 500, 200);
             Sprite newSprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height), new Vector2(0.5f, 0.5f));
             image.sprite = newSprite;
         }
+    }
+    Texture2D ResizeTexture(Texture2D source, int newWidth, int newHeight)
+    {
+        RenderTexture rt = RenderTexture.GetTemporary(newWidth, newHeight);
+        rt.filterMode = FilterMode.Bilinear;
+        RenderTexture.active = rt;
+        Graphics.Blit(source, rt);
+        Texture2D result = new Texture2D(newWidth, newHeight);
+        result.ReadPixels(new Rect(0, 0, newWidth, newHeight), 0, 0);
+        result.Apply();
+        RenderTexture.ReleaseTemporary(rt);
+        return result;
     }
 }
