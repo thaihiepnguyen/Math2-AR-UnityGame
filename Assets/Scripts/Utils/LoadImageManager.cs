@@ -2,9 +2,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using Unity.VisualScripting;
 
 public class LoadImageManager {
-    static public IEnumerator LoadImage(Image image, string url) 
+    static public IEnumerator LoadImage(Image image, string url, int? width, int? height) 
     {
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
 
@@ -17,8 +18,24 @@ public class LoadImageManager {
         else 
         {
             Texture2D myTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            if(width !=  null && height!= null)
+            {
+                myTexture = ResizeTexture(myTexture, (int)width, (int)height);
+            }
             Sprite newSprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height), new Vector2(0.5f, 0.5f));
             image.sprite = newSprite;
         }
+    }
+    static private Texture2D ResizeTexture(Texture2D source, int newWidth, int newHeight)
+    {
+        RenderTexture rt = RenderTexture.GetTemporary(newWidth, newHeight);
+        rt.filterMode = FilterMode.Bilinear;
+        RenderTexture.active = rt;
+        Graphics.Blit(source, rt);
+        Texture2D result = new Texture2D(newWidth, newHeight);
+        result.ReadPixels(new Rect(0, 0, newWidth, newHeight), 0, 0);
+        result.Apply();
+        RenderTexture.ReleaseTemporary(rt);
+        return result;
     }
 }
