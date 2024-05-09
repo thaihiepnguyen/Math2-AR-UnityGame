@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using Unity.VisualScripting;
 
 public class LoadImageManager {
-    static public IEnumerator LoadImage(Image image, string url, int? width, int? height) 
+    static public IEnumerator LoadImage(Image image, string url, int width = 500, int height = 200) 
     {
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
 
@@ -18,10 +18,7 @@ public class LoadImageManager {
         else 
         {
             Texture2D myTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            if(width !=  null && height!= null)
-            {
-                myTexture = ResizeTexture(myTexture, (int)width, (int)height);
-            }
+            myTexture = ResizeTexture(myTexture, width, height);
             Sprite newSprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height), new Vector2(0.5f, 0.5f));
             image.sprite = newSprite;
         }
