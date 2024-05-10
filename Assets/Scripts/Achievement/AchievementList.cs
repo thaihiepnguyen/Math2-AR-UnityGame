@@ -35,7 +35,7 @@ public class AchievementList : MonoBehaviour
 
                 Image imagePadge = imageAchievement.GetComponent<Image>();
 
-                StartCoroutine(LoadImage(imagePadge, response.data[i].image_url));
+                StartCoroutine(LoadImageManager.LoadBinaryImage(imagePadge, response.data[i].image_id));
 
                  int index = i;
               
@@ -98,20 +98,21 @@ public class AchievementList : MonoBehaviour
       //  SceneManager.LoadScene(currentSceneName);
     }
 
-        private IEnumerator LoadImage(Image image, string url) 
+    private IEnumerator LoadImage(Image image, string url)
     {
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
 
         yield return request.SendWebRequest();
 
-        if (request.isNetworkError || request.isHttpError) 
+        if (request.isNetworkError || request.isHttpError)
         {
             Debug.Log(request.error);
         }
-        else 
+        else
         {
             Texture2D myTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            Sprite newSprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height), new Vector2(0.5f, 0.5f));
+            Sprite newSprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height),
+                new Vector2(0.5f, 0.5f));
             image.sprite = newSprite;
         }
     }
