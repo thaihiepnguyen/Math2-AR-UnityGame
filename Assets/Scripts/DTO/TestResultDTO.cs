@@ -13,7 +13,7 @@ public class TestResultDTO
     public string? completed_time { get; set; }
     public string? point { get; set; }
 
-    public DateTime? date { get; set; }
+    public string? date { get; set; }
 
     
 

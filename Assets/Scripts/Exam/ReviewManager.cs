@@ -16,10 +16,15 @@ public partial class ReviewManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI resultText;
     [SerializeField] public TextMeshProUGUI progress;
     [SerializeField] Button backToResultBtn;
+    [SerializeField] private TextMeshProUGUI title;
     ExamManager examManager;
     List<ExerciseDTO> exercises;
     List<QuestionResultDTO> questionResults;
     int currentQuestion = 0;
+    TestResultBUS testResultBUS;
+    ExerciseBUS exerciseBUS;
+    QuestionResultBUS questionResultBUS;
+    TestResultDTO testResult;
     //DragDrop Result Object
 
     //Multiple Choices Result Object
@@ -31,18 +36,49 @@ public partial class ReviewManager : MonoBehaviour
     //[SerializeField] private Button ExitBtn;
     // Start is called before the first frame update
 
-     void Start()
+     async void Start()
     {
-        
-        examManager = mainCanvas.GetComponent<ExamManager>();
-        if(examManager!= null )
+        if (DetailExamManager.GetisReview())
         {
+            exerciseBUS= new ExerciseBUS();
+            testResultBUS= new TestResultBUS();
+            questionResultBUS= new QuestionResultBUS();
+            var exerciseResponse= await exerciseBUS.GetExerciseByTestId(ExamListManager.GetTestID());
+            int userId = PlayerPrefs.GetInt(GlobalVariable.userID);
+            var testResultResponse = await testResultBUS.GetByUserIdAndTestId(userId, ExamListManager.GetTestID());
+            
+            if(exerciseResponse.data != null)
+            {
+                exercises = exerciseResponse.data;
+            }
+            if (testResultResponse.data != null)
+            {
+                testResult= testResultResponse.data;
+               
+            }
+            var questionResultResponse = await questionResultBUS.GetQuestionResultByTestResultId(testResultResponse.data.test_result_id);
+            if (questionResultResponse.data != null)
+            {
+                questionResults = questionResultResponse.data;
+                title.text = DetailExamManager.GetTitle();
+                resultText.text = $"Bạn đã trả lời đúng {testResult.point} câu trong {testResult.completed_time}";
+                updateUI();
+            }
            
-            questionResults = examManager.questionResultList;
-            exercises=examManager.exercises;
-            resultText.text = $"Bạn đã trả lời đúng {examManager.currentRightAnswer}/{examManager.totalQuestion} câu trong {examManager.timer.toTimeString()} phút!!";
-            updateUI();
         }
+        else
+        {
+            examManager = mainCanvas.GetComponent<ExamManager>();
+            if (examManager != null)
+            {
+
+                questionResults = examManager.questionResultList;
+                exercises = examManager.exercises;
+                resultText.text = $"Bạn đã trả lời đúng {examManager.currentRightAnswer}/{examManager.totalQuestion} câu trong {examManager.timer.toTimeString()}";
+                updateUI();
+            }
+        }
+       
     }
 
     // Update is called once per frame
@@ -109,9 +145,9 @@ public partial class ReviewManager : MonoBehaviour
     {
         currentQuestion++;
         
-        if (currentQuestion >= examManager.totalQuestion)
+        if (currentQuestion >= questionResults.Count)
         {
-            currentQuestion=examManager.totalQuestion-1;
+            currentQuestion= questionResults.Count - 1;
             return;
         }
         updateUI();

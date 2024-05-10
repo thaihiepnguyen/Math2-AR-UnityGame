@@ -18,4 +18,8 @@ public class TestResultBUS
     {
         return await _testResultDao.GetById(id);
     }
+    public async Task<BaseDTO<TestResultDTO>> GetByUserIdAndTestId(int userId, int testId)
+    {
+        return await _testResultDao.GetByUserIdAndTestId(userId, testId);
+    }
 }
