@@ -76,20 +76,30 @@ public partial class ExerciseMananger : MonoBehaviour
     
     private async void Start()
     {
+        string preScene = SceneHistory.GetInstance().GetPreviousScene();
         var exerciseBUS = new ExerciseBUS();
-        string lessonId = LessonList.GetLessonId();
-        try
+        try 
         {
-            exercises = await exerciseBUS.GetExercisesByLessonId(lessonId);
+            if (preScene == "ChapterScene")
+            {
+                char chapterId = ChapterList.GetChapterId();
+                exercises = await exerciseBUS.GetExercisesByChapterId(chapterId);
+            }
+            else
+            {
+                string lessonId = LessonList.GetLessonId();
+                exercises = await exerciseBUS.GetExercisesByLessonId(lessonId);
+            }
         }
         catch (Exception ex)
         {
             Debug.LogError(ex);
         }
-   
+        
+
         if (exercises != null)
         {
-            totalQuestion= exercises.Count;
+            totalQuestion = exercises.Count;
             UpdateUI();
         }
     }
@@ -173,7 +183,6 @@ public partial class ExerciseMananger : MonoBehaviour
                 if (alist[i].name.Contains("ItemContain"))
                 {
                     aslotItem[j].transform.SetParent(alist[i]);
-                    Debug.Log(alist[i].name);
                     j++;
                 }
 
@@ -225,7 +234,6 @@ public partial class ExerciseMananger : MonoBehaviour
     public void ChangeInputObject(ExerciseDTO exercise){
         var question = exercise.question;
         var right_answers = exercise.right_answer.Split(",");
-        Debug.Log(right_answers.Length);
 
         i_question.text = question;
     
@@ -334,7 +342,8 @@ public partial class ExerciseMananger : MonoBehaviour
         {
             if (currentQuestion >= totalQuestion)
             {
-                SceneHistory.GetInstance().LoadScene(GlobalVariable.MAIN_SCENE);
+                SceneHistory.GetInstance().PreviousScene();
+                return;
             }
             if (exercises[currentQuestion].type == GlobalVariable.DragDropType && exercises != null)
             {

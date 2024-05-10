@@ -61,4 +61,10 @@ public class SceneHistory : MonoBehaviour
         }
  
     }
+
+    public string GetPreviousScene()
+    {
+        int nearLastIndex = sceneHistory.Count - 2;
+        return sceneHistory[nearLastIndex];
+    }
 }

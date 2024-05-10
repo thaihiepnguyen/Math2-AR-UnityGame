@@ -79,6 +79,8 @@ public partial class ExerciseMananger : MonoBehaviour
                 btn.color = HexToColor("#FF0000");
             }
         }
+
+        checkAnswer = false;
     }
 
     private void ResetMultipleChoiceAnswerAttribute()
