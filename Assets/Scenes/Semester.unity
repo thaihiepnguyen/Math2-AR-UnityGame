@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -258,7 +258,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.032250002, y: 0.043444455}
   m_AnchorMax: {x: 0.25086486, y: 0.4115}
-  m_AnchoredPosition: {x: -7.2349854, y: -0.47998047}
+  m_AnchoredPosition: {x: -7.2348633, y: -0.47998047}
   m_SizeDelta: {x: 7.203003, y: 6.1799927}
   m_Pivot: {x: 0, y: 0.000000074505806}
 --- !u!114 &429864552
@@ -612,6 +612,14 @@ PrefabInstance:
     - target: {fileID: 1388302322660002753, guid: be08b2e3baf786c48a3a9f3b4e994a65, type: 3}
       propertyPath: m_Name
       value: SidebarManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388302322660002753, guid: be08b2e3baf786c48a3a9f3b4e994a65, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539380114990880744, guid: be08b2e3baf786c48a3a9f3b4e994a65, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.3803711
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1030,7 +1038,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -4.33}
   m_AnchorMin: {x: 0.0133437505, y: 0.07}
   m_AnchorMax: {x: 0.27034378, y: 0.27733335}
-  m_AnchoredPosition: {x: -4.9125977, y: 13.189697}
+  m_AnchoredPosition: {x: -4.9121094, y: 13.189697}
   m_SizeDelta: {x: 4.3690186, y: -82.229996}
   m_Pivot: {x: 0.4731607, y: 0.49999994}
 --- !u!114 &1361646475
@@ -2306,11 +2314,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4690968046931182684, guid: 56403edfea2e54f5b9af57302d8212b9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -45.114014
+      value: -45.114258
       objectReference: {fileID: 0}
     - target: {fileID: 4690968046931182684, guid: 56403edfea2e54f5b9af57302d8212b9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -7.9310303
+      value: -7.9311523
       objectReference: {fileID: 0}
     - target: {fileID: 4690968046931182684, guid: 56403edfea2e54f5b9af57302d8212b9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2404,7 +2412,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6502880905050259806, guid: 70f34a0ccd1db8c469ab9f35d0bd44b8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.9969482
+      value: -1.9970703
       objectReference: {fileID: 0}
     - target: {fileID: 6502880905050259806, guid: 70f34a0ccd1db8c469ab9f35d0bd44b8, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2505,7 +2513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8424060509317888076, guid: 4f3ded61644ea194caf09cc48151fd02, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 15.999756
+      value: 15.999512
       objectReference: {fileID: 0}
     - target: {fileID: 8424060509317888076, guid: 4f3ded61644ea194caf09cc48151fd02, type: 3}
       propertyPath: m_AnchoredPosition.y
