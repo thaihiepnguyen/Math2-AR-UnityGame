@@ -31,6 +31,9 @@ public class ProfileManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI _username;
+
+     [SerializeField]
+    private GameObject dragon;
      async void Awake(){
         LeanTween.reset();
 
@@ -54,6 +57,9 @@ public class ProfileManager : MonoBehaviour
     public void OnEnable()
     {
         float width = container.gameObject.GetComponent<RectTransform>().rect.width;
+
+        container.gameObject.GetComponent<Image>().enabled = true;
+        dragon.SetActive(false);
         Debug.Log(width);
          LeanTween.moveLocalX(gameObject, -width/2f, 0.5f).setEase(LeanTweenType.easeInOutCirc);
     }
