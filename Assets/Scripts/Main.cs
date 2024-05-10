@@ -13,7 +13,7 @@ public class Main : MonoBehaviour
         SceneHistory.GetInstance().LoadScene("Store");
     }
 
-    public void OnClickPersonalButton() {
-        SceneHistory.GetInstance().LoadScene("PersonalScene");
-    }
+    // public void OnClickPersonalButton() {
+    //     SceneHistory.GetInstance().LoadScene("PersonalScene");
+    // }
 }
