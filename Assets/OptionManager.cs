@@ -18,9 +18,6 @@ public class OptionManager : MonoBehaviour
     }
 
     void OnClickButton() {
-        RectTransform rectTransform = GetComponent<RectTransform>();
-        float objectWidth = rectTransform.rect.width;
-        var currentPos = transform.position.x;
-        LeanTween.moveX(personal, currentPos + objectWidth, 3);
+        LeanTween.moveX(personal, 0, 3);
     }
 }
