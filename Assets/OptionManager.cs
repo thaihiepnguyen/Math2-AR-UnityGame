@@ -18,6 +18,6 @@ public class OptionManager : MonoBehaviour
     }
 
     void OnClickButton() {
-        LeanTween.moveX(personal, 0, 3);
+       personal.SetActive(true);
     }
 }

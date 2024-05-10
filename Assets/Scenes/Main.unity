@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -773,9 +773,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Collectible
       objectReference: {fileID: 0}
+    - target: {fileID: 2717464750757128217, guid: 56403edfea2e54f5b9af57302d8212b9, type: 3}
+      propertyPath: m_fontSize
+      value: 38
+      objectReference: {fileID: 0}
     - target: {fileID: 2840421086092541956, guid: 56403edfea2e54f5b9af57302d8212b9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1.4000225
+      value: -1.4000244
       objectReference: {fileID: 0}
     - target: {fileID: 4634249658477179806, guid: 56403edfea2e54f5b9af57302d8212b9, type: 3}
       propertyPath: collectiblePrefab
@@ -1804,13 +1808,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 439884109}
     m_Modifications:
+    - target: {fileID: 2678239281068061295, guid: cd1b9047cd647b447b5fbf7957ab6e04, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 439884105}
     - target: {fileID: 5610605648698893583, guid: cd1b9047cd647b447b5fbf7957ab6e04, type: 3}
       propertyPath: m_Name
       value: Personal
       objectReference: {fileID: 0}
     - target: {fileID: 8401446199234760176, guid: cd1b9047cd647b447b5fbf7957ab6e04, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0.000000026077032
       objectReference: {fileID: 0}
     - target: {fileID: 8401446199234760176, guid: cd1b9047cd647b447b5fbf7957ab6e04, type: 3}
       propertyPath: m_Pivot.y
@@ -1870,7 +1878,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8401446199234760176, guid: cd1b9047cd647b447b5fbf7957ab6e04, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -350
+      value: -700
       objectReference: {fileID: 0}
     - target: {fileID: 8401446199234760176, guid: cd1b9047cd647b447b5fbf7957ab6e04, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1889,8 +1897,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 1025946538808034768, guid: cd1b9047cd647b447b5fbf7957ab6e04, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd1b9047cd647b447b5fbf7957ab6e04, type: 3}
@@ -1988,7 +1995,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 192.7
+  m_fontSize: 143.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2924,7 +2931,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 130
+  m_fontSize: 100.65
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1

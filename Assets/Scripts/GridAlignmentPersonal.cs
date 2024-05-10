@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GridAlignment : MonoBehaviour
+public class GridAlignmentPersonal : MonoBehaviour
 {
     public GameObject container;
     void Update()
@@ -18,10 +18,8 @@ public class GridAlignment : MonoBehaviour
         container.GetComponent<GridLayoutGroup>().padding.bottom = paddingVertical;
         float width = container.GetComponent<RectTransform>().rect.width - 2*paddingHorizontal;
         float height = container.GetComponent<RectTransform>().rect.height  - 2*paddingVertical; 
-        Vector2 newSize = new Vector2(width/3,height/2);
+        Vector2 newSize = new Vector2(width,height/2);
 
         container.GetComponent<GridLayoutGroup>().cellSize = newSize;
     }
-
-
 }
