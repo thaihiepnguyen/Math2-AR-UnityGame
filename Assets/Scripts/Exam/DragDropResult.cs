@@ -34,7 +34,14 @@ public partial class ReviewManager : MonoBehaviour
         for (int i = 0; i < a.Length; i++)
         {
             a[i].text = right_answers[i];
-            q[i].text = questions[i];
+            if (questions.Length > 3)
+            {
+                q[i].text = questions[i+1];
+            }
+            else
+            {
+                q[i].text = questions[i];
+            }
             aslot[i].text = answers[i];
             if (answers[i] == right_answers[i])
             {

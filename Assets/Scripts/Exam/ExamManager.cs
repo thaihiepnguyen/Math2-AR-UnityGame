@@ -50,6 +50,7 @@ public class ExamManager : MonoBehaviour
     GameObject d_result;
     [SerializeField]
     GameObject d_answerSlot;
+    [SerializeField] TextMeshProUGUI d_question;
     public Sprite correctSprite;
     public Sprite incorrectSprite;
 
@@ -337,7 +338,6 @@ public class ExamManager : MonoBehaviour
         d_result.SetActive(false);
         var questions = exercise.question.Split(",");
         var answers = exercise.answer.Split(",");
-
         var aslotItem = d_answerSlot.GetComponentsInChildren<DragAndDrop>();
         if (aslotItem.Length > 0)
         {
@@ -348,7 +348,6 @@ public class ExamManager : MonoBehaviour
                 if (alist[i].name.Contains("ItemContain"))
                 {
                     aslotItem[j].transform.SetParent(alist[i]);
-                    Debug.Log(alist[i].name);
                     j++;
                 }
 
@@ -357,10 +356,23 @@ public class ExamManager : MonoBehaviour
         var a = d_answerList.GetComponentsInChildren<TextMeshProUGUI>();
 
         var q = d_questionList.GetComponentsInChildren<TextMeshProUGUI>();
-        for (int i = 0; i < a.Length; i++)
+        if (questions.Length > 3)
         {
-            a[i].text = answers[i];
-            q[i].text = questions[i];
+            d_question.text = questions[0];
+            for (int i = 0; i < a.Length; i++)
+            {
+                a[i].text = answers[i];
+                q[i].text = questions[i + 1];
+            }
+        }
+        else
+        {
+            d_question.text = "Em hãy hoàn thành các phép tính sau:";
+            for (int i = 0; i < a.Length; i++)
+            {
+                a[i].text = answers[i];
+                q[i].text = questions[i];
+            }
         }
 
     }
