@@ -50,4 +50,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 697daae3b1b25444e955b7b912f48a97
+  - enabled: 1
+    path: Assets/Scenes/DetailExamScene.unity
+    guid: c6e96c567f1838741a4d6377a492bb86
+  - enabled: 1
+    path: Assets/Scenes/ReviewExamScene.unity
+    guid: a9f7e02b053f8304db266d404023a61e
   m_configObjects: {}

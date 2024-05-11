@@ -104,6 +104,6 @@ public class ExamListManager : MonoBehaviour
     {
         Debug.Log("Btn " + btnIndex + " clicked");
         test_id = testList[btnIndex].test_id;
-        SceneManager.LoadScene("ExamScene");
+        SceneHistory.GetInstance().LoadScene("DetailExamScene");
     }
 }

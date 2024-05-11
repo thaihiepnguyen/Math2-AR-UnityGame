@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using EasyUI;
 using EasyUI.Toast;
+using System.Security.Cryptography;
 
 public class ExamManager : MonoBehaviour
 {
@@ -101,14 +102,8 @@ public class ExamManager : MonoBehaviour
             user_id = PlayerPrefs.GetInt(GlobalVariable.userID),
         };
         //var testResultResponse= await testResultBus.GetById(1);
-          var testResultResponse= await testResultBus.AddTestResult(testResult);
+        
         var testResponse = await testBus.GetById(test_id);
-        if(testResultResponse.data != null)
-        {
-            testResult = testResultResponse.data;
-            Debug.Log("testResultResponse " + testResultResponse.data.test_id.ToString());
-            
-        }
         if(testResponse.data != null)
         {
             title.text = $"Bài thi học kỳ {Semester.GetSemester()} - {testResponse.data.test_name}";
@@ -155,9 +150,14 @@ public class ExamManager : MonoBehaviour
                         var temp = new QuestionResultDTO()
                         {
                             exercise_id = exercises[i].exercise_id,
-                            test_result_id = testResult.test_result_id,
-                            user_answer = "",
+                             //test_result_id = testResult.test_result_id,
+                            user_answer = ""
+                           
                         };
+                        if (exercises[i].type == GlobalVariable.DragDropType)
+                        {
+                            temp.user_answer = exercises[i].answer;
+                        }
                         questionResultList.Add(temp);
                     }
                     currentQuestion= totalQuestion;
@@ -195,13 +195,29 @@ public class ExamManager : MonoBehaviour
         currentQuestion = currentQuestion + 1;
         if (currentQuestion >= totalQuestion)
         {
+            
             for (int i = 0;i< questionResultList.Count; i++)
             {
-                var response = await questionResultBus.AddQuestionResult(questionResultList[i]);
+               
+               
                 if (questionResultList[i].user_answer == exercises[i].right_answer)
                 {
                     currentRightAnswer += 1;
                 }
+            }
+            testResult.point = $"{currentRightAnswer}/{totalQuestion}";
+            testResult.completed_time = timer.toTimeString();
+            testResult.date = System.DateTime.Now.ToString();
+            
+            var testResultResponse = await testResultBus.AddTestResult(testResult);
+            if (testResultResponse.data != null)
+            {
+                testResult = testResultResponse.data;
+            }
+            for(int i = 0;i<questionResultList.Count; i++)
+            {
+                questionResultList[i].test_result_id = testResult.test_result_id;
+                var response = await questionResultBus.AddQuestionResult(questionResultList[i]);
             }
             Debug.Log($"Your result is: {currentRightAnswer}/{totalQuestion}");
             timer.isStop= true;

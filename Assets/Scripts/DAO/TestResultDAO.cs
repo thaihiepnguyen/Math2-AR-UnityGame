@@ -17,4 +17,8 @@ public class TestResultDAO
     {
         return await API.Get<TestResultDTO>($"{GlobalVariable.server_url}/test_result/{id}");
     }
+    public async Task<BaseDTO<TestResultDTO>> GetByUserIdAndTestId(int userId, int testId)
+    {
+        return await API.Get<TestResultDTO>($"{GlobalVariable.server_url}/test_result/user_test?userId={userId}&testId={testId}");
+    }
 }
