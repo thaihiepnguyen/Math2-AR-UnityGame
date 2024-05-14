@@ -1223,8 +1223,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.01467787, y: 0.1051688}
   m_AnchorMax: {x: 0.978, y: 0.671}
-  m_AnchoredPosition: {x: 36.386578, y: -69.74266}
-  m_SizeDelta: {x: -698.88684, y: 19.582336}
+  m_AnchoredPosition: {x: 36.387, y: -69.746}
+  m_SizeDelta: {x: -257.8567, y: 19.5823}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &94246729
 MonoBehaviour:
@@ -3075,6 +3075,7 @@ MonoBehaviour:
   resultText: {fileID: 848426343}
   progress: {fileID: 988730900}
   backToResultBtn: {fileID: 1670268080}
+  title: {fileID: 0}
 --- !u!224 &390655262 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6899614721874613431, guid: 4686e65de1610a74aadab969943627b7, type: 3}
@@ -11536,6 +11537,7 @@ MonoBehaviour:
   d_answerList: {fileID: 151203691}
   d_result: {fileID: 1672445254}
   d_answerSlot: {fileID: 710121473}
+  d_question: {fileID: 1297288440}
   correctSprite: {fileID: 21300000, guid: 066a79572ac8ea94d86814b4d271167b, type: 3}
   incorrectSprite: {fileID: 21300000, guid: 1744932cc2d6b76429db9b9f83fc5257, type: 3}
   MultipleChoiceExercise: {fileID: 797523317}
