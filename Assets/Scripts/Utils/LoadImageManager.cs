@@ -18,7 +18,7 @@ public class LoadImageManager {
         else 
         {
             Texture2D myTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            myTexture = ResizeTexture(myTexture, (int)width, (int)height);            
+            myTexture = ResizeTexture(myTexture, width, height);
             Sprite newSprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height), new Vector2(0.5f, 0.5f));
             image.sprite = newSprite;
         }
