@@ -60,7 +60,7 @@ public class StoreManager : MonoBehaviour
                 // if (skins[i].image_url != ""){
                 var imageProduct = newProduct.transform.GetChild(1).GetComponent<Image>();
 
-                StartCoroutine(LoadImage(imageProduct, skins[i].image_url));
+                StartCoroutine(LoadImageManager.LoadBinaryImage(imageProduct, skins[i].image_id));
                 // }
 
                 int index = i;
@@ -105,7 +105,7 @@ public class StoreManager : MonoBehaviour
                 //  if (frames[i].image_url != ""){
                 var imageProduct = newProduct.transform.GetChild(1).GetComponent<Image>();
 
-                StartCoroutine(LoadImage(imageProduct, frames[i].image_url));
+                StartCoroutine(LoadImageManager.LoadBinaryImage(imageProduct, frames[i].image_id));
                 //  }
 
                 int index = i;
@@ -189,27 +189,6 @@ public class StoreManager : MonoBehaviour
             newProduct.transform.SetParent(testTab.transform, false);
         }
 
-    }
-
-
-
-
-    private IEnumerator LoadImage(Image image, string url)
-    {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
-
-        yield return request.SendWebRequest();
-
-        if (request.isNetworkError || request.isHttpError)
-        {
-            Debug.Log(request.error);
-        }
-        else
-        {
-            Texture2D myTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            Sprite newSprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height), new Vector2(0.5f, 0.5f));
-            image.sprite = newSprite;
-        }
     }
 
     // Update is called once per frame

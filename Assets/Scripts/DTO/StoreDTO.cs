@@ -25,7 +25,7 @@ public class SkinDTO
 
     public string mode_url { get; set;}
 
-     public string image_url { get; set;}
+     public int image_id { get; set;}
 
      public int price {get;set;}
 
@@ -57,7 +57,7 @@ public class FrameDTO
   
     public int frame_id {get; set; }
 
-     public string image_url { get; set;}
+     public int image_id { get; set;}
 
      public int price {get;set;}
 
