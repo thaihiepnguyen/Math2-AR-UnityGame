@@ -407,10 +407,10 @@ public class ExamManager : MonoBehaviour
         var answers = exercise.answer.Split(",");
 
         m_question.text = questions;
-        if (exercise.image_url != null)
+        if (exercise.image_id != null)
         {
             isImageQuestion = true;
-            StartCoroutine(LoadImage(imageQuestion, exercise.image_url));
+            StartCoroutine(LoadImageManager.LoadBinaryImage(imageQuestion, (int)exercise.image_id));
             Vector3 currentPosition = m_answerList.transform.position;
             currentPosition.x += 460f;
             m_answerList.transform.position = currentPosition;
@@ -505,35 +505,5 @@ public class ExamManager : MonoBehaviour
             Debug.LogError("Invalid hexadecimal color: " + hex);
             return Color.white;
         }
-    }
-    private IEnumerator LoadImage(Image image, string url)
-    {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
-
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
-        {
-            Debug.Log(request.error);
-        }
-        else
-        {
-            Texture2D myTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            myTexture = ResizeTexture(myTexture, 500, 200);
-            Sprite newSprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height), new Vector2(0.5f, 0.5f));
-            image.sprite = newSprite;
-        }
-    }
-    Texture2D ResizeTexture(Texture2D source, int newWidth, int newHeight)
-    {
-        RenderTexture rt = RenderTexture.GetTemporary(newWidth, newHeight);
-        rt.filterMode = FilterMode.Bilinear;
-        RenderTexture.active = rt;
-        Graphics.Blit(source, rt);
-        Texture2D result = new Texture2D(newWidth, newHeight);
-        result.ReadPixels(new Rect(0, 0, newWidth, newHeight), 0, 0);
-        result.Apply();
-        RenderTexture.ReleaseTemporary(rt);
-        return result;
     }
 }
