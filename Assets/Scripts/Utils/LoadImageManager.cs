@@ -5,6 +5,32 @@ using UnityEngine.Networking;
 using Unity.VisualScripting;
 
 public class LoadImageManager {
+    static public IEnumerator LoadBinaryImage(Image image, int id, int width = 500, int height = 200)
+    {
+        string url = $"{GlobalVariable.server_url}/images/download/{id}"; // Replace with your server and image id
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(webRequest.error);
+            }
+            else
+            {
+                // Get downloaded data
+                byte[] imageData = webRequest.downloadHandler.data;
+
+                // Use imageData as needed, for example, convert to Texture2D
+                Texture2D texture = new Texture2D(2, 2);
+                texture.LoadImage(imageData);
+                texture = ResizeTexture(texture, width, height);
+                image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            }
+        }
+    }
+    
+    
     static public IEnumerator LoadImage(Image image, string url, int width = 500, int height = 200) 
     {
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);

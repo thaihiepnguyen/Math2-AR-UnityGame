@@ -24,10 +24,10 @@ public partial class ReviewManager : MonoBehaviour
 
         m_question.text = questions;
 
-        if (exercise.image_url != null)
+        if (exercise.image_id != null)
         {
             isImageQuestion = true;
-            StartCoroutine(LoadImageManager.LoadImage(imageQuestion, exercise.image_url));
+            StartCoroutine(LoadImageManager.LoadBinaryImage(imageQuestion, (int)exercise.image_id));
         
             
             imageQuestion.gameObject.SetActive(true);

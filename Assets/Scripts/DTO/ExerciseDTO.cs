@@ -14,8 +14,7 @@ public class ExerciseDTO
     public string right_answer { get; set; }
     public string type { get; set; }
     public int? test_id { get; set; }
-    public string image_url { get; set; }
-  
+    public int? image_id { get; set; }
 }
 
 [Serializable]

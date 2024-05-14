@@ -7,5 +7,5 @@ public class AchievementDTO
     public string name { get; set; }
     public int status_type { get; set; }
     public int price {get; set;}
-    public string image_url {get; set;}
+    public int image_id {get; set;}
 }
