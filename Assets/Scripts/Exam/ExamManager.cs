@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using EasyUI;
 using EasyUI.Toast;
+using System.Security.Cryptography;
 
 public class ExamManager : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class ExamManager : MonoBehaviour
     GameObject d_result;
     [SerializeField]
     GameObject d_answerSlot;
+    [SerializeField] TextMeshProUGUI d_question;
     public Sprite correctSprite;
     public Sprite incorrectSprite;
 
@@ -101,14 +103,8 @@ public class ExamManager : MonoBehaviour
             user_id = PlayerPrefs.GetInt(GlobalVariable.userID),
         };
         //var testResultResponse= await testResultBus.GetById(1);
-          var testResultResponse= await testResultBus.AddTestResult(testResult);
+        
         var testResponse = await testBus.GetById(test_id);
-        if(testResultResponse.data != null)
-        {
-            testResult = testResultResponse.data;
-            Debug.Log("testResultResponse " + testResultResponse.data.test_id.ToString());
-            
-        }
         if(testResponse.data != null)
         {
             title.text = $"Bài thi học kỳ {Semester.GetSemester()} - {testResponse.data.test_name}";
@@ -155,9 +151,14 @@ public class ExamManager : MonoBehaviour
                         var temp = new QuestionResultDTO()
                         {
                             exercise_id = exercises[i].exercise_id,
-                            test_result_id = testResult.test_result_id,
-                            user_answer = "",
+                             //test_result_id = testResult.test_result_id,
+                            user_answer = ""
+                           
                         };
+                        if (exercises[i].type == GlobalVariable.DragDropType)
+                        {
+                            temp.user_answer = exercises[i].answer;
+                        }
                         questionResultList.Add(temp);
                     }
                     currentQuestion= totalQuestion;
@@ -195,13 +196,29 @@ public class ExamManager : MonoBehaviour
         currentQuestion = currentQuestion + 1;
         if (currentQuestion >= totalQuestion)
         {
+            
             for (int i = 0;i< questionResultList.Count; i++)
             {
-                var response = await questionResultBus.AddQuestionResult(questionResultList[i]);
+               
+               
                 if (questionResultList[i].user_answer == exercises[i].right_answer)
                 {
                     currentRightAnswer += 1;
                 }
+            }
+            testResult.point = $"{currentRightAnswer}/{totalQuestion}";
+            testResult.completed_time = timer.toTimeString();
+            testResult.date = System.DateTime.Now.ToString();
+            
+            var testResultResponse = await testResultBus.AddTestResult(testResult);
+            if (testResultResponse.data != null)
+            {
+                testResult = testResultResponse.data;
+            }
+            for(int i = 0;i<questionResultList.Count; i++)
+            {
+                questionResultList[i].test_result_id = testResult.test_result_id;
+                var response = await questionResultBus.AddQuestionResult(questionResultList[i]);
             }
             Debug.Log($"Your result is: {currentRightAnswer}/{totalQuestion}");
             timer.isStop= true;
@@ -321,7 +338,6 @@ public class ExamManager : MonoBehaviour
         d_result.SetActive(false);
         var questions = exercise.question.Split(",");
         var answers = exercise.answer.Split(",");
-
         var aslotItem = d_answerSlot.GetComponentsInChildren<DragAndDrop>();
         if (aslotItem.Length > 0)
         {
@@ -332,7 +348,6 @@ public class ExamManager : MonoBehaviour
                 if (alist[i].name.Contains("ItemContain"))
                 {
                     aslotItem[j].transform.SetParent(alist[i]);
-                    Debug.Log(alist[i].name);
                     j++;
                 }
 
@@ -341,10 +356,23 @@ public class ExamManager : MonoBehaviour
         var a = d_answerList.GetComponentsInChildren<TextMeshProUGUI>();
 
         var q = d_questionList.GetComponentsInChildren<TextMeshProUGUI>();
-        for (int i = 0; i < a.Length; i++)
+        if (questions.Length > 3)
         {
-            a[i].text = answers[i];
-            q[i].text = questions[i];
+            d_question.text = questions[0];
+            for (int i = 0; i < a.Length; i++)
+            {
+                a[i].text = answers[i];
+                q[i].text = questions[i + 1];
+            }
+        }
+        else
+        {
+            d_question.text = "Em hãy hoàn thành các phép tính sau:";
+            for (int i = 0; i < a.Length; i++)
+            {
+                a[i].text = answers[i];
+                q[i].text = questions[i];
+            }
         }
 
     }
@@ -407,10 +435,10 @@ public class ExamManager : MonoBehaviour
         var answers = exercise.answer.Split(",");
 
         m_question.text = questions;
-        if (exercise.image_url != null)
+        if (exercise.image_id != null)
         {
             isImageQuestion = true;
-            StartCoroutine(LoadImage(imageQuestion, exercise.image_url));
+            StartCoroutine(LoadImageManager.LoadBinaryImage(imageQuestion, (int)exercise.image_id));
             Vector3 currentPosition = m_answerList.transform.position;
             currentPosition.x += 460f;
             m_answerList.transform.position = currentPosition;
@@ -505,35 +533,5 @@ public class ExamManager : MonoBehaviour
             Debug.LogError("Invalid hexadecimal color: " + hex);
             return Color.white;
         }
-    }
-    private IEnumerator LoadImage(Image image, string url)
-    {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
-
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
-        {
-            Debug.Log(request.error);
-        }
-        else
-        {
-            Texture2D myTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            myTexture = ResizeTexture(myTexture, 500, 200);
-            Sprite newSprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height), new Vector2(0.5f, 0.5f));
-            image.sprite = newSprite;
-        }
-    }
-    Texture2D ResizeTexture(Texture2D source, int newWidth, int newHeight)
-    {
-        RenderTexture rt = RenderTexture.GetTemporary(newWidth, newHeight);
-        rt.filterMode = FilterMode.Bilinear;
-        RenderTexture.active = rt;
-        Graphics.Blit(source, rt);
-        Texture2D result = new Texture2D(newWidth, newHeight);
-        result.ReadPixels(new Rect(0, 0, newWidth, newHeight), 0, 0);
-        result.Apply();
-        RenderTexture.ReleaseTemporary(rt);
-        return result;
     }
 }
