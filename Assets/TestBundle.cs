@@ -9,7 +9,9 @@ public class TestBundle : MonoBehaviour
     IEnumerator Start()
     {
         
-        string url = $"{GlobalVariable.server_url}/images/download/"; // Replace with your server and image id
+        // string url = $"{GlobalVariable.server_url}/images/download/"; // Replace with your server and image id
+        int id = 167;
+       string url = $"{GlobalVariable.server_url}/images/download/{id}";
         using (UnityWebRequest webRequest = UnityWebRequestAssetBundle.GetAssetBundle(url))
         {
             yield return webRequest.SendWebRequest();
@@ -25,8 +27,8 @@ public class TestBundle : MonoBehaviour
                if (remoteAssetBundle == null){
                 yield break;
                }
-
-               Instantiate(remoteAssetBundle.LoadAsset("dragon"));
+                Debug.Log(remoteAssetBundle.GetAllAssetNames()[0]);
+               Instantiate(remoteAssetBundle.LoadAsset(remoteAssetBundle.GetAllAssetNames()[0]));
                remoteAssetBundle.Unload(false);
             }
         }
