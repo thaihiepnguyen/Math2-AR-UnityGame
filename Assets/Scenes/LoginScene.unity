@@ -123,53 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &94872265
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 94872266}
-  - component: {fileID: 94872267}
-  m_Layer: 0
-  m_Name: FirebaseLoginManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &94872266
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 94872265}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 641.0613, y: 682.0599, z: 0.015101537}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &94872267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 94872265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd76d99cf7f65f74bb6833b24d3b4a23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  infoText: {fileID: 1802796953}
-  webClientId: 916595177384-tsjvonfipit52orilsn3tokvlna36l9o.apps.googleusercontent.com
-  errorCanvas: {fileID: 1279621161}
 --- !u!1 &101131657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,8 +1245,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 94872267}
-        m_TargetAssemblyTypeName: GoogleLogin, Assembly-CSharp
+      - m_Target: {fileID: 549858077}
+        m_TargetAssemblyTypeName: LoginScreenManager, Assembly-CSharp
         m_MethodName: SignInWithGoogle
         m_Mode: 1
         m_Arguments:
@@ -1547,6 +1500,9 @@ MonoBehaviour:
   RegisterButton: {fileID: 730640987}
   OkButton: {fileID: 114251782}
   errorCanvas: {fileID: 1279621161}
+  infoText: {fileID: 1802796953}
+  webClientId: 916595177384-tsjvonfipit52orilsn3tokvlna36l9o.apps.googleusercontent.com
+  OTPField: {fileID: 0}
 --- !u!1 &569250251
 GameObject:
   m_ObjectHideFlags: 0
@@ -6173,4 +6129,3 @@ SceneRoots:
   - {fileID: 1284226581}
   - {fileID: 726036387}
   - {fileID: 549858076}
-  - {fileID: 94872266}

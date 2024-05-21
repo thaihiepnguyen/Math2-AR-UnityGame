@@ -20,8 +20,16 @@ public class AuthDAO
         return await API.Post<LoginExternalDTO, int>($"{GlobalVariable.server_url}/account/login-external-party", loginDto);
     }
 
-    public async Task<BaseDTO<object>> RegisterByEmail(RegisterDTO registerDto)
+    public async Task<BaseDTO<object>> RegisterByEmail(RegisterEmailDTO registerDto)
     {
-        return await API.Post<RegisterDTO, object>($"{GlobalVariable.server_url}/account/register-by-email", registerDto);
+        return await API.Post<RegisterEmailDTO, object>($"{GlobalVariable.server_url}/account/register-by-email", registerDto);
+    }
+    public async Task<BaseDTO<object>> RegisterByPhone(RegisterPhoneDTO registerDto)
+    {
+        return await API.Post<RegisterPhoneDTO, object>($"{GlobalVariable.server_url}/account/register-by-phone", registerDto);
+    }
+    public async Task<BaseDTO<object>> VerifyByPhone(RegisterPhoneDTO phoneNumber)
+    {
+        return await API.Post<RegisterPhoneDTO, object>($"{GlobalVariable.server_url}/account/verify-phone", phoneNumber);
     }
 }

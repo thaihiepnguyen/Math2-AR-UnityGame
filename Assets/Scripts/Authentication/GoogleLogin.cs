@@ -15,8 +15,13 @@ using UnityEngine.SceneManagement;
 public class GoogleLogin : MonoBehaviour
 {
     public TextMeshProUGUI infoText;
-    public string webClientId = "<your client id here>";
+    public TMP_InputField PhoneNumberField;
+    public TMP_InputField OTPField;
 
+    public string webClientId = "<your client id here>";
+    PhoneAuthProvider provider;
+    private uint phoneAuthTimeoutMs = 60 * 1000;
+    private string VerificationId;
     private FirebaseAuth auth;
     private GoogleSignInConfiguration configuration;
     public Canvas errorCanvas;
@@ -46,6 +51,56 @@ public class GoogleLogin : MonoBehaviour
         });
     }
 
+    public void SignInWithPhoneNumber(string phoneNumber){
+        provider = PhoneAuthProvider.GetInstance(auth);
+        provider.VerifyPhoneNumber(
+        new Firebase.Auth.PhoneAuthOptions {
+            PhoneNumber = phoneNumber,
+            TimeoutInMilliseconds = phoneAuthTimeoutMs,
+            ForceResendingToken = null
+        },
+        verificationCompleted: (credential) => {
+            // Auto-sms-retrieval or instant validation has succeeded (Android only).
+            // There is no need to input the verification code.
+            // `credential` can be used instead of calling GetCredential().
+        },
+        verificationFailed: (error) => {
+            // The verification code was not sent.
+            // `error` contains a human readable explanation of the problem.
+        },
+        codeSent: (id, token) => {
+            VerificationId = id;
+            Debug.Log(PhoneNumberField.text);
+            // Verification code was successfully sent via SMS.
+            // `id` contains the verification id that will need to passed in with
+            // the code from the user when calling GetCredential().
+            // `token` can be used if the user requests the code be sent again, to
+            // tie the two requests together.
+        },
+        codeAutoRetrievalTimeOut: (id) => {
+            // Called when the auto-sms-retrieval has timed out, based on the given
+            // timeout parameter.
+            // `id` contains the verification id of the request that timed out.
+        });
+    }
+
+    public void VerifyOTP(){
+        PhoneAuthCredential credential =
+        provider.GetCredential(VerificationId, OTPField.text);
+        auth.SignInAndRetrieveDataWithCredentialAsync(credential).ContinueWith(task => {
+            if (task.IsFaulted) {
+                Debug.LogError("SignInAndRetrieveDataWithCredentialAsync encountered an error: " +
+                            task.Exception);
+                return;
+            }
+            FirebaseUser newUser = task.Result.User;
+            Debug.Log("User signed in successfully");
+            // This should display the phone number.
+            Debug.Log("Phone number: " + newUser.PhoneNumber);
+            // The phone number providerID is 'phone'.
+            Debug.Log("Phone provider ID: " + newUser.ProviderId);
+        });
+    }
     public void SignInWithGoogle() { OnSignIn(); }
     public void SignOutFromGoogle() { OnSignOut(); }
 
@@ -107,6 +162,7 @@ public class GoogleLogin : MonoBehaviour
                 email = task.Result.Email,
                 uid = task.Result.UserId,
                 token = task.Result.IdToken,
+                platform = "Google",
             });
             if (response.isSuccessful)
             {
