@@ -8,9 +8,9 @@ public class CollectibleManager : MonoBehaviour
     [SerializeField]
     private TMP_Text coinText;
     static protected int coin;
-   public static int GetCoin(){
-    return coin;
-   }
+    public static int GetCoin(){
+        return coin;
+    }
     // Start is called before the first frame update
     async void Start() {
         UserBUS userBus = new();
