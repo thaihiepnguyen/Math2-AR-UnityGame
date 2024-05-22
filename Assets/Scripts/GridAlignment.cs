@@ -10,7 +10,7 @@ public class GridAlignment : MonoBehaviour
     public  int row = 2;
     void Start()
     
-    {   
+    {
         var paddingHorizontal = (int) container.GetComponent<RectTransform>().rect.width * 1/20;
         GetComponent<GridLayoutGroup>().padding.left = paddingHorizontal;
         GetComponent<GridLayoutGroup>().padding.right = paddingHorizontal;

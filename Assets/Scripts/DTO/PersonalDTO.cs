@@ -25,5 +25,5 @@ public class PersonalDTO
     public string skinUrl { get; set; }
     public string frameUrl { get; set; }
     public SkinsDTO[] skinsPurchased { get; set; }
-    public FrameDTO[] framesPurchased { get; set; }
+    public FramesDTO[] framesPurchased { get; set; }
 }

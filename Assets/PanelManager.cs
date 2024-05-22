@@ -86,4 +86,8 @@ public class PanelManager : MonoBehaviour
          Debug.Log("Hello");
           
     }
+
+    public void UpdateAvatar(){
+        SceneHistory.GetInstance().LoadScene("Avatar");
+    }
 }
