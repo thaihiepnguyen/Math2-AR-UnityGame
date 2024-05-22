@@ -41,8 +41,8 @@ public class ProfileManager : MonoBehaviour
         var response = await userBUS.GetProfile();
         if (response.isSuccessful) {
             PersonalDTO personalDTO = response.data;
-            if (personalDTO.skinUrl != null) {
-                StartCoroutine(LoadImageManager.LoadImage(_skinImage, personalDTO.skinUrl));
+            if (personalDTO.imageSkinId != null) {
+                StartCoroutine(LoadImageManager.LoadBinaryImage(_skinImage, personalDTO.imageSkinId));
             }
             _username.text = personalDTO.username;
             _totalOfAchievement.text = personalDTO.totalAchievement.ToString();

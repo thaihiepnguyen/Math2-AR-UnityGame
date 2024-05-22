@@ -40,7 +40,6 @@ public class AvatarManager : MonoBehaviour
             personal = response.data;
 
             skins = personal.skinsPurchased;
-
             //skin
 
             for (int i = 0; i < skins.Length; i++)
@@ -50,7 +49,7 @@ public class AvatarManager : MonoBehaviour
           
                 var imageProduct = newProduct.transform.GetChild(0).GetComponent<Image>();
 
-                StartCoroutine(LoadImageManager.LoadBinaryImage(imageProduct, skins[i].skinId));
+                StartCoroutine(LoadImageManager.LoadBinaryImage(imageProduct, skins[i].imageSkinId));
                 // }
 
 
@@ -64,7 +63,7 @@ public class AvatarManager : MonoBehaviour
           
                 var imageProduct = newProduct.transform.GetChild(0).GetComponent<Image>();
 
-                StartCoroutine(LoadImageManager.LoadBinaryImage(imageProduct, frames[i].frameId));
+                StartCoroutine(LoadImageManager.LoadBinaryImage(imageProduct, frames[i].imageFrameId));
                 //  }
 
                 newProduct.transform.SetParent(frameTab.transform, false);
