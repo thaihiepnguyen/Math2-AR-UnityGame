@@ -8,7 +8,7 @@ public class GridAlignment : MonoBehaviour
     public GameObject container;
     public int col = 3;
     public  int row = 2;
-    void Start()
+    void FixedUpdate()
     
     {
         var paddingHorizontal = (int) container.GetComponent<RectTransform>().rect.width * 1/20;
