@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using EasyUI.Progress;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Firebase.Auth;
 
 public class RegisterScreenManager : MonoBehaviour
 {
@@ -18,11 +20,13 @@ public class RegisterScreenManager : MonoBehaviour
     public Button RegisterButton;
 
     public Text ErrorMessage;
+    public Text SuccessMessage;
     
     public Button OkButton;
     public Button ReturnButton;
     public Canvas errorCanvas;
     public Canvas successCanvas;
+    private bool isRegisterByPhone = false;
 
     // Start is called before the first frame update
     void Start()
@@ -78,9 +82,12 @@ public class RegisterScreenManager : MonoBehaviour
 
             if (response.isSuccessful)
             {
+                isRegisterByPhone = true;
+                PlayerPrefs.SetString("email",email);
+                PlayerPrefs.SetString("password",password);
                 Debug.Log("Register Successful");
                 Progress.Hide();
-                ShowSuccessCanvas();
+                ShowSuccessCanvas("Đăng kí số điện thoại thành công");
             }
             else
             {
@@ -103,7 +110,7 @@ public class RegisterScreenManager : MonoBehaviour
             {
                 Debug.Log("Register Successful");
                 Progress.Hide();
-                ShowSuccessCanvas();
+                ShowSuccessCanvas("Hãy kiểm tra email và xác nhận");
             }
             else
             {
@@ -125,8 +132,9 @@ public class RegisterScreenManager : MonoBehaviour
         errorCanvas.gameObject.SetActive(false);
     }
 
-    void ShowSuccessCanvas()
+    void ShowSuccessCanvas(string message)
     {
+        SuccessMessage.text = message;
         successCanvas.gameObject.SetActive(true);
     }
 
@@ -139,10 +147,13 @@ public class RegisterScreenManager : MonoBehaviour
     {
         HideErrorCanvas();
     }
+    
+    
 
-    public void OnClickReturn()
+    public async void OnClickReturn()
     {
         HideSuccessCanvas();
-        SceneManager.LoadScene(GlobalVariable.LOGIN_SCENE);
+        if(isRegisterByPhone)   SceneManager.LoadScene(GlobalVariable.OTP_SCENE);
+        else    SceneManager.LoadScene(GlobalVariable.LOGIN_SCENE);
     }
 }

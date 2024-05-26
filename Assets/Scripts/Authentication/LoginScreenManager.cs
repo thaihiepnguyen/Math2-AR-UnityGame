@@ -30,7 +30,6 @@ public class LoginScreenManager : MonoBehaviour
     private GoogleSignInConfiguration configuration;
     public TextMeshProUGUI infoText;
     public string webClientId = "<your client id here>";
-    private uint phoneAuthTimeoutMs = 60 * 1000;
 
     public TMP_InputField OTPField;
 
@@ -204,37 +203,6 @@ public class LoginScreenManager : MonoBehaviour
 
         GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished);
     }
-    public async Task SignInWithPhoneNumber(string phoneNumber){
-        GlobalVariable.provider = PhoneAuthProvider.GetInstance(GlobalVariable.auth);
-        GlobalVariable.provider.VerifyPhoneNumber(
-        new Firebase.Auth.PhoneAuthOptions {
-            PhoneNumber = phoneNumber,
-            TimeoutInMilliseconds = phoneAuthTimeoutMs,
-            ForceResendingToken = null
-        },
-        verificationCompleted: (credential) => {
-            // Auto-sms-retrieval or instant validation has succeeded (Android only).
-            // There is no need to input the verification code.
-            // `credential` can be used instead of calling GetCredential().
-        },
-        verificationFailed: (error) => {
-            // The verification code was not sent.
-            // `error` contains a human readable explanation of the problem.
-        },
-        codeSent: (id, token) => {
-            GlobalVariable.VerificationId = id;
-            // Verification code was successfully sent via SMS.
-            // `id` contains the verification id that will need to passed in with
-            // the code from the user when calling GetCredential().
-            // `token` can be used if the user requests the code be sent again, to
-            // tie the two requests together.
-        },
-        codeAutoRetrievalTimeOut: (id) => {
-            // Called when the auto-sms-retrieval has timed out, based on the given
-            // timeout parameter.
-            // `id` contains the verification id of the request that timed out.
-        });
-    }
 
     // public void VerifyOTP(){
     //     PhoneAuthCredential credential =
@@ -285,7 +253,7 @@ public class LoginScreenManager : MonoBehaviour
             SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
         }
         else if(isNumeric && string.Equals(response.message,"email not verified")){
-            await SignInWithPhoneNumber(email);
+            PlayerPrefs.SetString("email", email);
             PlayerPrefs.SetString("password", password);
             Progress.Hide();
             SceneManager.LoadScene(GlobalVariable.OTP_SCENE);

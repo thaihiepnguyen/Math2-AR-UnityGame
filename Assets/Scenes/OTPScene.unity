@@ -800,7 +800,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "H\xE3y ki\u1EC3m tra email v\xE0 x\xE1c nh\u1EADn"
+  m_text: "B\u1EA1n \u0111\xE3 x\xE1c th\u1EF1c th\xE0nh c\xF4ng !"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f60bdeaa54cbd43c88aca2752479e47d, type: 2}
   m_sharedMaterial: {fileID: -8072368292583539358, guid: f60bdeaa54cbd43c88aca2752479e47d, type: 2}
@@ -2030,7 +2030,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0110\u0103ng k\xFD th\xE0nh c\xF4ng"
+  m_text: "X\xE1c th\u1EF1c th\xE0nh c\xF4ng"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f60bdeaa54cbd43c88aca2752479e47d, type: 2}
   m_sharedMaterial: {fileID: -8072368292583539358, guid: f60bdeaa54cbd43c88aca2752479e47d, type: 2}
@@ -2057,7 +2057,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40.25
+  m_fontSize: 39.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2588,19 +2588,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1227149875}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1631818231}
-        m_TargetAssemblyTypeName: OTPScreenManager, Assembly-CSharp
-        m_MethodName: VerifyOTP
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1227149875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3993,6 +3981,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OTPField: {fileID: 1746901355}
+  errorCanvas: {fileID: 371044379}
+  successCanvas: {fileID: 574261830}
+  ErrorMessage: {fileID: 2140400701}
+  OkButton: {fileID: 1238197706}
+  ReturnButton: {fileID: 2065790155}
+  ConfirmButton: {fileID: 1227149874}
 --- !u!1 &1655004385
 GameObject:
   m_ObjectHideFlags: 0

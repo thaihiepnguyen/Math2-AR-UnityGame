@@ -4508,7 +4508,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 82.156, y: -38.7}
+  m_AnchoredPosition: {x: 20.199, y: -38.04}
   m_SizeDelta: {x: 284, y: 46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1480962927
@@ -5056,8 +5056,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.07, y: 0.77683765}
   m_AnchorMax: {x: 0.41200003, y: 0.85122514}
-  m_AnchoredPosition: {x: -0.1559906, y: -0.10002136}
-  m_SizeDelta: {x: 1.688797, y: -1.0778046}
+  m_AnchoredPosition: {x: 61.97673, y: -0.10002136}
+  m_SizeDelta: {x: 125.9543, y: -1.0778}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1700274140
 MonoBehaviour:
@@ -5079,9 +5079,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Email
-
-'
+  m_text: "Email/S\u1ED1 \u0111i\u1EC7n tho\u1EA1i\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 57ea901919c9b4899867bfbbcf838610, type: 2}
   m_sharedMaterial: {fileID: 2205265004108501606, guid: 57ea901919c9b4899867bfbbcf838610, type: 2}
@@ -5108,7 +5106,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.4
+  m_fontSize: 21.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5468,7 +5466,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.172, y: 0.83677495}
   m_AnchorMax: {x: 0.83862793, y: 0.97516245}
-  m_AnchoredPosition: {x: -0.0039978027, y: -0.41000366}
+  m_AnchoredPosition: {x: -0.000030517578, y: 4.823105}
   m_SizeDelta: {x: 1.2684021, y: -1.1809082}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1802796953
