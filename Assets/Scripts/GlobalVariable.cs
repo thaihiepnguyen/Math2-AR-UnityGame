@@ -16,7 +16,7 @@ public class GlobalVariable
     public static string VerificationId;
     public static uint phoneAuthTimeoutMs = 60 * 1000;
 
-    public const string server_url = "http://192.168.100.2:3000";
+    public const string server_url = "http://localhost:3000";
     public const string DragDropType = "DragDrop";
     public const string MULTIPLE_CHOICE_TYPE = "MultipleChoice";
     public const string InputType = "Input";
