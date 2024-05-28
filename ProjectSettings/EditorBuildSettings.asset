@@ -59,4 +59,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OTPScene.unity
     guid: 6f7ef049126b8a744afa233a8a15f846
-  m_configObjects: {}
+  m_configObjects:
+    Niantic.Lightship.AR.LightshipSettings: {fileID: 11400000, guid: 8a29abd944c5d004484d72aef946a644, type: 2}
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 50ac7484ee2723446bb8dcd15f5ab319, type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 2f56552de042b744d8fdc854e648ff20, type: 2}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 7d5756b25abc2fd4c8bc62a5643e6608, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: c30fd9412d18d4a49b065a53ce273159, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 7572128eb1a52804ebd11a1fcfd2a0b2, type: 2}
