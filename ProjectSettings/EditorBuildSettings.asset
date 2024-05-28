@@ -56,6 +56,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ReviewExamScene.unity
     guid: a9f7e02b053f8304db266d404023a61e
+  - enabled: 1
+    path: Assets/Scenes/OTPScene.unity
+    guid: 6f7ef049126b8a744afa233a8a15f846
   m_configObjects:
     Niantic.Lightship.AR.LightshipSettings: {fileID: 11400000, guid: 8a29abd944c5d004484d72aef946a644, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 50ac7484ee2723446bb8dcd15f5ab319, type: 2}
