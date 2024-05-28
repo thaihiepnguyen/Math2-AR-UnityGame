@@ -23,6 +23,13 @@ public class LoginScreenManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        #if UNITY_ANDROID
+        GlobalVariable.platform = 1;
+    #elif UNITY_IOS
+        GlobalVariable.platform = 2;
+    #endif
+    
         PasswordField.contentType = TMP_InputField.ContentType.Password;
 
         LoginButton.onClick.AddListener(OnClickLogin);
