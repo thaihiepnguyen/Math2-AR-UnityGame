@@ -672,7 +672,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1421400842}
   - component: {fileID: 1421400841}
-  - component: {fileID: 1421400840}
+  - component: {fileID: 1421400843}
+  - component: {fileID: 1421400844}
   m_Layer: 0
   m_Name: YoutubePlayer
   m_TagString: Untagged
@@ -680,21 +681,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1421400840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1421400838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3768fe280903842fdaa2a016022624f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  youtubeUrl: https://www.youtube.com/watch?v=Yy5RMWYGWqM
-  is360Video: 0
-  cli: 1
 --- !u!328 &1421400841
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -713,15 +699,15 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 1
+  m_DataSource: 0
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources:
   - {fileID: 0}
   m_DirectAudioVolumes:
-  - 1
-  m_Url: https://rr7---sn-8pxuuxa-nbozr.googlevideo.com/videoplayback?expire=1712659223&ei=t8YUZo3JC4mh7OsPt4yTkAg&ip=171.249.177.18&id=o-AHSqUtUlHNI_bNIYSETTVRIZGHjDueg2I4w1pzoLGXGs&itag=22&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=go&mm=31%2C29&mn=sn-8pxuuxa-nbozr%2Csn-8pxuuxa-nbo6k&ms=au%2Crdu&mv=m&mvi=7&pl=21&gcr=vn&initcwndbps=1542500&bui=AaUN6a0vy9yfYEXMoSMYuHsa-5PptgLMx4iAdvi2dqLQxywFj4W9ngKUKC4l0TD1EBKKdJHEnE7dKXB4&spc=UWF9fwCO0czVr1BOnLgeg49KvOXLxFJVU47tBe5Wwqo0jko3BaEJAaU37A&vprv=1&svpuc=1&mime=video%2Fmp4&ns=f7vW6H_TTAj-DWAbtgPGLv8Q&cnr=14&ratebypass=yes&dur=1420.109&lmt=1712621784720198&mt=1712633806&fvip=4&fexp=51141541&c=WEB&sefc=1&txp=5432434&n=mtJXh3iMIoGRPg&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cgcr%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRgIhAJDhdeT2eo4qOCUCtBHNf1hpiRuavosCmkaNi0iaevxCAiEA840HLsrpfly-Vd0F8Y8SBqIkG9QefX7UpL-qxlE6jp8%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ALClDIEwRgIhAKD_eAJ3u5BEMu9El00GsCP6uYEwK4_qNATAr77mzevMAiEApNwzswuXrQp5ZwXSySGbkYs30fP3Z2jwnw8EM195kq8%3D
+  - 0.46
+  m_Url: https://rr1---sn-a0jpm-a0md.googlevideo.com/videoplayback?expire=1716992847&ei=7-ZWZqbxLKnxxN8P986KwAI&ip=2001%3A910%3A800%3A0%3A2c88%3A7212%3A2677%3A3f6f&id=o-AEDLSH2B4AQGBOx9Y4LSxZcpoQj3m85-j4KOWn0SG40R&itag=22&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=_R&mm=31%2C29&mn=sn-a0jpm-a0md%2Csn-25glenlk&ms=au%2Crdu&mv=m&mvi=1&pl=32&initcwndbps=1206250&vprv=1&svpuc=1&mime=video%2Fmp4&rqh=1&cnr=14&ratebypass=yes&dur=1219.581&lmt=1711024947174521&mt=1716970373&fvip=5&c=ANDROID_TESTSUITE&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cvprv%2Csvpuc%2Cmime%2Crqh%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRQIhAONhY_N3Io9hQSTWCT-yEZYs3aLcyjl7jEe2DsmG-eUmAiBosEqlX7VOAfTpPA1Q1ASeQDCEG2O-BxXgkuUGY-IXGA%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AHWaYeowRQIhAMOU3VDBS90ZuPqWY92u1rtjGx1-MvSALTuoqStst_LOAiAXPwx68E9Wn7X3SuEknheIES6WVa823CxOH-PTfcFeuA%3D%3D&host=rr1---sn-a0jpm-a0md.googlevideo.com
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
@@ -748,6 +734,83 @@ Transform:
   - {fileID: 2056817567}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1421400843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421400838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f51438de7493496c87c7a2918e755e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvidiousInstance: {fileID: 1524487248}
+  VideoId: 
+  ProxyVideo: 1
+  Itag: 
+  CheckForBlockedStreams: 1
+--- !u!114 &1421400844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421400838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 062bd5436e6749040b9c15248916ec30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1421400841}
+  invidiousVideoPlayer: {fileID: 1421400843}
+--- !u!1 &1524487246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1524487247}
+  - component: {fileID: 1524487248}
+  m_Layer: 0
+  m_Name: InvidiousInstance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1524487247
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524487246}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1524487248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524487246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fcf9aaa4cc4c4c8591b505ba333932a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InstanceType: 0
+  CustomInstanceUrl: 
 --- !u!1 &1549171903
 GameObject:
   m_ObjectHideFlags: 0
@@ -1622,5 +1685,6 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1524487247}
   - {fileID: 2062122783}
   - {fileID: 1421400842}
