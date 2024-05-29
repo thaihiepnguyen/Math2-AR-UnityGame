@@ -3,6 +3,7 @@ public class Main : MonoBehaviour
 {
     
     [SerializeField] private GameObject prototype;
+    [SerializeField] private GameObject container;
 
     async void Start()
     {
@@ -10,7 +11,7 @@ public class Main : MonoBehaviour
         var response = await userBus.GetMe();
         if (response.isSuccessful){
             Debug.Log("Successful");
-               StartCoroutine(LoadModelManager.LoadModel(response.data.three_dimension_id,prototype));
+               StartCoroutine(LoadModelManager.LoadModel(response.data.three_dimension_id,prototype,container));
         }
 
     }
