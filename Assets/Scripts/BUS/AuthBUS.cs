@@ -15,8 +15,16 @@ public class AuthBUS
         return await _authDao.LoginExternalParty(loginDto);
     }
 
-    public async Task<BaseDTO<object>> RegisterByEmail(RegisterDTO registerDto)
+    public async Task<BaseDTO<object>> RegisterByEmail(RegisterEmailDTO registerDto)
     {
         return await _authDao.RegisterByEmail(registerDto);
+    }
+    public async Task<BaseDTO<object>> RegisterByPhone(RegisterPhoneDTO registerDto)
+    {
+        return await _authDao.RegisterByPhone(registerDto);
+    }
+    public async Task<BaseDTO<object>> VerifyByPhone(RegisterPhoneDTO phoneNumber)
+    {
+        return await _authDao.VerifyByPhone(phoneNumber);
     }
 }
