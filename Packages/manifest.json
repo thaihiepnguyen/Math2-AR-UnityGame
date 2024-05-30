@@ -9,7 +9,7 @@
     }
   ],
   "dependencies": {
-    "com.ibicha.youtube-player": "2.0.2",
+    "com.ibicha.youtube-player": "3.3.0",
     "com.nianticlabs.lightship": "https://github.com/niantic-lightship/ardk-upm.git",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.feature.2d": "2.0.0",

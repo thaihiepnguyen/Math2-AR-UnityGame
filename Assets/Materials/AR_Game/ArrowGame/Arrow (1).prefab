@@ -233,13 +233,13 @@ PrefabInstance:
       addedObject: {fileID: 7395001371390361762}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c6c53c81492bfe244935a6bfc14977da, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4473459339753164971}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c6c53c81492bfe244935a6bfc14977da, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1023631189589403889}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c6c53c81492bfe244935a6bfc14977da, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6713654399263382055}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c6c53c81492bfe244935a6bfc14977da, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2540174070173650443}
   m_SourcePrefab: {fileID: 100100000, guid: c6c53c81492bfe244935a6bfc14977da, type: 3}
 --- !u!1 &5932829084986347001 stripped
 GameObject:
@@ -273,21 +273,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &4473459339753164971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5932829084986347001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62e6a1a9d7033ce4c86bd12a16ba1288, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 7395001371390361762}
-  myCollider: {fileID: 6713654399263382055}
-  stickingArrow: {fileID: 5932829084986347001, guid: 2f68cc60bdb3a0a41af1cab40c96f928, type: 3}
 --- !u!65 &1023631189589403889
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -330,6 +315,21 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.00051079557
   m_Center: {x: 0, y: -0.027000004, z: 0}
+--- !u!114 &2540174070173650443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5932829084986347001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5af91c80ede31b0469b75c9dbd39cfc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 7395001371390361762}
+  myCollider: {fileID: 6713654399263382055}
+  stickingArrow: {fileID: 5932829084986347001, guid: 62bd2849f7a048a4ab74192a61c8427c, type: 3}
 --- !u!4 &6421697877059819331 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c6c53c81492bfe244935a6bfc14977da, type: 3}

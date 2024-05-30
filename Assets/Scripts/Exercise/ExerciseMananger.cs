@@ -95,6 +95,9 @@ public partial class ExerciseMananger : MonoBehaviour
         catch (Exception ex)
         {
             Debug.LogError(ex);
+            Toast.Show("Chưa có bài tập");
+            StartCoroutine(RealTimeDelayCoroutine(3f));
+            SceneHistory.GetInstance().PreviousScene();
         }
         
 
@@ -104,7 +107,12 @@ public partial class ExerciseMananger : MonoBehaviour
             UpdateUI();
         }
     }
-
+    IEnumerator RealTimeDelayCoroutine(float second)
+    {
+        // Waits for 2 seconds in real time
+        yield return new WaitForSecondsRealtime(second);
+        //Debug.Log("This message is delayed by 2 seconds, real time.");
+    }
     // Update is called once per frame
     void Update()
     {
