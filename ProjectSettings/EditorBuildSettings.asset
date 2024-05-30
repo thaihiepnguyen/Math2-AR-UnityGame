@@ -57,6 +57,14 @@ EditorBuildSettings:
     path: Assets/Scenes/ReviewExamScene.unity
     guid: a9f7e02b053f8304db266d404023a61e
   - enabled: 1
+    path: Assets/Scenes/TestBundle.unity
+    guid: d94d4039d2560c84e937420cb9695c46
+  - enabled: 1
+    path: Assets/Scenes/New Scene.unity
+    guid: 895cd06c330456340a07eea0af1292fb
+  - enabled: 1
+    path: Assets/Scenes/Avatar.unity
+    guid: 059d87c223cb97f40b07265f0664556c
     path: Assets/Scenes/BookLesson/BookLearningScene.unity
     guid: 846ba3d1fbfe9394384c4e7f990d79cd
   - enabled: 1

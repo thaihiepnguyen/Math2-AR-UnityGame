@@ -10,6 +10,9 @@ public class Tab : MonoBehaviour
     [SerializeField] private  GameObject tabHeaderList;
     [SerializeField] private  GameObject tabContentList;
 
+    int avatarTab = 0;
+    public int GetAvatarTab { get { return avatarTab; }}
+   
 
     void Start()
     {
@@ -53,6 +56,7 @@ public class Tab : MonoBehaviour
 
 
     void TabOnClick(int index){
+        avatarTab = index;
             for (int i = 0; i < tabHeaderList.transform.childCount; i++)
             {
 
