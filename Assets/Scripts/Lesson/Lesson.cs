@@ -42,7 +42,13 @@ public class Lesson : MonoBehaviour
     }
     public void OnClickViewLesson()
     {
-        //if video url
-        SceneHistory.GetInstance().LoadScene("VideoLearning");
+        if (lesson.book_url!= null) {
+            SceneHistory.GetInstance().LoadScene("BookLearningScene");
+        }
+        else
+        {
+            SceneHistory.GetInstance().LoadScene("VideoLearning");
+
+        }
     }
 }
