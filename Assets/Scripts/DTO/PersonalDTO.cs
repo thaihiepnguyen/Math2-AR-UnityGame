@@ -15,6 +15,14 @@ public class FramesDTO
     public int? imageFrameId { get; set; }
 }
 
+[Serializable]
+public class UpdateProfileDTO
+{
+    public int? skinId { get; set; }
+    public int? frameId { get; set; }
+}
+
+
 
 
 [Serializable]

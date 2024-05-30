@@ -6,14 +6,14 @@ using Unity.VisualScripting;
 
 
 public class LoadModelManager:MonoBehaviour {
-    static public IEnumerator LoadModel( int? id, GameObject self, GameObject parent = null, bool active = false, int indexOrder=0)
+    static public IEnumerator LoadModel( int? id, GameObject self, GameObject parent = null, bool active = false)
     {
         if (id == null)
         {
             id = 0; // skin default
         }
         string url = $"{GlobalVariable.server_url}/3ds/download/{id}"; // Replace with your server and image id
-    
+      
         using (UnityWebRequest webRequest = UnityWebRequestAssetBundle.GetAssetBundle(url))
         {
             yield return webRequest.SendWebRequest();
@@ -30,7 +30,7 @@ public class LoadModelManager:MonoBehaviour {
                 yield break;
                }
 
-                Debug.Log(remoteAssetBundle.LoadAsset(remoteAssetBundle.GetAllAssetNames()[0]));
+            
                var model = Instantiate(remoteAssetBundle.LoadAssetAsync(remoteAssetBundle.GetAllAssetNames()[0]).asset) as GameObject;
              
                 model.transform.position = self.transform.position;
@@ -40,9 +40,7 @@ public class LoadModelManager:MonoBehaviour {
                 if (parent !=null){
                 model.transform.SetParent(parent.transform,false);
                 }
-                // if (indexOrder!=0){
-                // model.transform.SetSiblingIndex(indexOrder);
-                // }
+
                 if (active == true){
                     model.SetActive(true);
                 }
@@ -54,6 +52,47 @@ public class LoadModelManager:MonoBehaviour {
         }
     }
     
-    
+        static public IEnumerator LoadModelBuffer( int? id, GameObject self, GameObject[] buffer = null, bool active = false, int index = -1)
+    {
+        if (id == null)
+        {
+            id = 0; // skin default
+        }
+        string url = $"{GlobalVariable.server_url}/3ds/download/{id}"; // Replace with your server and image id
+     
+        using (UnityWebRequest webRequest = UnityWebRequestAssetBundle.GetAssetBundle(url))
+        {
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(webRequest.error);
+            }
+            else
+            {
+               AssetBundle  remoteAssetBundle = DownloadHandlerAssetBundle.GetContent(webRequest);
+
+               if (remoteAssetBundle == null){
+                yield break;
+               }
+
+            
+               var model = remoteAssetBundle.LoadAssetAsync(remoteAssetBundle.GetAllAssetNames()[0]).asset as GameObject;
+             
+        
+
+                if (buffer !=null && index!=-1){
+                    buffer[index] = model;
+                }
+                if (active == true){
+                    model.SetActive(true);
+                }
+                else {
+                         model.SetActive(false);
+                }
+               remoteAssetBundle.Unload(false);
+            }
+        }
+    }
   
 }

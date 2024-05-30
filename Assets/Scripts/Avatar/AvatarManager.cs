@@ -41,6 +41,7 @@ public class AvatarManager : MonoBehaviour
 
     int? skinId = null;
     int? frameId = null;
+    GameObject[] bufferObject;
 
     async void Start()
     {
@@ -52,36 +53,38 @@ public class AvatarManager : MonoBehaviour
             personal = response.data;
 
             skins = personal.skinsPurchased;
-            skinId =  personal.imageSkinId;
-            frameId = personal.imageFrameId;
+          
             //skin
-
+            bufferObject = new GameObject[skins.Length];
             for (int i = 0; i < skins.Length; i++)
             {
-
+                
                 GameObject newProduct = Instantiate(prefabProduct);
           
                 var imageProduct = newProduct.transform.GetChild(0).GetComponent<Image>();
 
-                StartCoroutine(LoadImageManager.LoadBinaryImage(imageProduct, skins[i].imageSkinId));
-                // }
+                
+             
                
                
 
-                 int index = i;
+                int index = i;
                 newProduct.transform.SetParent(skinTab.transform, false);
                 if (personal.imageSkinId == skins[i].imageSkinId){
+                    skinId = skins[i].skinId;
+                    StartCoroutine(LoadImageManager.LoadBinaryImage(imageProduct, skins[i].imageSkinId,500,200, frameContainer.GetComponent<Image>()));
                     newProduct.GetComponent<Image>().color = new Color32(209,165,165,255);
-                    frameContainer.GetComponent<Image>().sprite = imageProduct.sprite;
+            
 
-                     StartCoroutine(LoadModelManager.LoadModel(skins[i].threeDimensionId,prototype,container,true,i));
+                    StartCoroutine(LoadModelManager.LoadModelBuffer(skins[i].threeDimensionId,prototype,bufferObject,true, index));
                 }
                 else {
-                       StartCoroutine(LoadModelManager.LoadModel(skins[i].threeDimensionId,prototype,container));
+                    StartCoroutine(LoadModelManager.LoadModelBuffer(skins[i].threeDimensionId,prototype,bufferObject,false, index));
+                    StartCoroutine(LoadImageManager.LoadBinaryImage(imageProduct, skins[i].imageSkinId));
                 }
 
                
-                newProduct.GetComponent<Button>().onClick.AddListener(() => CustomAvatar(index,skins[i].imageSkinId,"skin", skinTab));
+                newProduct.GetComponent<Button>().onClick.AddListener(() => CustomAvatar(index,skins[index].skinId,"skin", skinTab));
             }
 
             frames = personal.framesPurchased;
@@ -91,25 +94,24 @@ public class AvatarManager : MonoBehaviour
           
                 var imageProduct = newProduct.transform.GetChild(0).GetComponent<Image>();
 
-                StartCoroutine(LoadImageManager.LoadBinaryImage(imageProduct, frames[i].imageFrameId));
-                //  }
+                
+       
                 int index = i;
                 newProduct.transform.SetParent(frameTab.transform, false);
 
-                 if (personal.imageFrameId == frames[i].imageFrameId){
+                if (personal.imageFrameId == frames[i].imageFrameId){
+                    frameId = frames[i].frameId;
+                    StartCoroutine(LoadImageManager.LoadBinaryImage(imageProduct, frames[i].imageFrameId, 500, 200, frame.GetComponent<Image>()));
                     newProduct.GetComponent<Image>().color = new Color32(209,165,165,255);
-                    frame.GetComponent<Image>().sprite = imageProduct.sprite;
                     frame.SetActive(true);
+                } else {
+                    StartCoroutine(LoadImageManager.LoadBinaryImage(imageProduct, frames[i].imageFrameId));
                 }
-                   newProduct.GetComponent<Button>().onClick.AddListener(() => CustomAvatar(index,frames[i].imageFrameId,"frame", frameTab,imageProduct.sprite));
+                newProduct.GetComponent<Button>().onClick.AddListener(() => CustomAvatar(index,frames[index].frameId,"frame", frameTab,imageProduct.sprite));
             }
         }
-
-      
-        
-
     }
-
+    bool isOK = false;
     // Update is called once per frame
     void Update()
     {
@@ -121,12 +123,36 @@ public class AvatarManager : MonoBehaviour
             container.SetActive(false);
             frameContainer.SetActive(true);
         }
+
+
+        if (isOK == false && bufferObject != null && CheckBufferObject()) {
+             for (int i = 0; i < bufferObject.Length; i++) {
+                if (bufferObject[i] != null) {
+                    bufferObject[i].transform.localScale = prototype.transform.localScale;
+                    Instantiate(bufferObject[i],prototype.transform.position,prototype.transform.rotation,container.transform);
+                 
+                }
+            }
+            isOK = true;
+        }
+    }
+
+    bool CheckBufferObject() {
+        for (int i = 0; i < bufferObject.Length; i++) {
+            if (bufferObject[i] == null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
      void CustomAvatar(int index, int? id, string type, GameObject tab, Sprite image = null)
     {
         if (type == "skin"){
+            Debug.Log(id);
             skinId = id;
+            Debug.Log(index);
             for (int i = 0; i < skins.Length; i++){
                 if (i == index){
                     container.transform.GetChild(i+1).gameObject.SetActive(true);
@@ -149,9 +175,24 @@ public class AvatarManager : MonoBehaviour
                    
                 }
                 else {
-                      tab.transform.GetChild(i).gameObject.GetComponent<Image>().color = new Color32(255,255,255,255);
+                    tab.transform.GetChild(i).gameObject.GetComponent<Image>().color = new Color32(255,255,255,255);
                 }
             }
         }
     }
+
+     public async void SaveChange(){
+         var response = await userBUS.UpdateProfile(new UpdateProfileDTO {
+                    skinId = skinId,
+                    frameId = frameId
+                });
+
+                if (response.isSuccessful){
+                    Toast.Show("Cập nhật avatar thành công", 1f, ToastPosition.MiddleCenter);
+                }
+                else {
+                    Toast.Show("Cập nhật avatar thất bại", 1f, ToastPosition.MiddleCenter);
+                }
+     }
+
 }

@@ -16,4 +16,9 @@ public class UserDAO
     public async Task<BaseDTO<PersonalDTO>> GetProfile() {
         return await API.Get<PersonalDTO>($"{GlobalVariable.server_url}/users/get-personal-by-id/{GlobalVariable.platform}");
     }
+
+     public async Task<BaseDTO<object>> UpdateProfile(UpdateProfileDTO updateProfileDTO) 
+    {
+        return await API.Post<UpdateProfileDTO, object>($"{GlobalVariable.server_url}/users/update-personal", updateProfileDTO);
+    }
 }

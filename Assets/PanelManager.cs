@@ -46,6 +46,10 @@ public class PanelManager : MonoBehaviour
             if (personalDTO.imageSkinId != null) {
                 StartCoroutine(LoadImageManager.LoadBinaryImage(_skinImage, personalDTO.imageSkinId));
             }
+            if (personalDTO.imageFrameId!=null){
+                StartCoroutine(LoadImageManager.LoadBinaryImage(_frameImage,personalDTO.imageFrameId));
+                _frameImage.gameObject.SetActive(true);
+            }
             _username.text = personalDTO.username;
             _totalOfAchievement.text = personalDTO.totalAchievement.ToString();
             _totalOfNote.text = personalDTO.totalNote.ToString();
@@ -63,7 +67,7 @@ public class PanelManager : MonoBehaviour
          LeanTween.reset();
         float width = container.gameObject.GetComponent<RectTransform>().rect.width;
 
-        // container.gameObject.GetComponent<Image>().enabled = true;
+  
         dragon.SetActive(false);
         Debug.Log(width);
          LeanTween.moveLocalX(gameObject, width/2, 0.5f).setEase(LeanTweenType.easeInOutCirc);
@@ -76,14 +80,11 @@ public class PanelManager : MonoBehaviour
          float width = container.gameObject.GetComponent<RectTransform>().rect.width;
 
        
-        Debug.Log(width);
          LeanTween.moveLocalX(gameObject, -width/2f, 0.5f).setEase(LeanTweenType.easeInOutCirc).setOnComplete(()=>{
              dragon.SetActive(true);
             this.gameObject.SetActive(false);
          });
-        //  this.gameObject.SetActive(false);
 
-         Debug.Log("Hello");
           
     }
 

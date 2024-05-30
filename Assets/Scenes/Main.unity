@@ -2013,6 +2013,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: SidebarManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1707793425794535480, guid: be08b2e3baf786c48a3a9f3b4e994a65, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 348.316
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707793425794535480, guid: be08b2e3baf786c48a3a9f3b4e994a65, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 316.965
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707793425794535480, guid: be08b2e3baf786c48a3a9f3b4e994a65, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.0450134
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707793425794535480, guid: be08b2e3baf786c48a3a9f3b4e994a65, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -15.82
+      objectReference: {fileID: 0}
     - target: {fileID: 6344974128228909860, guid: be08b2e3baf786c48a3a9f3b4e994a65, type: 3}
       propertyPath: dragon
       value: 
@@ -2025,6 +2041,10 @@ PrefabInstance:
       propertyPath: _closeButton
       value: 
       objectReference: {fileID: 1722989703}
+    - target: {fileID: 8138396507249430018, guid: be08b2e3baf786c48a3a9f3b4e994a65, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8248904575340144186, guid: be08b2e3baf786c48a3a9f3b4e994a65, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2056,6 +2076,10 @@ PrefabInstance:
     - target: {fileID: 8880626173383926368, guid: be08b2e3baf786c48a3a9f3b4e994a65, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140995656861481324, guid: be08b2e3baf786c48a3a9f3b4e994a65, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2154,7 +2178,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 162
+  m_fontSize: 200
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2525,7 +2549,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 68.1
+  m_fontSize: 72
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3206,7 +3230,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 117.1
+  m_fontSize: 130
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1
