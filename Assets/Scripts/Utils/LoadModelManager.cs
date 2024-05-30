@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 
 
 public class LoadModelManager:MonoBehaviour {
-    static public IEnumerator LoadModel( int? id, GameObject self, GameObject parent = null)
+    static public IEnumerator LoadModel( int? id, GameObject self, GameObject parent = null, bool active = false, int indexOrder=0)
     {
         if (id == null)
         {
@@ -31,7 +31,7 @@ public class LoadModelManager:MonoBehaviour {
                }
 
                 Debug.Log(remoteAssetBundle.LoadAsset(remoteAssetBundle.GetAllAssetNames()[0]));
-               var model = Instantiate(remoteAssetBundle.LoadAsset(remoteAssetBundle.GetAllAssetNames()[0])) as GameObject;
+               var model = Instantiate(remoteAssetBundle.LoadAssetAsync(remoteAssetBundle.GetAllAssetNames()[0]).asset) as GameObject;
              
                 model.transform.position = self.transform.position;
                 model.transform.rotation = self.transform.rotation;
@@ -39,6 +39,15 @@ public class LoadModelManager:MonoBehaviour {
 
                 if (parent !=null){
                 model.transform.SetParent(parent.transform,false);
+                }
+                // if (indexOrder!=0){
+                // model.transform.SetSiblingIndex(indexOrder);
+                // }
+                if (active == true){
+                    model.SetActive(true);
+                }
+                else {
+                         model.SetActive(false);
                 }
                remoteAssetBundle.Unload(false);
             }

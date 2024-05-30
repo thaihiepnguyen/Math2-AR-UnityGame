@@ -5,6 +5,7 @@ public class SkinsDTO
 {
     public int skinId { get; set; }
     public int? imageSkinId { get; set; }
+    public int? threeDimensionId { get; set; }
 }
 
 [Serializable]

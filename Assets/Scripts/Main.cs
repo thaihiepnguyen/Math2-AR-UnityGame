@@ -11,7 +11,7 @@ public class Main : MonoBehaviour
         var response = await userBus.GetMe();
         if (response.isSuccessful){
             Debug.Log("Successful");
-               StartCoroutine(LoadModelManager.LoadModel(response.data.three_dimension_id,prototype,container));
+               StartCoroutine(LoadModelManager.LoadModel(response.data.three_dimension_id,prototype,container,true));
         }
 
     }
