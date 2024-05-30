@@ -57,6 +57,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ReviewExamScene.unity
     guid: a9f7e02b053f8304db266d404023a61e
   - enabled: 1
+    path: Assets/Scenes/BookLesson/BookLearningScene.unity
+    guid: 846ba3d1fbfe9394384c4e7f990d79cd
+  - enabled: 1
     path: Assets/Scenes/OTPScene.unity
     guid: 6f7ef049126b8a744afa233a8a15f846
   - enabled: 1
