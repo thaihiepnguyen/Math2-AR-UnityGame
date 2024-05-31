@@ -54,7 +54,7 @@ public class PanelManager : MonoBehaviour
             _totalOfAchievement.text = personalDTO.totalAchievement.ToString();
             _totalOfNote.text = personalDTO.totalNote.ToString();
 
-            // _logoutBtn.onClick.AddListener(OnLogoutCLick);
+            _logoutBtn.onClick.AddListener(OnLogoutCLick);
 
            
         }
@@ -90,5 +90,8 @@ public class PanelManager : MonoBehaviour
 
     public void UpdateAvatar(){
         SceneHistory.GetInstance().LoadScene("Avatar");
+    }
+      void OnLogoutCLick() {
+        SceneHistory.GetInstance().OnClickLogoutButton();
     }
 }
