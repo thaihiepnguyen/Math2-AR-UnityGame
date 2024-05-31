@@ -19,4 +19,9 @@ public class UserBUS
     {
         return await _userDao.GetProfile();
     }
+
+     public async Task<BaseDTO<object>> UpdateProfile(UpdateProfileDTO updateProfileDTO) 
+    {
+        return await _userDao.UpdateProfile(updateProfileDTO);
+    }
 }

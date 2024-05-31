@@ -123,53 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &94872265
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 94872266}
-  - component: {fileID: 94872267}
-  m_Layer: 0
-  m_Name: FirebaseLoginManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &94872266
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 94872265}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 641.0613, y: 682.0599, z: 0.015101537}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &94872267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 94872265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd76d99cf7f65f74bb6833b24d3b4a23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  infoText: {fileID: 1802796953}
-  webClientId: 916595177384-tsjvonfipit52orilsn3tokvlna36l9o.apps.googleusercontent.com
-  errorCanvas: {fileID: 1279621161}
 --- !u!1 &101131657
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,10 +156,10 @@ RectTransform:
   - {fileID: 705172131}
   m_Father: {fileID: 1510552218}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.07, y: 0.77683765}
-  m_AnchorMax: {x: 0.41200003, y: 0.85122514}
-  m_AnchoredPosition: {x: 0.84439087, y: -91.572}
-  m_SizeDelta: {x: 1.688797, y: -1.0778046}
+  m_AnchorMin: {x: 0.07, y: 0.56177497}
+  m_AnchorMax: {x: 0.41200003, y: 0.6286126}
+  m_AnchoredPosition: {x: 0.84439087, y: -0.071998596}
+  m_SizeDelta: {x: 1.688797, y: 1.9221954}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &101131659
 MonoBehaviour:
@@ -1292,8 +1245,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 94872267}
-        m_TargetAssemblyTypeName: GoogleLogin, Assembly-CSharp
+      - m_Target: {fileID: 549858077}
+        m_TargetAssemblyTypeName: LoginScreenManager, Assembly-CSharp
         m_MethodName: SignInWithGoogle
         m_Mode: 1
         m_Arguments:
@@ -1547,6 +1500,9 @@ MonoBehaviour:
   RegisterButton: {fileID: 730640987}
   OkButton: {fileID: 114251782}
   errorCanvas: {fileID: 1279621161}
+  infoText: {fileID: 1802796953}
+  webClientId: 916595177384-tsjvonfipit52orilsn3tokvlna36l9o.apps.googleusercontent.com
+  OTPField: {fileID: 0}
 --- !u!1 &569250251
 GameObject:
   m_ObjectHideFlags: 0
@@ -4552,7 +4508,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 82.156, y: -38.7}
+  m_AnchoredPosition: {x: 20.199, y: -38.04}
   m_SizeDelta: {x: 284, y: 46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1480962927
@@ -5099,9 +5055,9 @@ RectTransform:
   m_Father: {fileID: 1510552218}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.07, y: 0.77683765}
-  m_AnchorMax: {x: 0.41200003, y: 0.85122514}
-  m_AnchoredPosition: {x: -0.1559906, y: -0.10002136}
-  m_SizeDelta: {x: 1.688797, y: -1.0778046}
+  m_AnchorMax: {x: 0.77900004, y: 0.85122514}
+  m_AnchoredPosition: {x: -1.0232697, y: -0.10002136}
+  m_SizeDelta: {x: -0.045700073, y: -1.0778}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1700274140
 MonoBehaviour:
@@ -5123,9 +5079,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Email
-
-'
+  m_text: "Email/S\u1ED1 \u0111i\u1EC7n tho\u1EA1i\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 57ea901919c9b4899867bfbbcf838610, type: 2}
   m_sharedMaterial: {fileID: 2205265004108501606, guid: 57ea901919c9b4899867bfbbcf838610, type: 2}
@@ -5152,7 +5106,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.4
+  m_fontSize: 21.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5512,7 +5466,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.172, y: 0.83677495}
   m_AnchorMax: {x: 0.83862793, y: 0.97516245}
-  m_AnchoredPosition: {x: -0.0039978027, y: -0.41000366}
+  m_AnchoredPosition: {x: -0.000030517578, y: 4.823105}
   m_SizeDelta: {x: 1.2684021, y: -1.1809082}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1802796953
@@ -6173,4 +6127,3 @@ SceneRoots:
   - {fileID: 1284226581}
   - {fileID: 726036387}
   - {fileID: 549858076}
-  - {fileID: 94872266}

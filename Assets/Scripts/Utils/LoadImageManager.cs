@@ -5,8 +5,12 @@ using UnityEngine.Networking;
 using Unity.VisualScripting;
 
 public class LoadImageManager {
-    static public IEnumerator LoadBinaryImage(Image image, int id, int width = 500, int height = 200)
+    static public IEnumerator LoadBinaryImage(Image image, int? id, int width = 500, int height = 200, Image container = null)
     {
+        if (id == null)
+        {
+            id = 0; // skin default
+        }
         string url = $"{GlobalVariable.server_url}/images/download/{id}"; // Replace with your server and image id
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
@@ -26,6 +30,10 @@ public class LoadImageManager {
                 texture.LoadImage(imageData);
                 texture = ResizeTexture(texture, width, height);
                 image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
+                if (container!=null){
+                    container.sprite = image.sprite;
+                }
             }
         }
     }
