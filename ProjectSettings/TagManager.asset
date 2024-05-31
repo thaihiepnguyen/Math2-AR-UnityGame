@@ -10,6 +10,8 @@ TagManager:
   - Outsider
   - Exercise
   - MultipleChoiceQuestion
+  - Arrow
+  - Plane
   layers:
   - Default
   - TransparentFX
