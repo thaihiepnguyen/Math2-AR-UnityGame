@@ -65,6 +65,7 @@ public class ProfileManager : MonoBehaviour
     }
 
      void OnLogoutCLick() {
+        Debug.Log(SceneHistory.GetInstance());
         SceneHistory.GetInstance().OnClickLogoutButton();
     }
 }
