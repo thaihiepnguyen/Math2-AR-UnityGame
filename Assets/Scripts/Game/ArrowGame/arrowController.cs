@@ -32,7 +32,7 @@ public class arrowController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Plane"))
         {
-            ArrowGameManager.GetInstance().DescreaseHealth();
+            ArrowGameManager.GetInstance().DecreaseHealth();
             Destroy(gameObject);
             return;
         }

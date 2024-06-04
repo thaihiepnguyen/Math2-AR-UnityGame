@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MovingTarget : MonoBehaviour, IHittable
@@ -60,6 +61,15 @@ public class MovingTarget : MonoBehaviour, IHittable
             rb.isKinematic = false;
             stopped = true;
         }
+        var arrowGameManager = ArrowGameManager.GetInstance();
+        
+        var answer = GetComponentInChildren<TextMeshProUGUI>();
+        if(answer.text == arrowGameManager.GetCurRightAnswer())
+        {
+            arrowGameManager.point++;
+            Debug.Log("Point "+ArrowGameManager.GetInstance().point);
+        }
+        
     }
 
     private void FixedUpdate()
