@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 364d71876246fb14e81f0c854c92675b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundThreshold: 0.44
+  groundThreshold: 0.1
   avgNormal: 0
   minVerts: 10
   isGround: 0

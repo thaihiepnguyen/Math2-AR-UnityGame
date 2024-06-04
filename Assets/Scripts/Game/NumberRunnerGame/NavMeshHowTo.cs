@@ -11,34 +11,43 @@ public class NavMeshHowTo : MonoBehaviour
     private Camera _camera;
 
 
-    [SerializeField]
-    private LightshipNavMeshManager _navmeshManager;
+    // [SerializeField]
+    // private LightshipNavMeshManager _navmeshManager;
 
-    [SerializeField]
-    private LightshipNavMeshAgent _agentPrefab;
+    // [SerializeField]
+    // private LightshipNavMeshAgent _agentPrefab;
 
     
-    private LightshipNavMeshAgent _agentInstance;
+    // private LightshipNavMeshAgent _agentInstance;
 
+
+
+    [SerializeField]
+    private GameObject _agentPrefab;
+
+    
+    private GameObject _agentInstance;
+
+    private bool isPlaced = false;
     void Update()
     {
-        // if (isPlaced) return;
+      if (isPlaced) return;
         HandleTouch();
     }
 
     
 
-    public void SetVisualization(bool isVisualizationOn)
-    {
-        //turn off the rendering for the navmesh
-        _navmeshManager.GetComponent<LightshipNavMeshRenderer>().enabled = isVisualizationOn;
+    // public void SetVisualization(bool isVisualizationOn)
+    // {
+    //     //turn off the rendering for the navmesh
+    //     _navmeshManager.GetComponent<LightshipNavMeshRenderer>().enabled = isVisualizationOn;
 
-        if (_agentInstance != null)
-        {
-            //turn off the path rendering on the active agent
-            _agentInstance.GetComponent<LightshipNavMeshAgentPathRenderer>().enabled = isVisualizationOn;
-        }
-    }
+    //     if (_agentInstance != null)
+    //     {
+    //         //turn off the path rendering on the active agent
+    //         _agentInstance.GetComponent<LightshipNavMeshAgentPathRenderer>().enabled = isVisualizationOn;
+    //     }
+    // }
 
 
 
@@ -71,11 +80,12 @@ public class NavMeshHowTo : MonoBehaviour
                 {
                     _agentInstance = Instantiate(_agentPrefab);
                     _agentInstance.transform.position = hit.point;
+                    isPlaced = true;
                 }
-                else
-                {
-                    _agentInstance.SetDestination(hit.point);
-                }
+                // else
+                // {
+                //     _agentInstance.SetDestination(hit.point);
+                // }
             }
         }
     }

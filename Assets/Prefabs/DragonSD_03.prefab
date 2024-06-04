@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 7028862052561983817}
   - component: {fileID: -3100449399305928615}
   - component: {fileID: 7960330891491670709}
-  - component: {fileID: 3961003431313966550}
+  - component: {fileID: 1184129163007217206}
   m_Layer: 6
   m_Name: DragonSD_03
   m_TagString: Untagged
@@ -191,7 +191,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4891963664364971303}
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238444068895322191}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa9c6c34ba7214d98a185db26b656d1d, type: 3}
   m_Name: 
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238444068895322191}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4b1b693a878e4a18887acd8a155dfb5, type: 3}
   m_Name: 
@@ -266,8 +266,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d20592f510bd24f81fd9b872b31c50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedThreshold: 0.1
---- !u!54 &3961003431313966550
+  speedThreshold: 1.5
+--- !u!54 &1184129163007217206
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,7 +289,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0

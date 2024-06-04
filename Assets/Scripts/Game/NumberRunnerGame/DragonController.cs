@@ -19,16 +19,16 @@ public class DragonController : MonoBehaviour
     
     //Control the animation state, so that 
     private DragonAnimationState AnimationState;
-    void Start()
+    void OnEnable()
     {
         dragonAnimation = GetComponent<Animator>();
         joystick = FindObjectOfType<FixedJoystick>();
         rigidBody = gameObject.GetComponent<Rigidbody>();
 
-        lastPosition = transform.position;  // Initialize last position
-        lastTime = Time.time;
-        StartCoroutine(ControlState());
-        AnimationState = DragonAnimationState.isIdle;
+        // lastPosition = transform.position;  // Initialize last position
+        // lastTime = Time.time;
+        // StartCoroutine(ControlState());
+        // AnimationState = DragonAnimationState.isIdle;
     }
 
     
@@ -37,12 +37,30 @@ public class DragonController : MonoBehaviour
         float xVal = joystick.Horizontal;
         float yVal = joystick.Vertical;
 
-        Vector3 movement = new Vector3(xVal,0,yVal);
+        Vector3 movement = new Vector3(xVal,0.0f,yVal);
         rigidBody.velocity = movement*speedThreshold;
 
-        if (xVal !=0 && yVal!=0){
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x,Mathf.Atan2(xVal,yVal) *Mathf.Rad2Deg,transform.eulerAngles.z);
-        }
+          if (movement.sqrMagnitude<=0)
+                {
+                     dragonAnimation.SetBool("isIdle",true);
+                     dragonAnimation.SetBool("isRunning",false);
+                    return;
+                }
+                    dragonAnimation.SetBool("isIdle",false);
+                     dragonAnimation.SetBool("isRunning",true);
+                var targetDirection = Vector3.RotateTowards(transform.forward, movement,
+                    10 * Time.deltaTime, 0.0f);
+                
+                transform.rotation=Quaternion.LookRotation(targetDirection);
+
+
+        // if (xVal !=0 && yVal!=0){
+        //     transform.eulerAngles = new Vector3(transform.eulerAngles.x,Mathf.Atan2(xVal,yVal) *Mathf.Rad2Deg,transform.eulerAngles.z);
+        // }
+
+      
+
+              
     }
     
     public enum DragonAnimationState
