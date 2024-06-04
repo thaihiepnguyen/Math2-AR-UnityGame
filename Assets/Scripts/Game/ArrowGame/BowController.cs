@@ -68,19 +68,22 @@ public class BowController : MonoBehaviour
     {
         if (arrowPrefab!= null)
         {
-
-            Vector3 spawn = arrowSpawn.position;
-            
-            // Instantiate the arrow prefab at the arrow spawn point position and rotation
-            
-            var arrow = Instantiate(arrowPrefab, spawn, arrowSpawn.rotation);
-            // Add force to the arrow in the direction of the arrow spawn point's forward vector
-            if (Mathf.Abs(strenght) > 1)
+            if (ArrowGameManager.GetInstance().curhealth > 0)
             {
-                strenght= 1;
+                Vector3 spawn = arrowSpawn.position;
+
+                // Instantiate the arrow prefab at the arrow spawn point position and rotation
+
+                var arrow = Instantiate(arrowPrefab, spawn, arrowSpawn.rotation);
+                // Add force to the arrow in the direction of the arrow spawn point's forward vector
+                if (Mathf.Abs(strenght) > 1)
+                {
+                    strenght = 1;
+                }
+                Vector3 shootingDirection = Camera.main.transform.forward;
+                arrow.AddForce(shootingDirection * Mathf.Abs(strenght) * maxForce, ForceMode.Impulse); // Adjust the force as needed
             }
-            Vector3 shootingDirection = Camera.main.transform.forward;
-           arrow.AddForce(shootingDirection *Mathf.Abs(strenght)* maxForce,ForceMode.Impulse); // Adjust the force as needed
+           
         }
         
     }

@@ -54,7 +54,7 @@ public class MovingTarget : MonoBehaviour, IHittable
 
     public void GetHit()
     {
-        health--;
+        //health--;
         if(health <= 0)
         {
             rb.isKinematic = false;
