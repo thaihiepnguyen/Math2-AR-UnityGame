@@ -52,10 +52,15 @@ public class MeshAnalyzer : MonoBehaviour
         
         foreach (var normal in mesh.normals)
         {
+           
             averageVert += normal.normalized.y;
         }
 
+
+
         averageVert /= mesh.vertices.Length;
+
+        Debug.Log(averageVert);
         avgNormal =  averageVert;
         // mat.SetFloat("_LerpValue", avgNormal);
 

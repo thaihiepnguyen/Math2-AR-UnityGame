@@ -72,8 +72,19 @@ public class SpawnOnARMesh : MonoBehaviour
                 highestY = vert.y;
                 highestVert = transform.TransformPoint(vert);
             }
+       
+            // highestVert.x+=vert.x;
+            // highestVert.y+= vert.y;
+            // highestVert.z+= vert.z;
+            
         }
         
+        // highestVert.x/= arMesh.vertices.Length;
+        // highestVert.y/= arMesh.vertices.Length;
+        // highestVert.z/= arMesh.vertices.Length;
+
         return highestVert;
     }
+
+    
 }

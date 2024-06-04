@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 870383392726824679}
   - component: {fileID: 905337949922875899}
   - component: {fileID: 4749187955344417049}
+  - component: {fileID: 4781201539145143563}
   m_Layer: 0
   m_Name: MeshChunk
   m_TagString: Untagged
@@ -120,9 +121,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 364d71876246fb14e81f0c854c92675b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundThreshold: 0.1
+  groundThreshold: 0.44
   avgNormal: 0
-  minVerts: 10
+  minVerts: 5
   isGround: 0
 --- !u!114 &4749187955344417049
 MonoBehaviour:
@@ -141,13 +142,33 @@ MonoBehaviour:
   - {fileID: 1233942755423140, guid: 279f442eae33dfc43b2a04e607614779, type: 3}
   - {fileID: 1966313739005046, guid: 29161880b0c72c848a5ea5f7d2cf423f, type: 3}
   - {fileID: 1665688750615298, guid: ff7c450e2b3932642b0446228a26eb77, type: 3}
-  - {fileID: 1566041883044676, guid: a4fdbe1837883dd4c9acc14fdb4733ec, type: 3}
-  - {fileID: 1171050354376774, guid: 777f37ec1c1d2ee45aa497f4794fe3c0, type: 3}
-  - {fileID: 1039515050059364, guid: 4c4733284e9152f43b3de94a5da0586f, type: 3}
-  - {fileID: 1433126565202974, guid: c35675cc6836f5c48b1aa31422e99b29, type: 3}
-  - {fileID: 1343920219198514, guid: b788486f0267c054bb3812d57dc8e352, type: 3}
-  - {fileID: 1506098538570848, guid: 43e85bde9c957b348b1142b1e223656a, type: 3}
-  - {fileID: 1223646964416542, guid: 46d5ff6818c077444a1f1d1fb415c2ff, type: 3}
-  minVertsForSpawn: 30
-  scaler: 0.4
+  minVertsForSpawn: 20
+  scaler: 0.5
   spawnLikelyHood: 33
+--- !u!54 &4781201539145143563
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762867556495254887}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
