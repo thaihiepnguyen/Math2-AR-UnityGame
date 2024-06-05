@@ -96,6 +96,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7960330891491670709, guid: 81cad2005ece6cf4da36eaca38c28d01, type: 3}
+      propertyPath: speedThreshold
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
