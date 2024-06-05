@@ -1,3 +1,5 @@
+﻿// This shader only works with convex polygon meshes where the second set of uv coordinates
+// scales from 0 - 1, with 0 being the center of the mesh, and 1 being the edge of the mesh.
 Shader "Unlit/FeatheredPlaneShader"
 {
     Properties
@@ -24,14 +26,18 @@ Shader "Unlit/FeatheredPlaneShader"
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
-                float3 uv2: TEXCOORD1;
+                float3 uv2 : TEXCOORD1;
+
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct v2f
             {
-                float2 uv : TEXCOORD0;
-                float3 uv2: TEXCOORD1;
                 float4 vertex : SV_POSITION;
+                float2 uv : TEXCOORD0;
+                float3 uv2 : TEXCOORD1;
+
+                UNITY_VERTEX_OUTPUT_STEREO
             };
 
             sampler2D _MainTex;
@@ -43,6 +49,9 @@ Shader "Unlit/FeatheredPlaneShader"
             v2f vert (appdata v)
             {
                 v2f o;
+
+                
+
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.uv2 = v.uv2;
@@ -51,10 +60,17 @@ Shader "Unlit/FeatheredPlaneShader"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
-                col = lerp(_PlaneColor, col, col.a);
-                col.a *= 1 - smoothstep(1, _ShortestUVMapping, i.uv2.x);
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+
+                fixed4 col = tex2D(_MainTex, i.uv) * _TexTintColor;
+                col = lerp( _PlaneColor, col, col.a);
+                // Fade out from as we pass the edge.
+                // uv2.x stores a mapped UV that will be "1" at the beginning of the feathering.
+                // We fade until we reach at the edge of the shortest UV mapping.
+                // This is the remmaped UV value at the vertex.
+                // We choose the shorted one so that ll edges will fade out completely.
+                // See ARFeatheredPlaneMeshVisualizer.cs for more details.
+                col.a *=  1-smoothstep(1, _ShortestUVMapping, i.uv2.x);
                 return col;
             }
             ENDCG

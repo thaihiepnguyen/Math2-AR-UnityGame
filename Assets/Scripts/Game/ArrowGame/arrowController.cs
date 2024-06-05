@@ -10,7 +10,7 @@ public class arrowController : MonoBehaviour
     private Rigidbody rb;
     [SerializeField]
     private SphereCollider myCollider;
-
+    
     [SerializeField]
     private GameObject stickingArrow;
     private bool isStuck = false;
@@ -30,6 +30,12 @@ public class arrowController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Plane"))
+        {
+            ArrowGameManager.GetInstance().DescreaseHealth();
+            Destroy(gameObject);
+            return;
+        }
         rb.isKinematic = true;
         myCollider.isTrigger = true;
 
