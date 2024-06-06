@@ -1503,6 +1503,7 @@ MonoBehaviour:
   infoText: {fileID: 1802796953}
   webClientId: 916595177384-tsjvonfipit52orilsn3tokvlna36l9o.apps.googleusercontent.com
   OTPField: {fileID: 0}
+  RememberMe: {fileID: 942408285}
 --- !u!1 &569250251
 GameObject:
   m_ObjectHideFlags: 0
@@ -2998,7 +2999,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &984160187
 GameObject:
   m_ObjectHideFlags: 0
