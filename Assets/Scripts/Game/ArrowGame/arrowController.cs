@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -39,19 +40,27 @@ public class arrowController : MonoBehaviour
         rb.isKinematic = true;
         myCollider.isTrigger = true;
 
-        GameObject arrow = Instantiate(stickingArrow);
-        arrow.transform.position = transform.position;
-        arrow.transform.forward = transform.forward;
-
+        TrailRenderer trail=GetComponentInChildren<TrailRenderer>();
+        trail.enabled = false;
+        
         if (collision.collider.attachedRigidbody != null)
         {
-            arrow.transform.parent = collision.collider.attachedRigidbody.transform;
+            transform.parent = collision.collider.attachedRigidbody.transform;
         }
 
         collision.collider.GetComponent<IHittable>()?.GetHit();
 
-        Destroy(gameObject);
+        
+        if (!collision.gameObject.CompareTag("Target"))
+        {
+            ArrowGameManager.GetInstance().DecreaseHealth();
 
+            Destroy(gameObject, 3f);
+        }
+        else
+        {
+            ArrowGameManager.GetInstance().CheckAnswer(collision.gameObject.GetComponentInChildren<TextMeshProUGUI>().text);
+        }
     }
 
    

@@ -12,6 +12,7 @@ TagManager:
   - MultipleChoiceQuestion
   - Arrow
   - Plane
+  - Target
   layers:
   - Default
   - TransparentFX

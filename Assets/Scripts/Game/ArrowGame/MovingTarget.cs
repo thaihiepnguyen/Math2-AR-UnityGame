@@ -55,20 +55,14 @@ public class MovingTarget : MonoBehaviour, IHittable
 
     public void GetHit()
     {
-        //health--;
+        health--;
         if(health <= 0)
         {
             rb.isKinematic = false;
             stopped = true;
+            Destroy(gameObject,3f);
         }
-        var arrowGameManager = ArrowGameManager.GetInstance();
         
-        var answer = GetComponentInChildren<TextMeshProUGUI>();
-        if(answer.text == arrowGameManager.GetCurRightAnswer())
-        {
-            arrowGameManager.point++;
-            Debug.Log("Point "+ArrowGameManager.GetInstance().point);
-        }
         
     }
 

@@ -45,7 +45,7 @@ public class BowController : MonoBehaviour
         float pullDuration = Time.time - pullStartTime;
         float pullDistance = Mathf.Min(pullDuration * pullSpeed, maxPullDistance);
         float scaleFactor = pullDistance / maxPullDistance;
-        strenght = Mathf.Abs(midPointParent.transform.localPosition.x)/maxPullDistance;
+        strenght = Mathf.Abs(pullDistance) /maxPullDistance;
         Vector3 newScale = startPullPoint;
         if (Mathf.Abs(midPointParent.transform.localPosition.x) >= maxPullDistance)
         {
