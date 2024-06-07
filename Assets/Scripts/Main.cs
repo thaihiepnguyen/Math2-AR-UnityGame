@@ -9,11 +9,10 @@ public class Main : MonoBehaviour
     {
         var userBus = new UserBUS();
         var response = await userBus.GetMe();
+        PlayerPrefs.SetInt("uid", 1);
         if (response.isSuccessful){
-            Debug.Log("Successful");
-               StartCoroutine(LoadModelManager.LoadModel(response.data.three_dimension_id,prototype,container,true));
+            StartCoroutine(LoadModelManager.LoadModel(response.data.three_dimension_id,prototype,container,true));
         }
-
     }
 
     public void OnClickPlay(){

@@ -24,7 +24,6 @@ public class API
         
         foreach (var cookie in cookieList)
         {
-            Debug.Log(cookie);
             var decodeCookie = WebUtility.UrlDecode(cookie);
             var splitCookie = decodeCookie.Split("=");
             
@@ -63,7 +62,6 @@ public class API
         try
         {
             var json = JsonConvert.SerializeObject(data);
-            Debug.Log(url);
             var httpRequest = new StringContent(json, Encoding.UTF8, "application/json");
             var httpResponse = await _httpClient.PostAsync(url, httpRequest);
 
@@ -78,9 +76,13 @@ public class API
                 var act = Cookies["act"];
             
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                    "Beare",
+                    "Bearer",
                     act
                 );
+
+                if (GlobalVariable.IS_REMEMBER_ME) {
+                    PlayerPrefs.SetString("token", act);
+                }
             }
 
             return response;
@@ -132,6 +134,13 @@ public class API
         var response = await _httpClient.PostAsync(path, data);
         string result = await response.Content.ReadAsStringAsync();
         return result;
+    }
+
+    public static void AddToken(string token) {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+            "Bearer",
+            token
+        );
     }
 }
 

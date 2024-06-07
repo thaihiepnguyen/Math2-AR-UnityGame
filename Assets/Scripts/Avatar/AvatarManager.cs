@@ -8,6 +8,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using EasyUI.Toast;
 using Unity.XR.CoreUtils;
+using EasyUI.Progress;
+
+
 public class AvatarManager : MonoBehaviour
 {
    private PersonalDTO personal;
@@ -46,6 +49,7 @@ public class AvatarManager : MonoBehaviour
     async void Start()
     {
         userBUS = new UserBUS();
+        Progress.Show("Đang xử lý...", ProgressColor.Orange);
         var response = await userBUS.GetProfile();
 
         if (response.isSuccessful && response.data != null)
@@ -129,6 +133,7 @@ public class AvatarManager : MonoBehaviour
                 }
             }
             isOK = true;
+            Progress.Hide();
         }
     }
 
