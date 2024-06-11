@@ -52,6 +52,14 @@ public class ArrowGameManager : MonoBehaviour
     private GameObject trackables;
     private Mesh arMesh;
     private Timer timer;
+    [Header("Audio")]
+    [SerializeField] AudioClip correctSFX;
+    [SerializeField] AudioClip wrongSFX;
+    [SerializeField] GameObject overtimeSFX;
+    [SerializeField] AudioClip winSFX;
+    [SerializeField] AudioClip gameoverSFX;
+    private AudioSource audioSource;
+
     private void Awake()
     {
         if (instance == null)
@@ -81,6 +89,7 @@ public class ArrowGameManager : MonoBehaviour
         trackables = GameObject.Find("Trackables");
         timer=GetComponent<Timer>();
         meshManager.meshesChanged += OnMeshesChanged;
+        audioSource=GetComponent<AudioSource>(); 
     }
 
     private void OnMeshesChanged(ARMeshesChangedEventArgs obj)
@@ -199,9 +208,15 @@ public class ArrowGameManager : MonoBehaviour
             Toast.Show("Game Over", 3f);
             OnGameEnd();
         }
+        //Ten seconds left
+        if (timer.timeValue <=10 )
+        {
+            overtimeSFX.GetComponent<AudioSource>().Play();
+        }
         if (timer.timeValue <= 0)
         {
             OnGameEnd();
+            
         }
         if (spawnCount > 0)
         {
@@ -211,9 +226,13 @@ public class ArrowGameManager : MonoBehaviour
         }
         else
         {
-            WaitingUI.SetActive(false);
-            MainUI.SetActive(true);
-            timer.isStop = false;
+            if(curhealth> 0)
+            {
+                WaitingUI.SetActive(false);
+                MainUI.SetActive(true);
+                timer.isStop = false; 
+            }
+           
         }
     }
 
@@ -221,7 +240,8 @@ public class ArrowGameManager : MonoBehaviour
     {
         curhealth -= 1;
         curhealth = Mathf.Clamp(curhealth, 0, maxhealth);
-
+        audioSource.clip = wrongSFX;
+        audioSource.Play();
         UpdateHeartsUI();
         Debug.Log("Health " + curhealth);
     }
@@ -230,6 +250,8 @@ public class ArrowGameManager : MonoBehaviour
     {
         curhealth += 1;
         curhealth = Mathf.Clamp(curhealth, curhealth, maxhealth);
+        audioSource.clip = correctSFX;
+        audioSource.Play();
         UpdateHeartsUI();
     }
 
@@ -292,7 +314,9 @@ public class ArrowGameManager : MonoBehaviour
         timeText.text = timer.toTimeString();
         yourScore.text = (point*100).ToString();
         yourHighestScore.text = yourScore.text;
-        reward.text = (point/100 + (int)Mathf.Round(Mathf.Clamp(timer.timeValue,0,timer.timeValue))*10).ToString();
+        if(point==0)timer.timeValue= 0;
+        reward.text = (point*100 + (int)Mathf.Round(Mathf.Clamp(timer.timeValue,0,timer.timeValue))*10).ToString();
         gameWinMenu.gameObject.SetActive(true);
+        overtimeSFX.GetComponent<AudioSource>().Stop();
     }
 }

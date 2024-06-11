@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public class arrowController : MonoBehaviour
 {
@@ -15,10 +16,13 @@ public class arrowController : MonoBehaviour
     [SerializeField]
     private GameObject stickingArrow;
     private bool isStuck = false;
-
+    [SerializeField] AudioClip objectHit;
+    [SerializeField] AudioClip targetHit;
+    AudioSource audioSource;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource= GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -39,7 +43,18 @@ public class arrowController : MonoBehaviour
         }
         rb.isKinematic = true;
         myCollider.isTrigger = true;
+        if (collision.gameObject.CompareTag("Target"))
+        {
+            audioSource.clip = targetHit;
+            audioSource.Play();
+            StartCoroutine(StopSoundAfterSecond(1f));
+        }
+        else
+        {
+            audioSource.clip = objectHit;
+            audioSource.Play();
 
+        }
         TrailRenderer trail=GetComponentInChildren<TrailRenderer>();
         trail.enabled = false;
         
@@ -62,6 +77,10 @@ public class arrowController : MonoBehaviour
             ArrowGameManager.GetInstance().CheckAnswer(collision.gameObject.GetComponentInChildren<TextMeshProUGUI>().text);
         }
     }
-
+    IEnumerator StopSoundAfterSecond(float second)
+    {
+        yield return new WaitForSecondsRealtime(second);
+        audioSource.Stop();
+    }
    
 }
