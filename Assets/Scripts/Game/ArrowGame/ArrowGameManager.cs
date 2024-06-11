@@ -59,6 +59,8 @@ public class ArrowGameManager : MonoBehaviour
     [SerializeField] AudioClip winSFX;
     [SerializeField] AudioClip gameoverSFX;
     private AudioSource audioSource;
+    bool isGameOver=false;
+    bool isOverTime=false;
 
     private void Awake()
     {
@@ -209,13 +211,15 @@ public class ArrowGameManager : MonoBehaviour
             OnGameEnd();
         }
         //Ten seconds left
-        if (timer.timeValue <=10 )
+        if (timer.timeValue <=10  && !isOverTime  )
         {
             overtimeSFX.GetComponent<AudioSource>().Play();
+            isOverTime= true;
         }
-        if (timer.timeValue <= 0)
+        if (timer.timeValue <= 0 && !isGameOver)
         {
             OnGameEnd();
+            isGameOver= true;
             
         }
         if (spawnCount > 0)
@@ -318,5 +322,17 @@ public class ArrowGameManager : MonoBehaviour
         reward.text = (point*100 + (int)Mathf.Round(Mathf.Clamp(timer.timeValue,0,timer.timeValue))*10).ToString();
         gameWinMenu.gameObject.SetActive(true);
         overtimeSFX.GetComponent<AudioSource>().Stop();
+        if (point > 0)
+        {
+            audioSource.clip = winSFX;
+            audioSource.Play();
+            
+        }
+        else
+        {
+            audioSource.clip = gameoverSFX;
+            audioSource.Play();
+        }
+        Debug.Log("cc");
     }
 }
