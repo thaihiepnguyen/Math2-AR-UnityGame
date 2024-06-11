@@ -1,3 +1,4 @@
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,16 +10,30 @@ public class BubbleGameManager : MonoBehaviour
     public Vector3 spawnAreaMax; // Maximum bounds of the spawn area
 
     private Timer timer;
-    private bool isOverTime;
+    private bool isGameOver;
 
     [SerializeField] GameObject resultModal;
+    [SerializeField] AudioClip endSound;
+    [SerializeField] GameObject question;
+
+    private AudioSource audioSource;
+
+    private int MAX_NUM_BUBBLE = 30;
+
+    private int currentQuestion;
+
+    private int hp;
 
     void Start()
     {
         InvokeRepeating("SpawnPrefabs", 2.0f, spawnInterval);
         timer = GetComponent<Timer>();
-        isOverTime = false;
+        isGameOver = false;
         resultModal.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
+        hp = 3;
+
+        GetQuestion();
     }
 
     void Update()
@@ -47,12 +62,15 @@ public class BubbleGameManager : MonoBehaviour
                 }
             }
         }
-        if (timer.timeValue <= 0)
+        if (timer.timeValue <= 0 || hp == 0)
         {
-            if (isOverTime == false)
+            if (isGameOver == false)
             {
-                isOverTime = true;
+                isGameOver = true;
                 resultModal.SetActive(true);
+                audioSource.clip = endSound;
+                audioSource.Play();
+            
             }
         }
     }
@@ -70,23 +88,44 @@ public class BubbleGameManager : MonoBehaviour
 
             int randomPrefabIndex = Random.Range(0, prefabs.Length);
             var bubble = Instantiate(prefabs[randomPrefabIndex], randomPosition, Quaternion.identity);
-            bubble.transform.SetParent(GameObject.FindGameObjectWithTag("BubbleContainer").transform);
+            var bubbleContainer = GameObject.FindGameObjectWithTag("BubbleContainer");
+
+            bubble.transform.SetParent(bubbleContainer.transform);
+            var answer = Random.Range(currentQuestion - 5, currentQuestion + 5);
+            bubble.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = answer.ToString();
+
+
+            
+            if (bubbleContainer.transform.childCount > MAX_NUM_BUBBLE)
+            {
+                Destroy(bubbleContainer.transform.GetChild(0).gameObject);
+            }
         }
     }
 
     void InteractWithObject(GameObject obj)
     {
-        // Example interaction: log the object's name
-        Debug.Log("Touched object: " + obj.name);
-
-        // Example: Change the object's color to red
         Renderer renderer = obj.GetComponent<Renderer>();
         if (renderer != null)
         {
-            renderer.material.color = Color.red;
+            var answer = obj.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text;
+            if (answer == currentQuestion.ToString())
+            {
+                Destroy(obj);
+                GetQuestion();
+            }
+            else
+            {
+                renderer.material.color = Color.red;
+                hp--;
+            }
         }
+    }
 
-        // Add more interaction logic here
+    void GetQuestion()
+    {
+        currentQuestion = Random.Range(0, 30);
+        question.GetComponent<TextMeshProUGUI>().text = "Chọn số sau: " + currentQuestion.ToString();
     }
 
     public void Replay()
