@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GlobalVariable
 {
+
+    public static int  platform =  1;
     public const string MAIN_SCENE = "Main";
     public const int LOGIN_SCENE = 0;
     public const int REGISTER_SCENE = 2;

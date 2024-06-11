@@ -11,6 +11,8 @@ TagManager:
   - Exercise
   - MultipleChoiceQuestion
   - Arrow
+  - Plane
+  - Target
   - Bubble
   layers:
   - Default

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MovingTarget : MonoBehaviour, IHittable
@@ -59,7 +60,10 @@ public class MovingTarget : MonoBehaviour, IHittable
         {
             rb.isKinematic = false;
             stopped = true;
+            Destroy(gameObject,3f);
         }
+        
+        
     }
 
     private void FixedUpdate()
