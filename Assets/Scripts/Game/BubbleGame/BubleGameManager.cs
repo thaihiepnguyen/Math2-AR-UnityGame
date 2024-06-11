@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BubbleGameManager : MonoBehaviour
 {
@@ -7,9 +8,17 @@ public class BubbleGameManager : MonoBehaviour
     public Vector3 spawnAreaMin; // Minimum bounds of the spawn area
     public Vector3 spawnAreaMax; // Maximum bounds of the spawn area
 
+    private Timer timer;
+    private bool isOverTime;
+
+    [SerializeField] GameObject resultModal;
+
     void Start()
     {
         InvokeRepeating("SpawnPrefabs", 2.0f, spawnInterval);
+        timer = GetComponent<Timer>();
+        isOverTime = false;
+        resultModal.SetActive(false);
     }
 
     void Update()
@@ -38,11 +47,19 @@ public class BubbleGameManager : MonoBehaviour
                 }
             }
         }
+        if (timer.timeValue <= 0)
+        {
+            if (isOverTime == false)
+            {
+                isOverTime = true;
+                resultModal.SetActive(true);
+            }
+        }
     }
 
     void SpawnPrefabs()
     {
-        int numPrefabsToSpawn = Random.Range(2, 4); // Randomly choose between 2 and 3 prefabs
+        int numPrefabsToSpawn = Random.Range(2, 4); 
         for (int i = 0; i < numPrefabsToSpawn; i++)
         {
             Vector3 randomPosition = new Vector3(
@@ -52,7 +69,8 @@ public class BubbleGameManager : MonoBehaviour
             );
 
             int randomPrefabIndex = Random.Range(0, prefabs.Length);
-            Instantiate(prefabs[randomPrefabIndex], randomPosition, Quaternion.identity);
+            var bubble = Instantiate(prefabs[randomPrefabIndex], randomPosition, Quaternion.identity);
+            bubble.transform.SetParent(GameObject.FindGameObjectWithTag("BubbleContainer").transform);
         }
     }
 
@@ -70,4 +88,13 @@ public class BubbleGameManager : MonoBehaviour
 
         // Add more interaction logic here
     }
-}
+
+    public void Replay()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void Exit()
+    {
+        SceneHistory.GetInstance().PreviousScene();
+    }
+}   

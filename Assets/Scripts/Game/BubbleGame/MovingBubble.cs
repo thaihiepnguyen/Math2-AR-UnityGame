@@ -7,8 +7,8 @@ public class MovingBubble : MonoBehaviour, IHittable
     private Vector3 nextposition;
 
     [SerializeField]
-    private float speed = 1;
-
+    private float maxSpeed = 1;
+    private float minSpeed = 0.1f;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -19,8 +19,8 @@ public class MovingBubble : MonoBehaviour, IHittable
     {
         Vector3 newPosition = transform.position;
 
-        // Move horizontally
-        newPosition.y = transform.position.y + speed;
+        newPosition.y = transform.position.y + 1;
+        newPosition.x = transform.position.x + Random.Range(-1, 1);
 
         return newPosition;
     }
@@ -34,8 +34,8 @@ public class MovingBubble : MonoBehaviour, IHittable
     {
         nextposition = GetNewMovementPosition();
         Vector3 direction = nextposition - transform.position;
-        rb.MovePosition(transform.position + direction.normalized * Time.fixedDeltaTime * speed);
-        if (transform.position.y >= 50)
+        rb.MovePosition(transform.position + direction.normalized * Time.fixedDeltaTime * Random.Range(minSpeed, maxSpeed));
+        if (transform.position.y >= 50 || transform.position.x >= 50 || transform.position.y <= -50 || transform.position.x <= -50)
         {
             Destroy(gameObject);
         }
