@@ -60,7 +60,7 @@ public class MovingTarget : MonoBehaviour, IHittable
         {
             rb.isKinematic = false;
             stopped = true;
-            Destroy(gameObject,3f);
+            
         }
         
         
