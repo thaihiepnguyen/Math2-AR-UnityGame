@@ -321,7 +321,7 @@ public class ArrowGameManager : MonoBehaviour
        
         var realTimeValue = timer.baseTimeValue - timer.timeValue;
         if (point == 0) realTimeValue = 0;
-        reward.text = (point*10 + (int)Mathf.Round(Mathf.Clamp(realTimeValue, 0, realTimeValue))*10).ToString();
+        reward.text ="+ "+(point*10 + (int)Mathf.Round(Mathf.Clamp(realTimeValue, 0, realTimeValue))*10).ToString();
         gameWinMenu.gameObject.SetActive(true);
         overtimeSFX.GetComponent<AudioSource>().Stop();
         if (point > 0)
