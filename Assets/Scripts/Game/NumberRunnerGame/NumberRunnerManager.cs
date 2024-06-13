@@ -12,7 +12,7 @@ public class NumberRunnerManager : MonoBehaviour
     private int currentIndex = 0;
 
     
-    void Awake()
+    void Start()
     {
         for (int i = 0; i< 10; i++){
             numbers.Add(i);
@@ -24,9 +24,11 @@ public class NumberRunnerManager : MonoBehaviour
 
         for (int i = 0; i < numbers.Count; i++){
             var obj = GetRandomObject();
-
-            obj.GetComponent<NumberCollectiblesManager>().SetOverlayText(numbers[i].ToString());
+            if (obj !=null){
+            obj.GetComponent<NumberCollectiblesManager>().SetText(numbers[i].ToString());
+            
             spawnObjects.Remove(obj);
+            }
 
         
         }
@@ -51,7 +53,7 @@ public class NumberRunnerManager : MonoBehaviour
 
 
     public void ChangeCurrent(){
-        if (currentIndex < spawnObjects.Count){
+        if (currentIndex < numbers.Count){
             currentIndex++;
             currentNumber = numbers[currentIndex];
         }
