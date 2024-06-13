@@ -36,5 +36,9 @@ public class AutoPlaceOfObjectOnPlane : MonoBehaviour
         }
     }
 
+    public void Jump(){
+        FindObjectOfType<DragonController>().Jump();
+    }
+
     private void Dismiss() => welcomePanel.SetActive(false);
 }
