@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MovingTarget : MonoBehaviour, IHittable
@@ -54,12 +55,15 @@ public class MovingTarget : MonoBehaviour, IHittable
 
     public void GetHit()
     {
-        //health--;
+        health--;
         if(health <= 0)
         {
             rb.isKinematic = false;
             stopped = true;
+            
         }
+        
+        
     }
 
     private void FixedUpdate()

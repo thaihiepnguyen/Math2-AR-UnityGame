@@ -53,8 +53,8 @@ public class SpawnTarget : MonoBehaviour
         : _groundPrefabs[Random.Range(0, _groundPrefabs.Count)];
 
       Quaternion rotation = wall
-        ? Quaternion.LookRotation(normal, Vector3.up)
-        : Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0);
+        ? Quaternion.LookRotation(normal, Vector3.zero)
+        : Quaternion.Euler(0, 0, 0);
 
       // use local position/rotation because of the different coordinate system
       GameObject plant = Instantiate(prefab, transform, false);

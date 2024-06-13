@@ -54,6 +54,7 @@ Library: C:\Users\Admin\Desktop\CODE\Nam_4\DANTN\Source\Client\Math2-AR-UnityGam
 --assembly-defines=Unity.XR.OpenXR.Features.OculusQuestSupport;
 --assembly-defines=Unity.XR.OpenXR.Features.RuntimeDebugger;
 --assembly-defines=UnityEngine;
+--assembly-defines=YoutubePlayer;
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Users\Admin\Desktop\CODE\Nam_4\DANTN\Source\Client\Math2-AR-UnityGame\Temp\Burst
 --key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer

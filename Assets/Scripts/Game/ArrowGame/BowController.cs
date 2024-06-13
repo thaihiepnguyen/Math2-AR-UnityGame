@@ -16,13 +16,17 @@ public class BowController : MonoBehaviour
     [SerializeField] Rigidbody arrowPrefab;
     [SerializeField] Transform arrowSpawn;
     [SerializeField] Transform arrowRotationSpawn;
+    [SerializeField] AudioClip releaseArrow;
+    [SerializeField] AudioClip pullArrow;
+
    
     [SerializeField] private Camera mainCamera;
     public float maxForce = 1000f;
     private float strenght = 0f;
+    private AudioSource audioSource;
     void Start()
     {
-        
+        audioSource=GetComponent<AudioSource>();
         var buttonHoldAndRelease = shootButton.GetComponent<ButtonHoldAndRelease>();
         buttonHoldAndRelease.OnButtonDownEvent += StartPull;
         buttonHoldAndRelease.OnButtonHoldEvent += ContinuePull;
@@ -35,6 +39,9 @@ public class BowController : MonoBehaviour
     {
         isPulling = true;
         pullStartTime = Time.time;
+        audioSource.volume = 1f;
+        audioSource.clip = pullArrow;
+        audioSource.Play();
     }
 
     void ContinuePull()
@@ -45,7 +52,7 @@ public class BowController : MonoBehaviour
         float pullDuration = Time.time - pullStartTime;
         float pullDistance = Mathf.Min(pullDuration * pullSpeed, maxPullDistance);
         float scaleFactor = pullDistance / maxPullDistance;
-        strenght = Mathf.Abs(midPointParent.transform.localPosition.x)/maxPullDistance;
+        strenght = Mathf.Abs(pullDistance) /maxPullDistance;
         Vector3 newScale = startPullPoint;
         if (Mathf.Abs(midPointParent.transform.localPosition.x) >= maxPullDistance)
         {
@@ -62,6 +69,9 @@ public class BowController : MonoBehaviour
         isPulling = false;
        
         midPointParent.transform.localPosition = startPullPoint;
+        audioSource.volume = 0.7f;
+        audioSource.clip = releaseArrow;
+        audioSource.Play();
         ShootArrow();
     }
     void ShootArrow()

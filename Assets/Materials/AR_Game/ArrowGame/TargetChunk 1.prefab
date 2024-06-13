@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 6110023190907885291}
   - component: {fileID: 1348412307564771358}
   - component: {fileID: 951935392594187804}
-  - component: {fileID: 4116651606531023013}
+  - component: {fileID: 803647255982696682}
+  - component: {fileID: 4472453584611189065}
   m_Layer: 0
-  m_Name: MeshChunk
+  m_Name: TargetChunk 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 48cb8d593f18bdd4faf2608955128124, type: 2}
+  - {fileID: 2100000, guid: 2f23ec9237e1c7c4e99e27241ff11f94, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,7 +108,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &4116651606531023013
+--- !u!114 &803647255982696682
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,3 +124,20 @@ MonoBehaviour:
   avgNormal: 0
   minVerts: 10
   isGround: 0
+--- !u!114 &4472453584611189065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9148072860126053185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 504402b309a190749bb3957d99712a40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnObjects:
+  - {fileID: 9219746699666903786, guid: 3c7dafcee6e397d43a1e43d91373bdba, type: 3}
+  minVertsForSpawn: 30
+  scaler: 1
+  spawnLikelyHood: 33
