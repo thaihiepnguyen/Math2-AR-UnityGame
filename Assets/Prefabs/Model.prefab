@@ -918,8 +918,7 @@ MonoBehaviour:
   - {fileID: 682241996056886267}
   - {fileID: 6904232936820303644}
   - {fileID: 6507584403726162703}
-  scoreText: {fileID: 0}
-  gameOverUI: {fileID: 8147664458957968894, guid: ee656f571a09b5a448e295fcbd26fe1c, type: 3}
+  gameOverUI: {fileID: 5511190133825365888, guid: 3e718a40edc433d468a6280ea96acf1b, type: 3}
   gameCompletedUI: {fileID: 8147664458957968894, guid: ee656f571a09b5a448e295fcbd26fe1c, type: 3}
 --- !u!1 &8516358068013294869
 GameObject:

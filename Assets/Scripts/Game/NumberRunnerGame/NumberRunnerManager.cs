@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 using UnityEngine.UI;
 
 public class NumberRunnerManager : MonoBehaviour
@@ -110,13 +110,13 @@ public class NumberRunnerManager : MonoBehaviour
 
 
       public void GameOver(){
-    //     GameObject panel = Instantiate(gameOverUI);
-    //     panel.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform, false);
-    //     panel.SetActive(true);
+          GameObject panel = Instantiate(gameOverUI);
+          panel.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform, false);
+          panel.SetActive(true);
     //     panel.GetComponentInChildren<TextMeshProUGUI>().text = "THUA CUỘC";
     //     panel.GetComponentInChildren<Button>().onClick.AddListener(Restart);
        
-    //     gameOver = true;
+           gameOver = true;
         
     }
 
@@ -139,13 +139,11 @@ public class NumberRunnerManager : MonoBehaviour
         // panel.GetComponentInChildren<Button>().onClick.AddListener(Restart);
        
 
-        //  gameOver = true;
+          gameOver = true;
 
     }
 
-    public void Restart() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+
 
     
 }

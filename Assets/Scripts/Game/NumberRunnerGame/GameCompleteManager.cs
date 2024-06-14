@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine;
 
@@ -96,6 +97,15 @@ public class GameCompleteManager : MonoBehaviour
             titleText.text= "Xuất sắc";
         }
 
+
+    }
+
+    public void Restart() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Return(){
+    SceneHistory.GetInstance().PreviousScene();
 
     }
 
