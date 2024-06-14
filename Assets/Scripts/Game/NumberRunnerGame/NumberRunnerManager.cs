@@ -22,7 +22,7 @@ public class NumberRunnerManager : MonoBehaviour
 
     private bool gameOver = false;
     public bool gameDone {get {return gameOver;} }
-    public int numsCount { get { return numbers.Count;}}
+    // public int numsCount { get { return numbers.Count;}}
 
     private int score = 0;
     // public int GetScore { get { return score; }}
@@ -61,10 +61,17 @@ public class NumberRunnerManager : MonoBehaviour
         
     }
 
+    public bool checkEnd = false;
+
     // Update is called once per frame
     void Update()
     {
          scoreText.text =  string.Format("Điểm: {0}", score.ToString());  
+
+         if (score == numbers.Count){
+            checkEnd = true;
+
+         }
     }
 
 

@@ -2405,6 +2405,7 @@ GameObject:
   - component: {fileID: 6422778320554000900}
   - component: {fileID: 5201254465802470259}
   - component: {fileID: 6858401283002988002}
+  - component: {fileID: 5035909903680308438}
   m_Layer: 5
   m_Name: Light Ray
   m_TagString: Outsider
@@ -2469,6 +2470,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5035909903680308438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8825710238431386476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb8883576450a04480677d2ebe9058b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8888804241904740875
 GameObject:
   m_ObjectHideFlags: 0

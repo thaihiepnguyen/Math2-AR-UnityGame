@@ -47,7 +47,6 @@ public class DragonController : MonoBehaviour
         joystick = FindObjectOfType<FixedJoystick>();
         rigidBody = gameObject.GetComponent<Rigidbody>();
           currentHealth = maxHealth;
-          counter = 0;
          stepRayUpper.transform.position = new Vector3(stepRayUpper.transform.position.x, stepHeight, stepRayUpper.transform.position.z);
 
     }
@@ -82,7 +81,7 @@ public class DragonController : MonoBehaviour
             FindObjectOfType<NumberRunnerManager>().GameOver();
         
         }
-        else if (currentCounter == FindObjectOfType<NumberRunnerManager>().numsCount && !checkGameOver){
+        else if (FindObjectOfType<NumberRunnerManager>().checkEnd && !checkGameOver){
             checkGameOver = true;
             FindObjectOfType<NumberRunnerManager>().GameCompleted();
           
