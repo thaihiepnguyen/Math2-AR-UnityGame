@@ -13,6 +13,8 @@ TagManager:
   - Arrow
   - Plane
   - Target
+  - Canvas
+  - Score
   layers:
   - Default
   - TransparentFX

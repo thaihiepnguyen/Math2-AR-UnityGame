@@ -11,9 +11,12 @@ public class DragonController : MonoBehaviour
     private FixedJoystick joystick;
 
     private Rigidbody rigidBody;
-
+    int currentCounter = 0;
+    public int counter { get {return currentCounter; } set {currentCounter = value; }}
     public Transform jumpRay;
     public float jumpForce = 0.5f;
+
+     private bool checkGameOver = false;
 
     // public float maxStepHeight = 0.25f;
     // public int stepDetail = 1;
@@ -44,6 +47,7 @@ public class DragonController : MonoBehaviour
         joystick = FindObjectOfType<FixedJoystick>();
         rigidBody = gameObject.GetComponent<Rigidbody>();
           currentHealth = maxHealth;
+          counter = 0;
          stepRayUpper.transform.position = new Vector3(stepRayUpper.transform.position.x, stepHeight, stepRayUpper.transform.position.z);
 
     }
@@ -51,6 +55,8 @@ public class DragonController : MonoBehaviour
      public void ChangeHealth(int amount)
     {
         if (amount < 0) {
+
+            dragonAnimation.SetTrigger("Damage");
             if (isInvincible) return;
             isInvincible = true;
             invincibleTimer = timeInvincible;
@@ -65,9 +71,24 @@ public class DragonController : MonoBehaviour
     public void Jump(){
         if (isGrounded)
         rigidBody.AddForce(new Vector3(0,jumpForce,0),ForceMode.Impulse);
+        dragonAnimation.SetTrigger("Jump");
     }
     void Update()
     {
+
+          if (currentHealth <= 0 && !checkGameOver){
+            checkGameOver = true;
+            dragonAnimation.SetTrigger("Die");
+            FindObjectOfType<NumberRunnerManager>().GameOver();
+        
+        }
+        else if (currentCounter == FindObjectOfType<NumberRunnerManager>().numsCount && !checkGameOver){
+            checkGameOver = true;
+            FindObjectOfType<NumberRunnerManager>().GameCompleted();
+          
+           
+        }
+
         float xVal = joystick.Horizontal;
         float yVal = joystick.Vertical;
 
@@ -83,13 +104,15 @@ public class DragonController : MonoBehaviour
 
           if (movement.sqrMagnitude == 0)
                 {
-                     dragonAnimation.SetBool("isIdle",true);
-                     dragonAnimation.SetBool("isRunning",false);
+                    //  dragonAnimation.SetBool("isIdle",true);
+                    //  dragonAnimation.SetBool("isRunning",false);
+                    dragonAnimation.SetFloat("Speed",0f, 0.1f, Time.deltaTime);
                   
                 }
                 else {
-                    dragonAnimation.SetBool("isIdle",false);
-                    dragonAnimation.SetBool("isRunning",true);
+                    // dragonAnimation.SetBool("isIdle",false);
+                    // dragonAnimation.SetBool("isRunning",true);
+                    dragonAnimation.SetFloat("Speed",0.5f, 0.1f, Time.deltaTime);
                 }
                   
                 var targetDirection = Vector3.RotateTowards(transform.forward, movement,
