@@ -27,20 +27,14 @@ public class NumberCollectiblesManager : MonoBehaviour
     }
 
    
-    private float randomY = 0f;
-  
-    void Awake()
-    {
-            randomY = Random.Range(10f, 20f);
-    }
-
-  
+    public bool checkText = false;
     public void SetText(string text)
     {
         if(OverlayText != null && MinimapText !=null)
         {
           
-            OverlayText.text = text;
+            // OverlayText.text = text;
+            OverlayText.SetText(text);
             MinimapText.SetText(text);
 
         Color randomColor = Color.white;
@@ -54,7 +48,11 @@ public class NumberCollectiblesManager : MonoBehaviour
          
 
             MinimapText.color = randomColor;
+
+             checkText = true;
         }
+
+       
     }
 
    
