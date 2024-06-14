@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6110023190907885291}
   - component: {fileID: 1348412307564771358}
   - component: {fileID: 951935392594187804}
+  - component: {fileID: 4116651606531023013}
   m_Layer: 0
   m_Name: MeshChunk
   m_TagString: Untagged
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 48cb8d593f18bdd4faf2608955128124, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,3 +107,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &4116651606531023013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9148072860126053185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 397799355d00ad542b5c2b023b5ddf21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundThreshold: 0.44
+  avgNormal: 0
+  minVerts: 10
+  isGround: 0
