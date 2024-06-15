@@ -13,6 +13,9 @@ TagManager:
   - Arrow
   - Plane
   - Target
+  - Canvas
+  - Score
+  - BackgroundMusic
   layers:
   - Default
   - TransparentFX
@@ -20,9 +23,9 @@ TagManager:
   - 
   - Water
   - UI
+  - Stair
   - 
-  - 
-  - 
+  - Minimap
   - 
   - 
   - 
