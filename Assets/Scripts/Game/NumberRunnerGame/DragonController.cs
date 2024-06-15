@@ -38,6 +38,10 @@ public class DragonController : MonoBehaviour
 
     
     [SerializeField] UIHealthBar healthBar;
+
+    [SerializeField] private AudioClip playerHit;
+    [SerializeField] private AudioClip playerJump;
+    AudioSource playerAudio;
     
     //Control the animation state, so that 
    
@@ -47,15 +51,24 @@ public class DragonController : MonoBehaviour
         joystick = FindObjectOfType<FixedJoystick>();
         rigidBody = gameObject.GetComponent<Rigidbody>();
           currentHealth = maxHealth;
+        playerAudio = GetComponent<AudioSource>();
          stepRayUpper.transform.position = new Vector3(stepRayUpper.transform.position.x, stepHeight, stepRayUpper.transform.position.z);
-
+        
     }
+
+
+       public void PlaySound(AudioClip clip)
+    {
+    playerAudio.PlayOneShot(clip);
+    }
+    
 
      public void ChangeHealth(int amount)
     {
         if (amount < 0) {
 
             dragonAnimation.SetTrigger("Damage");
+            PlaySound(playerHit);
             if (isInvincible) return;
             isInvincible = true;
             invincibleTimer = timeInvincible;
@@ -71,6 +84,7 @@ public class DragonController : MonoBehaviour
         if (isGrounded)
         rigidBody.AddForce(new Vector3(0,jumpForce,0),ForceMode.Impulse);
         dragonAnimation.SetTrigger("Jump");
+          PlaySound(playerJump);
     }
     void Update()
     {

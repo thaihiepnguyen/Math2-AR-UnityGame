@@ -476,6 +476,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OverlayText: {fileID: 198576726713587435}
   MinimapText: {fileID: 7248609772517760260}
+  collectedClip: {fileID: 8300000, guid: 03da63aa97681064fbca76c5e0b364c5, type: 3}
+  checkText: 0
 --- !u!65 &943829467049668224
 BoxCollider:
   m_ObjectHideFlags: 0

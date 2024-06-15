@@ -10,6 +10,8 @@ public class NumberCollectiblesManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshPro MinimapText;
+
+    [SerializeField] private AudioClip collectedClip;
      
     private void OnTriggerEnter(Collider collision)
     {
@@ -19,6 +21,8 @@ public class NumberCollectiblesManager : MonoBehaviour
         if (controller != null)
         {
              if (FindObjectOfType<NumberRunnerManager>().CheckCurrent( int.Parse(OverlayText.text), controller)){
+
+                controller.PlaySound(collectedClip);
             
                Destroy(gameObject);
              }

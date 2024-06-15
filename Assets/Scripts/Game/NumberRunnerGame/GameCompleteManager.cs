@@ -26,6 +26,8 @@ public class GameCompleteManager : MonoBehaviour
 
     [SerializeField] GameObject star3;
 
+   
+
     // void Awake(){
 
     //     LeanTween.reset();
@@ -101,10 +103,12 @@ public class GameCompleteManager : MonoBehaviour
     }
 
     public void Restart() {
+        GetComponent<AudioSource>().Play();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void Return(){
+      GetComponent<AudioSource>().Play();
     SceneHistory.GetInstance().PreviousScene();
 
     }

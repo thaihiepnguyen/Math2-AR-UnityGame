@@ -15,6 +15,7 @@ TagManager:
   - Target
   - Canvas
   - Score
+  - BackgroundMusic
   layers:
   - Default
   - TransparentFX

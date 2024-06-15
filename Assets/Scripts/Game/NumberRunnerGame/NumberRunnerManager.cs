@@ -17,8 +17,8 @@ public class NumberRunnerManager : MonoBehaviour
     private int currentNumber = 0;
     private int currentIndex = 0;
 
-    [SerializeField] GameObject gameOverUI;
-     [SerializeField] GameObject gameCompletedUI;
+    [SerializeField] private GameObject gameOverUI;
+     [SerializeField] private GameObject gameCompletedUI;
 
     private bool gameOver = false;
     public bool gameDone {get {return gameOver;} }
@@ -29,11 +29,20 @@ public class NumberRunnerManager : MonoBehaviour
 
     private int currentScore = 0;
     static protected int maxScore = 0;
+
+
+
+    [SerializeField] private  AudioClip gameOverSound;
+    [SerializeField] private  AudioClip gameCompletedSound;
+
     public static int GetMaxScore()
     {
         return maxScore;
     }
 
+
+
+    private GameObject backgroundMusic;
     
     void Start()
     {
@@ -59,9 +68,13 @@ public class NumberRunnerManager : MonoBehaviour
         }
 
         
+        backgroundMusic = GameObject.FindGameObjectWithTag("BackgroundMusic");
+        
     }
 
     public bool checkEnd = false;
+
+  
 
     // Update is called once per frame
     void Update()
@@ -124,6 +137,8 @@ public class NumberRunnerManager : MonoBehaviour
     //     panel.GetComponentInChildren<Button>().onClick.AddListener(Restart);
        
            gameOver = true;
+            backgroundMusic.SetActive(false);
+            GetComponent<AudioSource>().PlayOneShot(gameOverSound);
         
     }
 
@@ -147,6 +162,10 @@ public class NumberRunnerManager : MonoBehaviour
        
 
           gameOver = true;
+
+              backgroundMusic.SetActive(false);
+
+           GetComponent<AudioSource>().PlayOneShot(gameCompletedSound);
 
     }
 
