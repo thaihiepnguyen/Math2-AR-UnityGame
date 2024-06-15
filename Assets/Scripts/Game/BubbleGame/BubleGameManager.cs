@@ -1,6 +1,9 @@
-﻿using TMPro;
+﻿using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BubbleGameManager : MonoBehaviour
 {
@@ -11,9 +14,24 @@ public class BubbleGameManager : MonoBehaviour
 
     private Timer timer;
     private bool isGameOver;
+    private bool isNearlyOverTime;
 
     [SerializeField] GameObject resultModal;
+    [SerializeField] GameObject hpCanvas;
+
     [SerializeField] AudioClip endSound;
+    [SerializeField] AudioClip correctSound;
+    [SerializeField] AudioClip incorrectSound;
+    [SerializeField] AudioClip winSound;
+    [SerializeField] AudioClip hurrySound;
+
+    [SerializeField] Sprite emptyHeart;
+
+    [SerializeField] TextMeshProUGUI timeTaken;
+    [SerializeField] TextMeshProUGUI point;
+    [SerializeField] TextMeshProUGUI highestPoint;
+    [SerializeField] TextMeshProUGUI reward;
+
     [SerializeField] GameObject question;
 
     private AudioSource audioSource;
@@ -24,14 +42,21 @@ public class BubbleGameManager : MonoBehaviour
 
     private int hp;
 
+    private int currentPoint;
+
+    private int questionNum = 10;
+    private int preHighestPoint = 10;
+
     void Start()
     {
         InvokeRepeating("SpawnPrefabs", 2.0f, spawnInterval);
         timer = GetComponent<Timer>();
         isGameOver = false;
+        isNearlyOverTime = false;
         resultModal.SetActive(false);
         audioSource = GetComponent<AudioSource>();
         hp = 3;
+        currentPoint = 0;
 
         GetQuestion();
     }
@@ -62,22 +87,36 @@ public class BubbleGameManager : MonoBehaviour
                 }
             }
         }
-        if (timer.timeValue <= 0 || hp == 0)
+        if (timer.timeValue <= 10 && isNearlyOverTime == false)
         {
-            if (isGameOver == false)
+            isNearlyOverTime = true;
+            audioSource.clip = hurrySound;
+            audioSource.Play();
+        }
+        if ((timer.timeValue <= 0 || hp == 0) && isGameOver == false)
+        {
+            isGameOver = true;
+            resultModal.SetActive(true);
+            point.text = currentPoint.ToString();
+            highestPoint.text = preHighestPoint.ToString();
+            reward.text = (currentPoint * 10).ToString();
+
+            if (currentPoint == questionNum)
             {
-                isGameOver = true;
-                resultModal.SetActive(true);
+                audioSource.clip = winSound;
+                audioSource.Play();
+            }
+            else
+            {
                 audioSource.clip = endSound;
                 audioSource.Play();
-            
             }
         }
     }
 
     void SpawnPrefabs()
     {
-        int numPrefabsToSpawn = Random.Range(2, 4); 
+        int numPrefabsToSpawn = Random.Range(2, 6); 
         for (int i = 0; i < numPrefabsToSpawn; i++)
         {
             Vector3 randomPosition = new Vector3(
@@ -111,15 +150,44 @@ public class BubbleGameManager : MonoBehaviour
             var answer = obj.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text;
             if (answer == currentQuestion.ToString())
             {
+                currentPoint++;
+                point.text = currentPoint.ToString();
+                audioSource.clip = correctSound;
+                audioSource.Play();
+                renderer.material.SetColor("_TintColor", HexToColor("#BAFF67"));
+                StartCoroutine(Delay(2f));
                 Destroy(obj);
                 GetQuestion();
             }
             else
             {
-                renderer.material.color = Color.red;
+                audioSource.clip = incorrectSound;
+                audioSource.Play();
+                renderer.material.SetColor("_TintColor", HexToColor("#FF6161"));
+                hpCanvas.transform.GetChild(3 - hp).gameObject.GetComponent<Image>().sprite = emptyHeart;
                 hp--;
+                
             }
         }
+    }
+
+    private Color HexToColor(string hex)
+    {
+        Color color = Color.white;
+        if (UnityEngine.ColorUtility.TryParseHtmlString(hex, out color))
+        {
+            return color;
+        }
+        else
+        {
+            Debug.LogError("Invalid hexadecimal color: " + hex);
+            return Color.white;
+        }
+    }
+
+    private IEnumerator Delay(float sec)
+    {
+        yield return new WaitForSeconds(sec);
     }
 
     void GetQuestion()
