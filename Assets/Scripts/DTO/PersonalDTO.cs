@@ -11,7 +11,7 @@ public class SkinsDTO
 [Serializable]
 public class FramesDTO
 {
-    public int frameId { get; set; }
+    public int? frameId { get; set; }
     public int? imageFrameId { get; set; }
 }
 

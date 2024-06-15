@@ -13,6 +13,9 @@ TagManager:
   - Arrow
   - Plane
   - Target
+  - Canvas
+  - Score
+  - BackgroundMusic
   - Bubble
   - BubbleContainer
   layers:
@@ -22,9 +25,9 @@ TagManager:
   - 
   - Water
   - UI
+  - Stair
   - 
-  - 
-  - 
+  - Minimap
   - 
   - 
   - 

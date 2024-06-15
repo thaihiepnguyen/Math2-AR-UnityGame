@@ -8,6 +8,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using EasyUI.Toast;
 using Unity.XR.CoreUtils;
+using EasyUI.Progress;
+
+
 public class AvatarManager : MonoBehaviour
 {
    private PersonalDTO personal;
@@ -18,7 +21,7 @@ public class AvatarManager : MonoBehaviour
     [SerializeField]
     private GameObject prefabProduct;
 
-
+    private int indexChoice = 0;
 
 
     [SerializeField]
@@ -46,6 +49,7 @@ public class AvatarManager : MonoBehaviour
     async void Start()
     {
         userBUS = new UserBUS();
+        Progress.Show("Đang xử lý...", ProgressColor.Orange);
         var response = await userBUS.GetProfile();
 
         if (response.isSuccessful && response.data != null)
@@ -63,18 +67,13 @@ public class AvatarManager : MonoBehaviour
           
                 var imageProduct = newProduct.transform.GetChild(0).GetComponent<Image>();
 
-                
-             
-               
-               
-
                 int index = i;
                 newProduct.transform.SetParent(skinTab.transform, false);
                 if (personal.imageSkinId == skins[i].imageSkinId){
                     skinId = skins[i].skinId;
                     StartCoroutine(LoadImageManager.LoadBinaryImage(imageProduct, skins[i].imageSkinId,500,200, frameContainer.GetComponent<Image>()));
                     newProduct.GetComponent<Image>().color = new Color32(209,165,165,255);
-            
+                    this.indexChoice = i;
 
                     StartCoroutine(LoadModelManager.LoadModelBuffer(skins[i].threeDimensionId,prototype,bufferObject,true, index));
                 }
@@ -134,6 +133,7 @@ public class AvatarManager : MonoBehaviour
                 }
             }
             isOK = true;
+            Progress.Hide();
         }
     }
 
@@ -153,11 +153,12 @@ public class AvatarManager : MonoBehaviour
             Debug.Log(id);
             skinId = id;
             Debug.Log(index);
+            indexChoice = index;
             for (int i = 0; i < skins.Length; i++){
                 if (i == index){
                     container.transform.GetChild(i+1).gameObject.SetActive(true);
                     tab.transform.GetChild(i).gameObject.GetComponent<Image>().color = new Color32(209,165,165,255);
-                   
+
                 }
                 else {
                      container.transform.GetChild(i+1).gameObject.SetActive(false);
@@ -187,12 +188,16 @@ public class AvatarManager : MonoBehaviour
                     frameId = frameId
                 });
 
-                if (response.isSuccessful){
-                    Toast.Show("Cập nhật avatar thành công", 1f, ToastPosition.MiddleCenter);
-                }
-                else {
-                    Toast.Show("Cập nhật avatar thất bại", 1f, ToastPosition.MiddleCenter);
-                }
+        if (response.isSuccessful){
+            Debug.Log(indexChoice);
+            frameContainer.GetComponent<Image>().sprite = skinTab.transform.GetChild(indexChoice).GetChild(0).gameObject.GetComponent<Image>().sprite;
+
+
+            Toast.Show("Cập nhật avatar thành công", 1f, ToastPosition.MiddleCenter);
+        }
+        else {
+            Toast.Show("Cập nhật avatar thất bại", 1f, ToastPosition.MiddleCenter);
+        }
      }
 
 }

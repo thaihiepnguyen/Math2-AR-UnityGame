@@ -1,4 +1,5 @@
 ﻿using EasyUI.Toast;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -59,6 +60,8 @@ public class ArrowGameManager : MonoBehaviour
     [SerializeField] AudioClip winSFX;
     [SerializeField] AudioClip gameoverSFX;
     private AudioSource audioSource;
+    bool isGameOver=false;
+    bool isOverTime=false;
 
     private void Awake()
     {
@@ -203,18 +206,21 @@ public class ArrowGameManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (curhealth <= 0)
+        if (curhealth <= 0 && !isGameOver)
         {
             Toast.Show("Game Over", 3f);
             OnGameEnd();
+            isGameOver = true;
         }
         //Ten seconds left
-        if (timer.timeValue <=10 )
+        if (timer.timeValue <=10  && !isOverTime  )
         {
             overtimeSFX.GetComponent<AudioSource>().Play();
+            isOverTime= true;
         }
-        if (timer.timeValue <= 0)
+        if (timer.timeValue <= 0 && !isGameOver)
         {
+            isGameOver= true;
             OnGameEnd();
             
         }
@@ -240,8 +246,7 @@ public class ArrowGameManager : MonoBehaviour
     {
         curhealth -= 1;
         curhealth = Mathf.Clamp(curhealth, 0, maxhealth);
-        audioSource.clip = wrongSFX;
-        audioSource.Play();
+        StartCoroutine(PlaySoundAfterSeconds(wrongSFX, 0.5f));
         UpdateHeartsUI();
         Debug.Log("Health " + curhealth);
     }
@@ -250,8 +255,7 @@ public class ArrowGameManager : MonoBehaviour
     {
         curhealth += 1;
         curhealth = Mathf.Clamp(curhealth, curhealth, maxhealth);
-        audioSource.clip = correctSFX;
-        audioSource.Play();
+        StartCoroutine(PlaySoundAfterSeconds(correctSFX, 0.5f));
         UpdateHeartsUI();
     }
 
@@ -271,7 +275,7 @@ public class ArrowGameManager : MonoBehaviour
 
     public void OnExit()
     {
-        SceneHistory.GetInstance().PreviousScene();
+        //SceneHistory.GetInstance().PreviousScene();
     }
    public void NextQuestion()
     {
@@ -314,9 +318,29 @@ public class ArrowGameManager : MonoBehaviour
         timeText.text = timer.toTimeString();
         yourScore.text = (point*100).ToString();
         yourHighestScore.text = yourScore.text;
-        if(point==0)timer.timeValue= 0;
-        reward.text = (point*100 + (int)Mathf.Round(Mathf.Clamp(timer.timeValue,0,timer.timeValue))*10).ToString();
+       
+        var realTimeValue = timer.baseTimeValue - timer.timeValue;
+        if (point == 0) realTimeValue = 0;
+        reward.text ="+ "+(point*10 + (int)Mathf.Round(Mathf.Clamp(realTimeValue, 0, realTimeValue))*10).ToString();
         gameWinMenu.gameObject.SetActive(true);
         overtimeSFX.GetComponent<AudioSource>().Stop();
+        if (point > 0)
+        {
+            audioSource.clip = winSFX;
+            audioSource.Play();
+            
+        }
+        else
+        {
+            audioSource.clip = gameoverSFX;
+            audioSource.Play();
+        }
+        
+    }
+    IEnumerator PlaySoundAfterSeconds(AudioClip audioClip, float second)
+    {
+        yield return new WaitForSeconds(second);
+        audioSource.clip = audioClip;
+        audioSource.Play();
     }
 }

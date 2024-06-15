@@ -30,4 +30,6 @@ public class GlobalVariable
     //Scene number
     public const string EXAM_SCENE = "ExamScene";
     public const string EXAM_LIST_SCENE = "ExamListScene";
+
+    public static bool IS_REMEMBER_ME = false;
 }

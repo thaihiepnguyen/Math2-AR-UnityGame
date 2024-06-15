@@ -36,9 +36,7 @@ public class PanelManager : MonoBehaviour
     private GameObject dragon;
 
    
-     async void Awake(){
-       
-
+    public async void Start(){
           UserBUS userBUS = new();
         var response = await userBUS.GetProfile();
         if (response.isSuccessful) {
@@ -54,7 +52,7 @@ public class PanelManager : MonoBehaviour
             _totalOfAchievement.text = personalDTO.totalAchievement.ToString();
             _totalOfNote.text = personalDTO.totalNote.ToString();
 
-            // _logoutBtn.onClick.AddListener(OnLogoutCLick);
+            _logoutBtn.onClick.AddListener(OnLogoutCLick);
 
            
         }
@@ -90,5 +88,9 @@ public class PanelManager : MonoBehaviour
 
     public void UpdateAvatar(){
         SceneHistory.GetInstance().LoadScene("Avatar");
+    }
+    public void OnLogoutCLick() {
+        Debug.Log("Click!");
+        SceneHistory.GetInstance().OnClickLogoutButton();
     }
 }
