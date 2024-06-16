@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78faa53e6a7bf32499ec7e9d09a18b92, type: 3}
+  m_Name: 05 Enemy B Monster Data
+  m_EditorClassIdentifier: 
+  turnSpeed: 360
+  scorePoints: 150
+  rotateTowardsMode: 1
+  speedAnimation: 1.5
+  minDistanceToPlayer: 1
+  goUpSpeed: 2
+  faceInitialDirection: 1
+  maxDeviationRandomVectorUp: 0.5
+  minSecondsGoUp: 1
+  maxSecondsGoUp: 2.5
+  angleToAwayFromPlayer: 30
+  patrolMode: 1
+  randomPositionBehindCenter: 1
+  patrolSpeed: 2
+  firstPointMaxAttempts: 3
+  firstPointMinDot: 0.5
+  spherePatrollingRadius: 5
+  spherePatrollingDistanceToTarget: 0
+  spherePatrollingHeight: -1
+  maxHeightPatrolling: 10
+  minSecondsSameDirection: 4
+  maxSecondsSameDirection: 8
+  minDistanceToTarget: 0.05
+  attackSpeed: 2.25
+  secondsToAdjustDirection: 1
+  initialColor: {r: 0.95294124, g: 0.41176474, b: 1, a: 1}
+  attackColor: {r: 0.18039216, g: 0.3529412, b: 0.29803923, a: 1}
+  attackMaterial: {fileID: 2100000, guid: a8145984785158c4b9676a4dc349aec1, type: 2}
+  damageMaterial: {fileID: 0}
+  normalMaterial: {fileID: 2100000, guid: 5084a2898f8f55840931eb7419d779e2, type: 2}

@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78faa53e6a7bf32499ec7e9d09a18b92, type: 3}
+  m_Name: 06 Enemy C Monster Data
+  m_EditorClassIdentifier: 
+  turnSpeed: 400
+  scorePoints: 250
+  rotateTowardsMode: 1
+  speedAnimation: 0.5
+  minDistanceToPlayer: 1
+  goUpSpeed: 1.5
+  faceInitialDirection: 1
+  maxDeviationRandomVectorUp: 0.5
+  minSecondsGoUp: 1
+  maxSecondsGoUp: 3
+  angleToAwayFromPlayer: 30
+  patrolMode: 1
+  randomPositionBehindCenter: 1
+  patrolSpeed: 1.5
+  firstPointMaxAttempts: 3
+  firstPointMinDot: 0.5
+  spherePatrollingRadius: 6
+  spherePatrollingDistanceToTarget: -1
+  spherePatrollingHeight: -1
+  maxHeightPatrolling: 10
+  minSecondsSameDirection: 4
+  maxSecondsSameDirection: 8
+  minDistanceToTarget: 0.05
+  attackSpeed: 2.5
+  secondsToAdjustDirection: 1
+  initialColor: {r: 1, g: 1, b: 0.57254905, a: 1}
+  attackColor: {r: 0.19607845, g: 0.4156863, b: 0.7960785, a: 1}
+  attackMaterial: {fileID: 2100000, guid: 2e3b125e2b46b334e81c28bd505a1671, type: 2}
+  damageMaterial: {fileID: 0}
+  normalMaterial: {fileID: 2100000, guid: 1dcf18599fec3384ab8214aa036c77d6, type: 2}

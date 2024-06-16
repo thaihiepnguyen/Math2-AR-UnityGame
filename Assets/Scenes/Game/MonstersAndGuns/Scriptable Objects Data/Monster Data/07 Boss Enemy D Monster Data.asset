@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78faa53e6a7bf32499ec7e9d09a18b92, type: 3}
+  m_Name: 07 Boss Enemy D Monster Data
+  m_EditorClassIdentifier: 
+  turnSpeed: 540
+  scorePoints: 1000
+  rotateTowardsMode: 0
+  speedAnimation: 1
+  minDistanceToPlayer: 2
+  goUpSpeed: 0.5
+  faceInitialDirection: 0
+  maxDeviationRandomVectorUp: 0.5
+  minSecondsGoUp: 2
+  maxSecondsGoUp: 3
+  angleToAwayFromPlayer: 30
+  patrolMode: 1
+  randomPositionBehindCenter: 1
+  patrolSpeed: 2
+  firstPointMaxAttempts: 3
+  firstPointMinDot: 0.5
+  spherePatrollingRadius: 4
+  spherePatrollingDistanceToTarget: 0
+  spherePatrollingHeight: 0
+  minSecondsSameDirection: 5
+  maxSecondsSameDirection: 8
+  minDistanceToTarget: 0.5
+  attackSpeed: 1.5
+  secondsToAdjustDirection: 1
+  initialColor: {r: 1, g: 0.29803923, b: 0.20392159, a: 1}
+  attackColor: {r: 1, g: 0.29803923, b: 0.20392157, a: 1}
+  attackMaterial: {fileID: 0}
+  damageMaterial: {fileID: 2100000, guid: 388c21dd3415d2741b68048c3755d2db, type: 2}
+  normalMaterial: {fileID: 2100000, guid: 4d8215369ad2c9a47a74206a883a73c2, type: 2}

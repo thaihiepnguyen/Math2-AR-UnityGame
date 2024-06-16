@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78faa53e6a7bf32499ec7e9d09a18b92, type: 3}
+  m_Name: 02 Ghost Monster Data
+  m_EditorClassIdentifier: 
+  turnSpeed: 180
+  scorePoints: 150
+  rotateTowardsMode: 1
+  speedAnimation: 0.5
+  minDistanceToPlayer: 1
+  goUpSpeed: 1.5
+  faceInitialDirection: 1
+  maxDeviationRandomVectorUp: 0.5
+  minSecondsGoUp: 1.5
+  maxSecondsGoUp: 2.5
+  angleToAwayFromPlayer: 30
+  patrolMode: 0
+  randomPositionBehindCenter: 0
+  patrolSpeed: 1
+  firstPointMaxAttempts: 3
+  firstPointMinDot: 0.5
+  spherePatrollingRadius: 5
+  spherePatrollingDistanceToTarget: 0
+  spherePatrollingHeight: -1
+  maxHeightPatrolling: 10
+  minSecondsSameDirection: 4
+  maxSecondsSameDirection: 8
+  minDistanceToTarget: 0.05
+  attackSpeed: 2.25
+  secondsToAdjustDirection: 1
+  initialColor: {r: 0.59607846, g: 0.8784314, b: 0.2, a: 1}
+  attackColor: {r: 1, g: 0.69803923, b: 0.11764707, a: 1}
+  attackMaterial: {fileID: 2100000, guid: f5725c9bda0115d49992103475bbf3dc, type: 2}
+  damageMaterial: {fileID: 0}
+  normalMaterial: {fileID: 2100000, guid: 0d27622fe8dcdae468e7a3b005f37cac, type: 2}

@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78faa53e6a7bf32499ec7e9d09a18b92, type: 3}
+  m_Name: 03 Skull Monster Data
+  m_EditorClassIdentifier: 
+  turnSpeed: 360
+  scorePoints: 200
+  rotateTowardsMode: 1
+  speedAnimation: 1.5
+  minDistanceToPlayer: 1
+  goUpSpeed: 2
+  faceInitialDirection: 1
+  maxDeviationRandomVectorUp: 0.5
+  minSecondsGoUp: 1
+  maxSecondsGoUp: 3
+  angleToAwayFromPlayer: 30
+  patrolMode: 0
+  randomPositionBehindCenter: 0
+  patrolSpeed: 2
+  firstPointMaxAttempts: 3
+  firstPointMinDot: 0.5
+  spherePatrollingRadius: 4
+  spherePatrollingDistanceToTarget: 0.5
+  spherePatrollingHeight: -1
+  maxHeightPatrolling: 10
+  minSecondsSameDirection: 4
+  maxSecondsSameDirection: 8
+  minDistanceToTarget: 0.1
+  attackSpeed: 2.1
+  secondsToAdjustDirection: 1
+  initialColor: {r: 0.6313726, g: 0.69411767, b: 0.7490196, a: 1}
+  attackColor: {r: 0, g: 0, b: 0, a: 1}
+  attackMaterial: {fileID: 2100000, guid: 454707bfe72c2e749bd9f0c76154de0d, type: 2}
+  damageMaterial: {fileID: 0}
+  normalMaterial: {fileID: 2100000, guid: b8598a0268cf18b4c85dfb0676536dc9, type: 2}
