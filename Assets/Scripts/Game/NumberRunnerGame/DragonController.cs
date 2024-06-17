@@ -42,6 +42,7 @@ public class DragonController : MonoBehaviour
     [SerializeField] private AudioClip playerHit;
     [SerializeField] private AudioClip playerJump;
     AudioSource playerAudio;
+    [SerializeField] private ParticleSystem hitEffect;
     
     //Control the animation state, so that 
    
@@ -63,12 +64,15 @@ public class DragonController : MonoBehaviour
     }
     
 
+
      public void ChangeHealth(int amount)
     {
         if (amount < 0) {
 
             dragonAnimation.SetTrigger("Damage");
             PlaySound(playerHit);
+            hitEffect.Play();
+            rigidBody.AddForce(new Vector3(-1f,0.1f,0),ForceMode.Impulse);
             if (isInvincible) return;
             isInvincible = true;
             invincibleTimer = timeInvincible;
@@ -91,12 +95,17 @@ public class DragonController : MonoBehaviour
 
           if (currentHealth <= 0 && !checkGameOver){
             checkGameOver = true;
+           
             dragonAnimation.SetTrigger("Die");
+           
             FindObjectOfType<NumberRunnerManager>().GameOver();
         
         }
         else if (FindObjectOfType<NumberRunnerManager>().checkEnd && !checkGameOver){
+
             checkGameOver = true;
+            dragonAnimation.SetTrigger("Roar");
+          
             FindObjectOfType<NumberRunnerManager>().GameCompleted();
           
            

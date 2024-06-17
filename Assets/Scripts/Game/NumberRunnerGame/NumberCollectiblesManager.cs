@@ -12,6 +12,8 @@ public class NumberCollectiblesManager : MonoBehaviour
     private TextMeshPro MinimapText;
 
     [SerializeField] private AudioClip collectedClip;
+
+    [SerializeField] private ParticleSystem collectEffect;
      
     private void OnTriggerEnter(Collider collision)
     {
@@ -23,8 +25,11 @@ public class NumberCollectiblesManager : MonoBehaviour
              if (FindObjectOfType<NumberRunnerManager>().CheckCurrent( int.Parse(OverlayText.text), controller)){
 
                 controller.PlaySound(collectedClip);
+                
             
                Destroy(gameObject);
+               Instantiate(collectEffect,transform.position,transform.rotation);
+    
              }
         } 
         
@@ -52,6 +57,7 @@ public class NumberCollectiblesManager : MonoBehaviour
          
 
             MinimapText.color = randomColor;
+            OverlayText.color = randomColor;
 
              checkText = true;
         }

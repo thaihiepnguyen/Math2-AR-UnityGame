@@ -81,7 +81,8 @@ public class NumberRunnerManager : MonoBehaviour
     {
          scoreText.text =  string.Format("Điểm: {0}", score.ToString());  
 
-         if (score == numbers.Count){
+         if (score == numbers.Count && spawnObjects.Count == 0){
+
             checkEnd = true;
 
          }
