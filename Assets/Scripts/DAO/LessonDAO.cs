@@ -18,4 +18,8 @@ public class LessonDAO
     {
         return await API.Post<ChapterDTO, List<LessonDTO>>($"{GlobalVariable.server_url}/lessons/get-lessons-by-chapter-id", chapterDto);
     }
+    public async Task<BaseDTO<LessonDTO>> GetVideoByLessonId(int lessonId)
+    {
+        return await API.Get<LessonDTO>($"{GlobalVariable.server_url}/lessons/{lessonId}"); 
+    }
 }

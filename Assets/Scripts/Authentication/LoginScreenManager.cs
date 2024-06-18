@@ -33,9 +33,16 @@ public class LoginScreenManager : MonoBehaviour
 
     public TMP_InputField OTPField;
 
+    public Toggle RememberMe;
+
 
     private void Awake()
     {
+        string token = PlayerPrefs.GetString("token");
+        if (token != "") {
+            API.AddToken(token);
+            SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
+        }
         configuration = new GoogleSignInConfiguration { WebClientId = webClientId, RequestEmail = true, RequestIdToken = true };
         CheckFirebaseDependencies();
     }
@@ -44,7 +51,14 @@ public class LoginScreenManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        #if UNITY_ANDROID
+        GlobalVariable.platform = 1;
+        #elif UNITY_IOS
+            GlobalVariable.platform = 2;
+        #endif
+    
         PasswordField.contentType = TMP_InputField.ContentType.Password;
+
 
         LoginButton.onClick.AddListener(OnClickLogin);
         RegisterButton.onClick.AddListener(OnClickRegister);
@@ -135,21 +149,6 @@ public class LoginScreenManager : MonoBehaviour
             });
             if (response.isSuccessful)
             {
-                // // Set uid 
-
-                // Debug.Log("Please take this uid in main screen to get profile of user" + response.data);
-                PlayerPrefs.SetInt("uid", response.data);
-
-                // To explain how to use the uid in the future
-                // var userBus = new UserBUS();
-                // var me = await userBus.GetUserById(PlayerPrefs.GetInt("uid"));
-
-                // if (me.isSuccessful)
-                // {
-                //     AddToInformation(me.data.email);
-                // }
-                Debug.Log("get here");
-
                 SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
 
             }
@@ -230,6 +229,7 @@ public class LoginScreenManager : MonoBehaviour
 
     async void OnClickLogin()
     {
+        GlobalVariable.IS_REMEMBER_ME = RememberMe.isOn;
         var email = EmailField.text;
         var password = PasswordField.text;
         var isNumeric = Regex.IsMatch(email,@"^(\+[\d]{1,5}|0)?[0-9]\d{8}$");
@@ -240,14 +240,12 @@ public class LoginScreenManager : MonoBehaviour
         var response = await loginBus.LoginByEmail(new LoginEmailDTO
         {
             email = email,
-            password = password
+            password = password,
+            rememberMe = RememberMe.isOn
         });
         
         if (response.isSuccessful)
         {
-            Debug.Log("Login Successful");
-            // Set uid 
-            PlayerPrefs.SetInt("uid", response.data);
         
             Progress.Hide();
             SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);

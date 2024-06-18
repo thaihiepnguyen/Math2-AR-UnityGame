@@ -48,6 +48,7 @@ public class SceneHistory : MonoBehaviour
 
     public void OnClickLogoutButton() {
         sceneHistory.Clear();
+        PlayerPrefs.DeleteKey("token");
         LoadScene("LoginScene");
     }
    

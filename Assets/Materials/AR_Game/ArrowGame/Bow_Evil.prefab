@@ -493,7 +493,7 @@ MonoBehaviour:
   arrowSpawn: {fileID: 0}
   arrowRotationSpawn: {fileID: 0}
   mainCamera: {fileID: 0}
-  maxForce: 1000
+  maxForce: 500
 --- !u!4 &4415312973135603310 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9559609448a3be943917920af0439447, type: 3}

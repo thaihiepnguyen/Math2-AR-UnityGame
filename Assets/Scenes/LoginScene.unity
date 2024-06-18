@@ -156,10 +156,10 @@ RectTransform:
   - {fileID: 705172131}
   m_Father: {fileID: 1510552218}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.07, y: 0.77683765}
-  m_AnchorMax: {x: 0.41200003, y: 0.85122514}
-  m_AnchoredPosition: {x: 0.84439087, y: -91.572}
-  m_SizeDelta: {x: 1.688797, y: -1.0778046}
+  m_AnchorMin: {x: 0.07, y: 0.56177497}
+  m_AnchorMax: {x: 0.41200003, y: 0.6286126}
+  m_AnchoredPosition: {x: 0.84439087, y: -0.071998596}
+  m_SizeDelta: {x: 1.688797, y: 1.9221954}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &101131659
 MonoBehaviour:
@@ -1503,6 +1503,7 @@ MonoBehaviour:
   infoText: {fileID: 1802796953}
   webClientId: 916595177384-tsjvonfipit52orilsn3tokvlna36l9o.apps.googleusercontent.com
   OTPField: {fileID: 0}
+  RememberMe: {fileID: 942408285}
 --- !u!1 &569250251
 GameObject:
   m_ObjectHideFlags: 0
@@ -2998,7 +2999,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &984160187
 GameObject:
   m_ObjectHideFlags: 0
@@ -5055,9 +5056,9 @@ RectTransform:
   m_Father: {fileID: 1510552218}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.07, y: 0.77683765}
-  m_AnchorMax: {x: 0.41200003, y: 0.85122514}
-  m_AnchoredPosition: {x: 61.97673, y: -0.10002136}
-  m_SizeDelta: {x: 125.9543, y: -1.0778}
+  m_AnchorMax: {x: 0.77900004, y: 0.85122514}
+  m_AnchoredPosition: {x: -1.0232697, y: -0.10002136}
+  m_SizeDelta: {x: -0.045700073, y: -1.0778}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1700274140
 MonoBehaviour:

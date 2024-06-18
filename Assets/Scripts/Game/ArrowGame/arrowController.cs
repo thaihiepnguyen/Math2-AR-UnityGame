@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public class arrowController : MonoBehaviour
 {
@@ -10,14 +12,17 @@ public class arrowController : MonoBehaviour
     private Rigidbody rb;
     [SerializeField]
     private SphereCollider myCollider;
-
+    
     [SerializeField]
     private GameObject stickingArrow;
     private bool isStuck = false;
-
+    [SerializeField] AudioClip objectHit;
+    [SerializeField] AudioClip targetHit;
+    AudioSource audioSource;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource= GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -30,23 +35,52 @@ public class arrowController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Plane"))
+        {
+            ArrowGameManager.GetInstance().DecreaseHealth();
+            Destroy(gameObject);
+            return;
+        }
         rb.isKinematic = true;
         myCollider.isTrigger = true;
+        if (collision.gameObject.CompareTag("Target"))
+        {
+            audioSource.clip = targetHit;
+            audioSource.Play();
+            StartCoroutine(StopSoundAfterSecond(1f));
+        }
+        else
+        {
+            audioSource.clip = objectHit;
+            audioSource.Play();
 
-        GameObject arrow = Instantiate(stickingArrow);
-        arrow.transform.position = transform.position;
-        arrow.transform.forward = transform.forward;
-
+        }
+        TrailRenderer trail=GetComponentInChildren<TrailRenderer>();
+        trail.enabled = false;
+        
         if (collision.collider.attachedRigidbody != null)
         {
-            arrow.transform.parent = collision.collider.attachedRigidbody.transform;
+            transform.parent = collision.collider.attachedRigidbody.transform;
         }
 
         collision.collider.GetComponent<IHittable>()?.GetHit();
 
-        Destroy(gameObject);
+        
+        if (!collision.gameObject.CompareTag("Target"))
+        {
+            ArrowGameManager.GetInstance().DecreaseHealth();
 
+            Destroy(gameObject, 3f);
+        }
+        else
+        {
+            ArrowGameManager.GetInstance().CheckAnswer(collision.gameObject.GetComponentInChildren<TextMeshProUGUI>().text);
+        }
     }
-
+    IEnumerator StopSoundAfterSecond(float second)
+    {
+        yield return new WaitForSecondsRealtime(second);
+        audioSource.Stop();
+    }
    
 }

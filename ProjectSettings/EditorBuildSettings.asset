@@ -57,8 +57,29 @@ EditorBuildSettings:
     path: Assets/Scenes/ReviewExamScene.unity
     guid: a9f7e02b053f8304db266d404023a61e
   - enabled: 0
+    path: Assets/Scenes/TestBundle.unity
+    guid: d94d4039d2560c84e937420cb9695c46
+  - enabled: 0
+    path: Assets/Scenes/New Scene.unity
+    guid: 895cd06c330456340a07eea0af1292fb
+  - enabled: 0
+    path: Assets/Scenes/Avatar.unity
+    guid: 059d87c223cb97f40b07265f0664556c
+  - enabled: 0
     path: Assets/Scenes/OTPScene.unity
     guid: 6f7ef049126b8a744afa233a8a15f846
+  - enabled: 0
+    path: Assets/Scenes/VideoLearning.unity
+    guid: ca287024364692842a17921ece07c966
+  - enabled: 0
+    path: Assets/Scenes/Game/ArrowGame.unity
+    guid: 168bd30671e73de4ca56f8359dd7838c
+  - enabled: 0
+    path: Assets/Scenes/Game/NumberRunnerGame.unity
+    guid: 97480d4868d95754bb1ce812b3dfe9ba
+  - enabled: 1
+    path: Assets/Scenes/Game/NumberConnect.unity
+    guid: a652ad17d99ee534da30cb396db8f7f3
   - enabled: 1
     path: Assets/Scenes/Game/CatGame.unity
     guid: 211d650abdc77b443ba2b64959d1890c

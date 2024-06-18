@@ -6,9 +6,10 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     public TextMeshProUGUI timer;
-    [SerializeField]public float timeValue = 0.5f;
+    [SerializeField] public float timeValue = 0.5f;
     public bool isStop = false;
-    private float baseTimeValue = 0f;
+    [SerializeField, HideInInspector]
+    public float baseTimeValue { get; private set; }
     // Start is called before the first frame update
     void Start()
     {

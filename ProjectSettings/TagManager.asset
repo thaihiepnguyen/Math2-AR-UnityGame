@@ -10,6 +10,13 @@ TagManager:
   - Outsider
   - Exercise
   - MultipleChoiceQuestion
+  - Arrow
+  - Plane
+  - Target
+  - Canvas
+  - Score
+  - BackgroundMusic
+  - WorldCanvas
   - Spawnable
   layers:
   - Default
@@ -18,11 +25,10 @@ TagManager:
   - Dragon
   - Water
   - UI
+  - Stair
   - Spawnable
   - 
-  - 
-  - 
-  - 
+  - Minimap
   - 
   - 
   - 
