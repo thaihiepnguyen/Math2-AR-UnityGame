@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using EasyUI.Toast;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,6 +58,8 @@ public class DragonController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision){
         if(collision.gameObject.CompareTag("Spawnable")){
+            var text = collision.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+            Toast.Show(text.text, 2f);
             Debug.Log("touched");
             // rigidBody.velocity = Vector3.zero;
             rigidBody.rotation = Quaternion.identity;

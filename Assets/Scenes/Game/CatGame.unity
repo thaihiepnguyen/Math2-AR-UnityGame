@@ -712,9 +712,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnObjects:
   - {fileID: 8108536670058704418, guid: cbfd48c9badfca5469205dc75b011591, type: 3}
-  - {fileID: 375881710746279053, guid: 3a9a89aae95715c4f920b69e1460c745, type: 3}
-  - {fileID: 7921440383920221472, guid: 6d1cc1bdb14b8c84384308e08af4e4bc, type: 3}
-  - {fileID: 2340582100524619271, guid: 2b0b507e13911f74bae57b7ecea72894, type: 3}
   amount: 10
   scaler: 0.05
   mainCam: {fileID: 1669232752}
@@ -1179,7 +1176,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0

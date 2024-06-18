@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CatGameManager : MonoBehaviour
@@ -48,10 +49,12 @@ public class CatGameManager : MonoBehaviour
     {
         GlobalVariable.currentAmount = 0;
         for(int i = 0; i < amount; i++){
-            InstantiateObject(GetRandomObject());
+            var GameObject = GetRandomObject();
+            GameObject.GetComponentInChildren<TextMeshProUGUI>().text = Random.Range(1,10).ToString();
+            InstantiateObject(GameObject);
         }
     }
-
+    
     // Update is called once per frame
     void Update()
     {

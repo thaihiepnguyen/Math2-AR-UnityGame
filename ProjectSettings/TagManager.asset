@@ -10,13 +10,15 @@ TagManager:
   - Outsider
   - Exercise
   - MultipleChoiceQuestion
+  - Spawnable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Dragon
   - Water
   - UI
+  - Spawnable
   - 
   - 
   - 
@@ -40,8 +42,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - XR Simulation
   - 
   m_SortingLayers:
   - name: Default
