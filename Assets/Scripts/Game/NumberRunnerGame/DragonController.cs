@@ -71,6 +71,9 @@ public class DragonController : MonoBehaviour
 
             dragonAnimation.SetTrigger("Damage");
             PlaySound(playerHit);
+            
+             hitEffect.transform.LookAt(Camera.main.transform);
+       
             hitEffect.Play();
             rigidBody.AddForce(new Vector3(-1f,0.1f,0),ForceMode.Impulse);
             if (isInvincible) return;
