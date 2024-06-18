@@ -41,8 +41,8 @@ public class NumberCollectiblesManager : MonoBehaviour
                 
             
                Destroy(gameObject);
-           Instantiate(collectEffect,transform.position,Camera.main.transform.rotation);
-              
+              Instantiate(collectEffect,transform.position,transform.rotation);
+                    
     
              }
         } 
