@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MovingTarget : MonoBehaviour, IHittable
@@ -20,6 +21,10 @@ public class MovingTarget : MonoBehaviour, IHittable
     private bool moveHorizontally = true;
     [SerializeField]
     private float arriveThreshold, movementRadius = 2, speed = 1;
+    [SerializeField]
+    ParticleSystem explose;
+    [SerializeField] GameObject Item;
+    [SerializeField] public TextMeshProUGUI text;
 
     private void Awake()
     {
@@ -50,20 +55,25 @@ public class MovingTarget : MonoBehaviour, IHittable
         {
             //audioSource.Play();
             Debug.Log("Target down");
+
         }
+        if(collision.gameObject.CompareTag("Arrow") == true){
+            
+        }
+    }
+    void OnDestroy() {
+       
     }
 
     public void GetHit()
     {
-        health--;
-        if(health <= 0)
-        {
-            rb.isKinematic = false;
-            stopped = true;
-            
-        }
+        Item.SetActive(false);
+       
         
-        
+        text.gameObject.SetActive(false);
+        explose.Play();
+
+
     }
 
     private void FixedUpdate()

@@ -32,7 +32,7 @@ public class ArrowGameManager : MonoBehaviour
     public int point = 0;
     public int totalquestions = 10;
     public int curquestion = 0;
-    private int maxhealth = 3;
+    public int maxhealth = 3;
     public int curhealth { get; set; }
     private const float minDistance = 2f;
     private static ArrowGameManager instance;
@@ -62,7 +62,7 @@ public class ArrowGameManager : MonoBehaviour
     private AudioSource audioSource;
     bool isGameOver=false;
     bool isOverTime=false;
-
+    int correctAnswer = 0;
     private void Awake()
     {
         if (instance == null)
@@ -240,6 +240,10 @@ public class ArrowGameManager : MonoBehaviour
             }
            
         }
+        if (correctAnswer > 3)
+        {
+            IncreaseHealth();
+        }
     }
 
     public void DecreaseHealth()
@@ -255,7 +259,8 @@ public class ArrowGameManager : MonoBehaviour
     {
         curhealth += 1;
         curhealth = Mathf.Clamp(curhealth, curhealth, maxhealth);
-        StartCoroutine(PlaySoundAfterSeconds(correctSFX, 0.5f));
+        correctAnswer= 0;
+        //StartCoroutine(PlaySoundAfterSeconds(correctSFX, 0.5f));
         UpdateHeartsUI();
     }
 
@@ -277,15 +282,16 @@ public class ArrowGameManager : MonoBehaviour
     {
         //SceneHistory.GetInstance().PreviousScene();
     }
-   public void NextQuestion()
+   public void  NextQuestion()
     {
         curquestion++;
         if(curquestion  == totalquestions)
         {
             OnGameEnd();
-            return;
+           
         }
         var activeTarget = GameObject.FindGameObjectsWithTag("Target");
+        
         foreach(GameObject t in activeTarget)
         {
             Destroy(t);
@@ -298,17 +304,22 @@ public class ArrowGameManager : MonoBehaviour
         spawnCount = 4;
         updateUI();
     }
-    public void CheckAnswer(string answer)
+    public bool CheckAnswer(string answer)
     {
         if (exerciseList[curquestion].right_answer==answer)
         {
             point++;
-            IncreaseHealth();
-            NextQuestion();
+            //IncreaseHealth();
+            correctAnswer++;
+            StartCoroutine(PlaySoundAfterSeconds(correctSFX,1f));
+              
+            return true;
         }
         else
         {
+            correctAnswer = 0;
            DecreaseHealth();
+            return false;
         }
     }
     public void OnGameEnd()
@@ -326,14 +337,13 @@ public class ArrowGameManager : MonoBehaviour
         overtimeSFX.GetComponent<AudioSource>().Stop();
         if (point > 0)
         {
-            audioSource.clip = winSFX;
-            audioSource.Play();
+            StartCoroutine(PlaySoundAfterSeconds(winSFX, 1f));
+            
             
         }
         else
         {
-            audioSource.clip = gameoverSFX;
-            audioSource.Play();
+            StartCoroutine(PlaySoundAfterSeconds(gameoverSFX, 1f));
         }
         
     }
