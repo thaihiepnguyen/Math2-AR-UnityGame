@@ -1,0 +1,139 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class RunnerController : MonoBehaviour
+{
+    // Start is called before the first frame update
+
+     private CharacterController controller;
+     private Vector3 direction;
+    public float forwardSpeed = 5;
+    
+    private int desiredLane = 1;
+    public float laneDistance = 2.5f;
+
+    public float maxSpeed;
+
+    public float jumpForce;
+    public float gravity = -12f;
+
+    public Animator animator;
+
+    private bool isSliding = false;
+
+    // public bool isGrounded;
+    // public LayerMask groundLayer;
+    // public Transform groundCheck;
+
+    void Start()
+    {
+         controller = GetComponent<CharacterController>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!RunnerManager.isGameStarted)
+        return;
+
+
+        if (forwardSpeed < maxSpeed){
+            
+        forwardSpeed += 0.1f * Time.deltaTime;
+        }
+
+        animator.SetBool("IsGameStarted",true);
+        direction.z = forwardSpeed;
+
+        // isGrounded = Physics.CheckSphere(groundCheck.position, 0.17f, groundLayer);
+        animator.SetBool("IsGrounded", controller.isGrounded);
+        if (controller.isGrounded){
+        
+        direction.y = -1;
+      
+        if(SwipeManager.swipeUp){
+           
+            Jump();
+        }
+        }
+        else 
+        direction.y += gravity * Time.deltaTime;
+        
+        if (SwipeManager.swipeDown && !isSliding){
+            StartCoroutine(Slide());
+        }
+        if (SwipeManager.swipeRight){
+            desiredLane++;
+            if (desiredLane == 3) {
+                desiredLane = 2;
+            }
+        }
+
+        if (SwipeManager.swipeLeft){
+            desiredLane--;
+            if (desiredLane == -1){
+                desiredLane = 0;
+            }
+        }
+
+        Vector3 targetPosition = transform.position.z*transform.forward + transform.position.y* transform.up;
+        if (desiredLane == 0){
+            targetPosition+= Vector3.left*laneDistance;
+        }
+        else if (desiredLane == 2){
+            targetPosition+= Vector3.right * laneDistance;
+        }
+
+    //    transform.position = targetPosition;
+        
+        //  transform.position = Vector3.Lerp(transform.position,targetPosition, 1000 * Time.deltaTime);
+        //  controller.center = controller.center;
+
+        if (transform.position == targetPosition )
+            return;
+        
+        Vector3 diff = targetPosition - transform.position;
+        Vector3 moveDir = diff.normalized * 25 * Time.deltaTime;
+
+        if (moveDir.sqrMagnitude < diff.sqrMagnitude)
+            controller.Move(moveDir);
+        else
+            controller.Move(diff);
+        
+   
+    }
+
+   
+    private void FixedUpdate()
+    {
+        if (!RunnerManager.isGameStarted)
+        return;
+           controller.Move(direction * Time.fixedDeltaTime);
+
+    }
+
+    private void Jump(){
+         direction.y = jumpForce;
+    }
+
+    private void  OnControllerColliderHit (ControllerColliderHit hit){
+        if (hit.transform.tag == "Obstacle"){
+            RunnerManager.gameOver = true;
+        }
+    }
+
+    private IEnumerator Slide(){
+        isSliding = true;
+        animator.SetBool("IsSliding",true);
+        controller.center = new Vector3(0,-0.5f,0);
+        controller.height = 1;
+        yield return new WaitForSeconds(1.3f);
+        animator.SetBool("IsSliding", false);
+         controller.center = new Vector3(0,0,0);
+        controller.height = 2;
+        isSliding = false;
+    }
+}

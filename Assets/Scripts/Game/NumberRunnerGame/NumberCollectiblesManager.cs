@@ -57,7 +57,7 @@ public class NumberCollectiblesManager : MonoBehaviour
 
     //     OverlayText.transform.SetParent(worldSpaceCanvas);
      }
-    void LateUpdate(){
+    void FixedUpdate(){
         //   OverlayText.transform.rotation = Quaternion.LookRotation(Camera.main.transform.rotation + new Vector3(90,0,0));
         //  OverlayText.transform.position = unit.position + offset;
 
