@@ -24,8 +24,8 @@ public class Tiles : MonoBehaviour
 
        void OnTriggerExit(Collider other)
     {
-          tileManager.SpawnTile(Random.Range(0,tileManager.tilePrefabs.Length-2),transform.position + transform.GetChild(transform.childCount-1).transform.localPosition*2);
-           Destroy(gameObject,0.1f);
+          tileManager.SpawnTile(Random.Range(0,tileManager.tilePrefabs.Length-2),transform.position + transform.GetChild(transform.childCount-1).transform.localPosition*2,transform.parent.gameObject);
+           Destroy(gameObject,1f);
     }
 
   

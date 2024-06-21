@@ -18,27 +18,27 @@ public class TileManager : MonoBehaviour
 
     public QuizAnswerManager quizManager;
 
-    void Start()
-    {
-        // activeTiles = new List<GameObject>();
-        // for (int i = 0; i < numberOfTiles; i++)
-        // {
-        //     if(i==0)
-        //         SpawnTile(0);
-        //     else if (i == 2)    
-        //         {
-        //         SpawnTile(tilePrefabs.Length-2);
+    // void Start()
+    // {
+    //     // activeTiles = new List<GameObject>();
+    //     // for (int i = 0; i < numberOfTiles; i++)
+    //     // {
+    //     //     if(i==0)
+    //     //         SpawnTile(0);
+    //     //     else if (i == 2)    
+    //     //         {
+    //     //         SpawnTile(tilePrefabs.Length-2);
             
-        //         }
-        //     else
-        //         SpawnTile(Random.Range(0, tilePrefabs.Length-2));
-        // }
+    //     //         }
+    //     //     else
+    //     //         SpawnTile(Random.Range(0, tilePrefabs.Length-2));
+    //     // }
 
-        // playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+    //     // playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
-        SpawnTile(0,new Vector3(0,0,0));
+    //     SpawnTile(0,new Vector3(0,0,0));
 
-    }
+    // }
 
     private int cur = 0;
 
@@ -80,7 +80,7 @@ public class TileManager : MonoBehaviour
             
     }
 
-    public void SpawnTile(int index, Vector3 position)
+    public void SpawnTile(int index, Vector3 position, GameObject parent)
     {
         // GameObject tile = tilePrefabs[index];
         // if (tile.activeInHierarchy)
@@ -106,6 +106,7 @@ public class TileManager : MonoBehaviour
           if (quizManager.checkEnd && !DoneSpawn){
                    go = Instantiate(tilePrefabs[tilePrefabs.Length-1]);
                    go.transform.localPosition = position;
+                     go.transform.SetParent(parent.transform);
                   DoneSpawn = true;
                   return;
             }
@@ -115,14 +116,17 @@ public class TileManager : MonoBehaviour
         {
           
             go = Instantiate(tilePrefabs[tilePrefabs.Length-2]);
-            go.transform.localPosition = position;
+        
             cur = 0;
         }
         else {
             go = Instantiate(tilePrefabs[index]);
-            go.transform.localPosition = position;
+         
             cur+=1;
         }
+
+            go.transform.localPosition = position;
+            go.transform.SetParent(parent.transform);
         if (go!= null && go.gameObject.CompareTag("TileQuiz")){
                quizManager.QuizStart(go);
         }

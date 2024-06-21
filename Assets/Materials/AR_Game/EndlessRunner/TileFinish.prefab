@@ -116,6 +116,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4976169691586046938}
+  - component: {fileID: 8186728027535469555}
   m_Layer: 0
   m_Name: TileFinish
   m_TagString: Untagged
@@ -142,6 +143,18 @@ Transform:
   - {fileID: 8999873118747973943}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8186728027535469555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4885975911611896218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0bb3c5176642d441b26ca595e243558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5532908183593792069
 GameObject:
   m_ObjectHideFlags: 0
