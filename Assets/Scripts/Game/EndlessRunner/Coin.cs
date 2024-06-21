@@ -18,7 +18,8 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter(Collider other){
         if (other.tag == "Player"){
-            RunnerManager.numberCoins += 1;
+           QuizAnswerManager.score+=1; 
+
             Destroy(gameObject);
         }
     }

@@ -24,6 +24,9 @@ public class RunnerController : MonoBehaviour
 
     private bool isSliding = false;
 
+      int maxHealth = 5;
+      int currentHealth;
+  
     // public bool isGrounded;
     // public LayerMask groundLayer;
     // public Transform groundCheck;
@@ -31,13 +34,35 @@ public class RunnerController : MonoBehaviour
     void Start()
     {
          controller = GetComponent<CharacterController>();
+
+         currentHealth = maxHealth;
     }
+
+         public void ChangeHealth(int amount)
+    {
+       
+        // currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        currentHealth += amount;
+        DragonHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
+    }
+
 
     // Update is called once per frame
     void Update()
-    {
-        if (!RunnerManager.isGameStarted)
+    {   
+        
+
+        if (!RunnerManager.isGameStarted || RunnerManager.gameOver || RunnerManager.gameCompleted )
         return;
+
+     
+
+        if (currentHealth <= 0){
+          RunnerManager.gameOver = true;
+          return;
+        
+        }
+      
 
 
         if (forwardSpeed < maxSpeed){
@@ -103,14 +128,18 @@ public class RunnerController : MonoBehaviour
         else
             controller.Move(diff);
         
-   
+        
     }
 
    
+   
     private void FixedUpdate()
-    {
-        if (!RunnerManager.isGameStarted)
+    {   
+    
+          if (!RunnerManager.isGameStarted || RunnerManager.gameOver || RunnerManager.gameCompleted)
         return;
+     
+
            controller.Move(direction * Time.fixedDeltaTime);
 
     }
@@ -124,6 +153,7 @@ public class RunnerController : MonoBehaviour
             RunnerManager.gameOver = true;
         }
     }
+
 
     private IEnumerator Slide(){
         isSliding = true;

@@ -4,50 +4,83 @@ using UnityEngine;
 
 public class TileManager : MonoBehaviour
 {
-   private List<GameObject> activeTiles;
+//    private List<GameObject> activeTiles;
     public GameObject[] tilePrefabs;
 
-    public float tileLength = 30;
-    public int numberOfTiles = 3;
-    public int totalNumOfTiles = 8;
+    Vector3 nextSpawnPoint;
+    // public float tileLength = 30;
+    // public int numberOfTiles = 3;
+    // public int totalNumOfTiles = 8;
 
-    public float zSpawn = 0;
+    // public float zSpawn = 0;
 
     public Transform playerTransform;
 
-    private int previousIndex;
+    public QuizAnswerManager quizManager;
 
     void Start()
     {
-        activeTiles = new List<GameObject>();
-        for (int i = 0; i < numberOfTiles; i++)
-        {
-            if(i==0)
-                SpawnTile(0);
-            else
-                SpawnTile(Random.Range(0, tilePrefabs.Length));
-        }
+        // activeTiles = new List<GameObject>();
+        // for (int i = 0; i < numberOfTiles; i++)
+        // {
+        //     if(i==0)
+        //         SpawnTile(0);
+        //     else if (i == 2)    
+        //         {
+        //         SpawnTile(tilePrefabs.Length-2);
+            
+        //         }
+        //     else
+        //         SpawnTile(Random.Range(0, tilePrefabs.Length-2));
+        // }
 
         // playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
-    }
-    void Update()
-    {
-        if(playerTransform.position.z - 30 >= zSpawn - (numberOfTiles * tileLength))
-        {
-            // int index = Random.Range(0, totalNumOfTiles);
-            // while(index == previousIndex)
-            //     index = Random.Range(0, totalNumOfTiles);
+        SpawnTile(0,new Vector3(0,0,0));
 
-           
-             SpawnTile(Random.Range(0,tilePrefabs.Length));
-              DeleteTile();
-            // SpawnTile(index);
-        }
+    }
+
+    private int cur = 0;
+
+    private bool DoneSpawn = false;
+    void Update()
+    {   
+        // if (RunnerManager.gameCompleted || RunnerManager.gameOver || DoneSpawn)
+        // return;
+        //   if (quizManager.checkEnd && !DoneSpawn){
+        //          cur = 0;
+        //           SpawnTile(tilePrefabs.Length-1);
+        //           DoneSpawn = true;
+        //           return;
+        //     }
+
+
+        // if(playerTransform.position.z - 30 >= zSpawn - (numberOfTiles * tileLength))
+        // {
+        //     // int index = Random.Range(0, totalNumOfTiles);
+        //     // while(index == previousIndex)
+        //     //     index = Random.Range(0, totalNumOfTiles);
+          
+        //     if (index == 2)
+        //     {
+        //         SpawnTile(tilePrefabs.Length-2);
+            
+
+        //         index = 0;
+        //     }
+        //     else{
+        //      SpawnTile(Random.Range(0,tilePrefabs.Length-2));
+        //       index+=1;
+        //     }
+        //      DeleteTile();
+             
+        //     // SpawnTile(index);
+        // }
+
             
     }
 
-    public void SpawnTile(int index)
+    public void SpawnTile(int index, Vector3 position)
     {
         // GameObject tile = tilePrefabs[index];
         // if (tile.activeInHierarchy)
@@ -64,15 +97,44 @@ public class TileManager : MonoBehaviour
         // zSpawn += tileLength;
         // previousIndex = index;
 
-        GameObject go = Instantiate(tilePrefabs[index],transform.forward * zSpawn, transform.rotation);
-         activeTiles.Add(go);
+        // GameObject go = Instantiate(tilePrefabs[index],transform.forward * zSpawn, transform.rotation);
+
+        if (RunnerManager.gameCompleted || RunnerManager.gameOver || DoneSpawn)
+        return;
+
+            GameObject go;
+          if (quizManager.checkEnd && !DoneSpawn){
+                   go = Instantiate(tilePrefabs[tilePrefabs.Length-1]);
+                   go.transform.localPosition = position;
+                  DoneSpawn = true;
+                  return;
+            }
+
+      
+        if (cur == 2)
+        {
+          
+            go = Instantiate(tilePrefabs[tilePrefabs.Length-2]);
+            go.transform.localPosition = position;
+            cur = 0;
+        }
+        else {
+            go = Instantiate(tilePrefabs[index]);
+            go.transform.localPosition = position;
+            cur+=1;
+        }
+        if (go!= null && go.gameObject.CompareTag("TileQuiz")){
+               quizManager.QuizStart(go);
+        }
+        //  activeTiles.Add(go);
          
-         zSpawn += tileLength;
+        //  zSpawn += tileLength;
+        //  nextSpawnPoint = go.transform.GetChild(go.transform.childCount-1).transform.localPosition;
     }
 
-    private void DeleteTile()
-    {
-        activeTiles[0].SetActive(false);
-        activeTiles.RemoveAt(0);
-    }
+    // private void DeleteTile()
+    // {
+    //     activeTiles[0].SetActive(false);
+    //     activeTiles.RemoveAt(0);
+    // }
 }
