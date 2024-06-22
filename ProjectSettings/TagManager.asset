@@ -16,6 +16,7 @@ TagManager:
   - Canvas
   - Score
   - BackgroundMusic
+  - WorldCanvas
   - Bubble
   - BubbleContainer
   layers:

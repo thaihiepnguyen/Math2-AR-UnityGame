@@ -19,8 +19,9 @@ public class UIHealthBar : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-      
+          transform.LookAt(Camera.main.transform);
+          transform.RotateAround(transform.position, transform.up, 180f);
     }
 }

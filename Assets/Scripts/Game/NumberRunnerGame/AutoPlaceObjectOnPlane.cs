@@ -42,5 +42,11 @@ public class AutoPlaceOfObjectOnPlane : MonoBehaviour
     { welcomePanel.SetActive(false);
       FindObjectOfType<SettingsMenu>().open = true;
     
+    
      }
+
+      public void Jump(){
+        FindObjectOfType<DragonController>().Jump();
+    }
+
 }
