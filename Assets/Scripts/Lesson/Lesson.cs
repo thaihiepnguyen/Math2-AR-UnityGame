@@ -42,8 +42,11 @@ public class Lesson : MonoBehaviour
     }
     public void OnClickViewLesson()
     {
-        if (lesson.book_url!= null) {
-            SceneHistory.GetInstance().LoadScene("BookLearningScene");
+        if (lesson.book_url!= "1") {
+            SceneHistory.GetInstance().LoadScene("SlideScene");
+        }
+        else if (lesson.book_url!= "2") {
+            SceneHistory.GetInstance().LoadScene("SlideSceneB");
         }
         else
         {
