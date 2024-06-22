@@ -19,6 +19,7 @@ TagManager:
   - WorldCanvas
   - Bubble
   - BubbleContainer
+  - BubbleGameTutorial
   layers:
   - Default
   - TransparentFX

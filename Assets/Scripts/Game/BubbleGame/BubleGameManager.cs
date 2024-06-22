@@ -16,36 +16,33 @@ public class BubbleGameManager : MonoBehaviour
     private bool isGameOver;
     private bool isNearlyOverTime;
 
-    [SerializeField] GameObject resultModal;
-    [SerializeField] GameObject hpCanvas;
+    [SerializeField] GameObject gameCompleteScreen;
+    [SerializeField] GameObject hpBar;
+    [SerializeField] GameObject bubbleGameTutorial;
 
     [SerializeField] AudioClip endSound;
     [SerializeField] AudioClip correctSound;
     [SerializeField] AudioClip incorrectSound;
     [SerializeField] AudioClip winSound;
-    [SerializeField] AudioClip hurrySound;
+    [SerializeField] AudioClip hurryUpSound;
+
+    [SerializeField] TextMeshProUGUI currentPointText;
+    [SerializeField] TextMeshProUGUI playerPointText;
+    [SerializeField] TextMeshProUGUI highestPointText;
+    [SerializeField] TextMeshProUGUI rewardText;
+    [SerializeField] TextMeshProUGUI progress;
+    [SerializeField] TextMeshProUGUI questionText;
 
     [SerializeField] Sprite emptyHeart;
 
-    [SerializeField] TextMeshProUGUI timeTaken;
-    [SerializeField] TextMeshProUGUI point;
-    [SerializeField] TextMeshProUGUI highestPoint;
-    [SerializeField] TextMeshProUGUI reward;
-
-    [SerializeField] GameObject question;
-
     private AudioSource audioSource;
-
     private int MAX_NUM_BUBBLE = 30;
-
     private int currentQuestion;
-
-    private int hp;
-
+    private int currentHp;
     private int currentPoint;
+    private int highestPoint = 10;
 
     private int questionNum = 10;
-    private int preHighestPoint = 10;
 
     void Start()
     {
@@ -53,54 +50,46 @@ public class BubbleGameManager : MonoBehaviour
         timer = GetComponent<Timer>();
         isGameOver = false;
         isNearlyOverTime = false;
-        resultModal.SetActive(false);
+        gameCompleteScreen.SetActive(false);
         audioSource = GetComponent<AudioSource>();
-        hp = 3;
+        currentHp = 3;
         currentPoint = 0;
-
+        currentPointText.text = "Điểm: " + currentPoint.ToString();
         GetQuestion();
     }
 
     void Update()
     {
-        // Check if there are any touches
+        // Check touch and handle interact
         if (Input.touchCount > 0)
         {
-            // Get the first touch
             Touch touch = Input.GetTouch(0);
-
-            // Check if the touch began
             if (touch.phase == TouchPhase.Began)
             {
-                // Convert touch position to a Ray
                 Ray ray = Camera.main.ScreenPointToRay(touch.position);
-
-                // Perform a raycast
                 if (Physics.Raycast(ray, out RaycastHit hit))
                 {
-                    // Check if the hit object has a specific tag or component
                     if (hit.collider.CompareTag("Bubble"))
                     {
-                        // Handle interaction with the object
                         InteractWithObject(hit.collider.gameObject);
                     }
                 }
             }
         }
+        // Check time and play sound hurry up
         if (timer.timeValue <= 10 && isNearlyOverTime == false)
         {
             isNearlyOverTime = true;
-            audioSource.clip = hurrySound;
+            audioSource.clip = hurryUpSound;
             audioSource.Play();
         }
-        if ((timer.timeValue <= 0 || hp == 0) && isGameOver == false)
+        if ((timer.timeValue <= 0 || currentHp == 0 || currentPoint == questionNum) && isGameOver == false)
         {
             isGameOver = true;
-            resultModal.SetActive(true);
-            point.text = currentPoint.ToString();
-            highestPoint.text = preHighestPoint.ToString();
-            reward.text = (currentPoint * 10).ToString();
-
+            gameCompleteScreen.SetActive(true);
+            playerPointText.text = "Điểm của bạn: " + currentPoint.ToString();
+            highestPointText.text = "Điểm cao nhất: " + highestPoint.ToString();
+            rewardText.text = (currentPoint * 10).ToString();
             if (currentPoint == questionNum)
             {
                 audioSource.clip = winSound;
@@ -116,7 +105,7 @@ public class BubbleGameManager : MonoBehaviour
 
     void SpawnPrefabs()
     {
-        int numPrefabsToSpawn = Random.Range(2, 6); 
+        int numPrefabsToSpawn = Random.Range(2, 6);
         for (int i = 0; i < numPrefabsToSpawn; i++)
         {
             Vector3 randomPosition = new Vector3(
@@ -127,14 +116,14 @@ public class BubbleGameManager : MonoBehaviour
 
             int randomPrefabIndex = Random.Range(0, prefabs.Length);
             var bubble = Instantiate(prefabs[randomPrefabIndex], randomPosition, Quaternion.identity);
+            bubble.GetComponent<Renderer>().material.SetColor("_TintColor", HexToColor(GenerateRandomColorCode()));
+            
             var bubbleContainer = GameObject.FindGameObjectWithTag("BubbleContainer");
-
             bubble.transform.SetParent(bubbleContainer.transform);
+
             var answer = Random.Range(currentQuestion - 5, currentQuestion + 5);
             bubble.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = answer.ToString();
 
-
-            
             if (bubbleContainer.transform.childCount > MAX_NUM_BUBBLE)
             {
                 Destroy(bubbleContainer.transform.GetChild(0).gameObject);
@@ -151,12 +140,13 @@ public class BubbleGameManager : MonoBehaviour
             if (answer == currentQuestion.ToString())
             {
                 currentPoint++;
-                point.text = currentPoint.ToString();
                 audioSource.clip = correctSound;
                 audioSource.Play();
-                renderer.material.SetColor("_TintColor", HexToColor("#BAFF67"));
-                StartCoroutine(Delay(2f));
-                Destroy(obj);
+                
+                currentPointText.text = "Điểm: " + currentPoint.ToString();
+                renderer.transform.GetChild(2).gameObject.SetActive(true);
+                Destroy(obj, 1f);
+
                 GetQuestion();
             }
             else
@@ -164,9 +154,9 @@ public class BubbleGameManager : MonoBehaviour
                 audioSource.clip = incorrectSound;
                 audioSource.Play();
                 renderer.material.SetColor("_TintColor", HexToColor("#FF6161"));
-                hpCanvas.transform.GetChild(3 - hp).gameObject.GetComponent<Image>().sprite = emptyHeart;
-                hp--;
-                
+                hpBar.transform.GetChild(3 - currentHp).gameObject.GetComponent<Image>().sprite = emptyHeart;
+                currentHp--;
+
             }
         }
     }
@@ -174,7 +164,7 @@ public class BubbleGameManager : MonoBehaviour
     private Color HexToColor(string hex)
     {
         Color color = Color.white;
-        if (UnityEngine.ColorUtility.TryParseHtmlString(hex, out color))
+        if (ColorUtility.TryParseHtmlString(hex, out color))
         {
             return color;
         }
@@ -185,15 +175,14 @@ public class BubbleGameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator Delay(float sec)
-    {
-        yield return new WaitForSeconds(sec);
-    }
-
     void GetQuestion()
     {
-        currentQuestion = Random.Range(0, 30);
-        question.GetComponent<TextMeshProUGUI>().text = "Chọn số sau: " + currentQuestion.ToString();
+        if (currentPoint < questionNum)
+        {
+            progress.text = (currentPoint + 1).ToString() + "/" + questionNum.ToString();
+            currentQuestion = Random.Range(0, 30);
+            questionText.text = "Chọn số sau: " + currentQuestion.ToString();
+        }
     }
 
     public void Replay()
@@ -203,5 +192,18 @@ public class BubbleGameManager : MonoBehaviour
     public void Exit()
     {
         SceneHistory.GetInstance().PreviousScene();
+    }
+    public void ShowTutorial()
+    {
+        bubbleGameTutorial.SetActive(true);
+    }
+    public void HideTutorial()
+    {
+        bubbleGameTutorial.SetActive(false);
+    }
+    private string GenerateRandomColorCode()
+    {
+        int randomValue = Random.Range(0, 0xFFFFFF + 1);
+        return "#" + randomValue.ToString("X6");
     }
 }   
