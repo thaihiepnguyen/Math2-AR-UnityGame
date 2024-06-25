@@ -32,7 +32,7 @@ public class ArrowGameManager : MonoBehaviour
     public int point = 0;
     public int totalquestions = 10;
     public int curquestion = 0;
-    private int maxhealth = 3;
+    public int maxhealth = 3;
     public int curhealth { get; set; }
     private const float minDistance = 2f;
     private static ArrowGameManager instance;
@@ -62,7 +62,7 @@ public class ArrowGameManager : MonoBehaviour
     private AudioSource audioSource;
     bool isGameOver=false;
     bool isOverTime=false;
-
+    int correctAnswer = 0;
     private void Awake()
     {
         if (instance == null)
@@ -127,9 +127,9 @@ public class ArrowGameManager : MonoBehaviour
             Mesh selectedMesh = selectedMeshFilter.mesh;
             var meshAnalyser = selectedMeshFilter.gameObject.GetComponent<MeshAnalyser>();
             // Find the highest vertex in the selected mesh
-            if (!meshAnalyser.IsGround)
+            if (!meshAnalyser || !meshAnalyser.IsGround)
             {
-                return;
+                continue;
             }
             Vector3 highestVertexPosition = selectedMesh.vertices[0];
             foreach (Vector3 vertex in selectedMesh.vertices)
@@ -240,6 +240,10 @@ public class ArrowGameManager : MonoBehaviour
             }
            
         }
+        if (correctAnswer > 3)
+        {
+            IncreaseHealth();
+        }
     }
 
     public void DecreaseHealth()
@@ -255,7 +259,8 @@ public class ArrowGameManager : MonoBehaviour
     {
         curhealth += 1;
         curhealth = Mathf.Clamp(curhealth, curhealth, maxhealth);
-        StartCoroutine(PlaySoundAfterSeconds(correctSFX, 0.5f));
+        correctAnswer= 0;
+        //StartCoroutine(PlaySoundAfterSeconds(correctSFX, 0.5f));
         UpdateHeartsUI();
     }
 
@@ -275,17 +280,18 @@ public class ArrowGameManager : MonoBehaviour
 
     public void OnExit()
     {
-        //SceneHistory.GetInstance().PreviousScene();
+        SceneHistory.GetInstance().PreviousScene();
     }
-   public void NextQuestion()
+   public void  NextQuestion()
     {
         curquestion++;
         if(curquestion  == totalquestions)
         {
             OnGameEnd();
-            return;
+           
         }
         var activeTarget = GameObject.FindGameObjectsWithTag("Target");
+        
         foreach(GameObject t in activeTarget)
         {
             Destroy(t);
@@ -298,42 +304,54 @@ public class ArrowGameManager : MonoBehaviour
         spawnCount = 4;
         updateUI();
     }
-    public void CheckAnswer(string answer)
+    public bool CheckAnswer(string answer)
     {
         if (exerciseList[curquestion].right_answer==answer)
         {
             point++;
-            IncreaseHealth();
-            NextQuestion();
+            //IncreaseHealth();
+            correctAnswer++;
+            StartCoroutine(PlaySoundAfterSeconds(correctSFX,1f));
+              
+            return true;
         }
         else
         {
+            correctAnswer = 0;
            DecreaseHealth();
+            return false;
         }
     }
     public void OnGameEnd()
     {
         timer.isStop = true;
         
-        timeText.text = timer.toTimeString();
+        //timeText.text = timer.toTimeString();
         yourScore.text = (point*100).ToString();
         yourHighestScore.text = yourScore.text;
+        int bonus = 0;
+        var realTimeValue = timer.timeValue / timer.baseTimeValue * 100;
        
-        var realTimeValue = timer.baseTimeValue - timer.timeValue;
-        if (point == 0) realTimeValue = 0;
-        reward.text ="+ "+(point*10 + (int)Mathf.Round(Mathf.Clamp(realTimeValue, 0, realTimeValue))*10).ToString();
+        
+        if (realTimeValue >= 50 && point > 5 )
+        {
+            bonus = (int)Mathf.Round(timer.timeValue);
+        }
+        else
+        {
+            bonus = 0;
+        }
+        if (point == 0) bonus = 0;
+        reward.text ="+ "+(point*10 + bonus).ToString();
         gameWinMenu.gameObject.SetActive(true);
         overtimeSFX.GetComponent<AudioSource>().Stop();
         if (point > 0)
         {
-            audioSource.clip = winSFX;
-            audioSource.Play();
-            
+            StartCoroutine(PlaySoundAfterSeconds(winSFX, 1f));           
         }
         else
         {
-            audioSource.clip = gameoverSFX;
-            audioSource.Play();
+            StartCoroutine(PlaySoundAfterSeconds(gameoverSFX, 1f));
         }
         
     }
