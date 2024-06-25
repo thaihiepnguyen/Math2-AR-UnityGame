@@ -326,13 +326,23 @@ public class ArrowGameManager : MonoBehaviour
     {
         timer.isStop = true;
         
-        timeText.text = timer.toTimeString();
+        //timeText.text = timer.toTimeString();
         yourScore.text = (point*100).ToString();
         yourHighestScore.text = yourScore.text;
+        int bonus = 0;
+        var realTimeValue = timer.timeValue / timer.baseTimeValue * 100;
        
-        var realTimeValue = timer.baseTimeValue - timer.timeValue;
-        if (point == 0) realTimeValue = 0;
-        reward.text ="+ "+(point*10 + (int)Mathf.Round(Mathf.Clamp(realTimeValue, 0, realTimeValue))*10).ToString();
+        
+        if (realTimeValue >= 50)
+        {
+            bonus = (int)Mathf.Round(timer.timeValue);
+        }
+        else
+        {
+            bonus = 0;
+        }
+        if (point == 0) bonus = 0;
+        reward.text ="+ "+(point + bonus).ToString();
         gameWinMenu.gameObject.SetActive(true);
         overtimeSFX.GetComponent<AudioSource>().Stop();
         if (point > 0)

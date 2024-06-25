@@ -17,7 +17,7 @@ public class BowString : MonoBehaviour
 
     public void CreateString(Vector3? midPosition)
     {
-        Debug.Log("Mid " + midPosition);
+       
         Vector3[] linePoints = new Vector3[midPosition == null ? 2 : 3];
         linePoints[0] = endpoint_1.localPosition;
         if (midPosition != null)
