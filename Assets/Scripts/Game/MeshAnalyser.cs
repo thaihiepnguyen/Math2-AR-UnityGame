@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeshAnalyser : MonoBehaviour
+public class MeshAnalyserArrow : MonoBehaviour
 {
     [SerializeField] private float groundThreshold;
     [SerializeField] private float avgNormal;

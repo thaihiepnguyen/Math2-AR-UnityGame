@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using Random = UnityEngine.Random;
 
-public class SpawnOnARMesh : MonoBehaviour
+public class SpawnOnARMeshDragon : MonoBehaviour
 {
     [SerializeField] private List<GameObject> spawnObjects = new List<GameObject>();
     [SerializeField] private float minVertsForSpawn;
@@ -16,7 +16,7 @@ public class SpawnOnARMesh : MonoBehaviour
     [SerializeField] private int amount = 5;
     private GameObject spawnedObject;
 
-    private MeshAnalyser meshAnalyser;
+    private MeshAnalyserDragon meshAnalyser;
     List<ARRaycastHit> m_Hits = new List<ARRaycastHit>(); 
 
     private Mesh arMesh;
@@ -29,7 +29,7 @@ public class SpawnOnARMesh : MonoBehaviour
     {
         // currentAmount = 0;
         // if(spawnLikelyHood == 0) return;
-        meshAnalyser = GetComponent<MeshAnalyser>();
+        meshAnalyser = GetComponent<MeshAnalyserDragon>();
         meshAnalyser.analysisDone += StartSpawning;
     }
 
@@ -43,7 +43,7 @@ public class SpawnOnARMesh : MonoBehaviour
     void StartSpawning()
     {
         // Debug.Log(currentAmount);
-        if(GlobalVariable.currentAmount == amount)  return;
+        if(CatGameManager.GetInstance().currentAmount == amount)  return;
         arMesh = GetComponent<MeshFilter>().sharedMesh;
 
 
@@ -58,7 +58,7 @@ public class SpawnOnARMesh : MonoBehaviour
         if (arMesh.vertexCount > minVertsForSpawn &&
             meshAnalyser.IsGround)
         {
-            Debug.Log("currentAmount: " + GlobalVariable.currentAmount);
+            Debug.Log("currentAmount: " + CatGameManager.GetInstance().currentAmount);
             InstantiateObject(GetRandomObject());
         }
         
@@ -72,7 +72,7 @@ public class SpawnOnARMesh : MonoBehaviour
     {
         Vector3 randomVector = GetRandomVector();
         if(!IsCreated(randomVector)){
-            GlobalVariable.currentAmount++;
+            CatGameManager.GetInstance().currentAmount++;
             spawnedObject = Instantiate(obj, randomVector, Quaternion.identity);
             spawnedObject.transform.localScale *= scaler;
         }

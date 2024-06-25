@@ -22,8 +22,8 @@ public class SpawnableManager : MonoBehaviour
                 Debug.Log("UI Hit was recognized");
                 return;
             }
-
-            TouchToRay(mainCam.transform.position);
+            else if(CatGameManager.GetInstance().currentAmount == CatGameManager.GetInstance().amount)
+                TouchToRay(mainCam.transform.position);
         }
 #elif UNITY_IOS || UNITY_ANDROID
         
@@ -41,16 +41,16 @@ public class SpawnableManager : MonoBehaviour
             //     return;
             // }
             
-
-            // Debug.Log("get here");
-            TouchToRay(mainCam.transform.position + mainCam.transform.forward * 5);
+            if(CatGameManager.GetInstance().currentAmount == CatGameManager.GetInstance().amount)
+                TouchToRay(mainCam.transform.position + mainCam.transform.forward * 5);
         }
 #endif
     }
     
     void TouchToRay(Vector3 touch)
     {
-        touch.y -= 3;
+        // touch.y -= 2;
+        // touch.x -= 2;
         // Ray ray = mainCam.ScreenPointToRay(touch);
         // RaycastHit hit;
         // if (Physics.Raycast(ray ,out hit))

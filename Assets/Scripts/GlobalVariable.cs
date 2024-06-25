@@ -17,7 +17,7 @@ public class GlobalVariable
     public static PhoneAuthProvider provider;
     public static string VerificationId;
     public static uint phoneAuthTimeoutMs = 60 * 1000;
-    public static int currentAmount;
+    // public static int currentAmount;
     public const string server_url = "http://192.168.100.10:3000";
     public const string DragDropType = "DragDrop";
     public const string MULTIPLE_CHOICE_TYPE = "MultipleChoice";

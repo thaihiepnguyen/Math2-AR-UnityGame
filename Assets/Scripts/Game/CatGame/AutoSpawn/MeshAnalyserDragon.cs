@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeshAnalyser : MonoBehaviour
+public class MeshAnalyserDragon : MonoBehaviour
 {
     [SerializeField] private float groundThreshold;
     [SerializeField] private float avgNormal;

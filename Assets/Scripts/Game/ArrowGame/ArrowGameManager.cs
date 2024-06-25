@@ -125,7 +125,7 @@ public class ArrowGameManager : MonoBehaviour
                 return;
             }
             Mesh selectedMesh = selectedMeshFilter.mesh;
-            var meshAnalyser = selectedMeshFilter.gameObject.GetComponent<MeshAnalyser>();
+            var meshAnalyser = selectedMeshFilter.gameObject.GetComponent<MeshAnalyserArrow>();
             // Find the highest vertex in the selected mesh
             if (!meshAnalyser.IsGround)
             {
@@ -213,7 +213,7 @@ public class ArrowGameManager : MonoBehaviour
             isGameOver = true;
         }
         //Ten seconds left
-        if (timer.timeValue <=10  && !isOverTime  )
+        if (timer.timeValue <=10  && !isOverTime)
         {
             overtimeSFX.GetComponent<AudioSource>().Play();
             isOverTime= true;

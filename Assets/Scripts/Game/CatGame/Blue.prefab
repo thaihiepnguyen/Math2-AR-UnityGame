@@ -2738,8 +2738,8 @@ GameObject:
   - component: {fileID: 409426}
   - component: {fileID: 9569754}
   - component: {fileID: 857306650286217375}
-  - component: {fileID: 1262458477202613673}
   - component: {fileID: 6866427551289003892}
+  - component: {fileID: -3755396698627170616}
   m_Layer: 0
   m_Name: Blue
   m_TagString: Untagged
@@ -2812,19 +2812,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1262458477202613673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4bf389f073e9d74a804642ba072302a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.5
 --- !u!136 &6866427551289003892
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2848,6 +2835,21 @@ CapsuleCollider:
   m_Height: 5.43
   m_Direction: 1
   m_Center: {x: 0, y: 3.95, z: -1.03}
+--- !u!114 &-3755396698627170616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4bf389f073e9d74a804642ba072302a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.5
+  upButton: {fileID: 0}
+  downButton: {fileID: 0}
 --- !u!1 &198178
 GameObject:
   m_ObjectHideFlags: 0

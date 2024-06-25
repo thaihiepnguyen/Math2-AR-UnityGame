@@ -15,13 +15,13 @@ public class SpawnOnARMesh : MonoBehaviour
     [SerializeField] private int spawnLikelyHood = 33;
     private GameObject spawnedObject;
 
-    private MeshAnalyser meshAnalyser;
+    private MeshAnalyserArrow meshAnalyser;
     private Mesh arMesh;
     // Start is called before the first frame update
     void Start()
     {
         if (spawnLikelyHood == 0) return;
-        meshAnalyser = GetComponent<MeshAnalyser>();
+        meshAnalyser = GetComponent<MeshAnalyserArrow>();
         meshAnalyser.analysisDone += StartSpawning;
     }
 
