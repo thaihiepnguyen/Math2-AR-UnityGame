@@ -71,9 +71,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/VideoLearning.unity
     guid: ca287024364692842a17921ece07c966
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game/ArrowGame.unity
     guid: 168bd30671e73de4ca56f8359dd7838c
+  - enabled: 0
+    path: Assets/Scenes/Game/NumberRunnerGame.unity
+    guid: 97480d4868d95754bb1ce812b3dfe9ba
+  - enabled: 0
+    path: Assets/Scenes/Game/NumberConnect.unity
+    guid: a652ad17d99ee534da30cb396db8f7f3
+  - enabled: 1
+    path: Assets/Scenes/Game/BubbleGame.unity
+    guid: d3656035373b1e34bbfc9d0e104e791d
   m_configObjects:
     Niantic.Lightship.AR.LightshipSettings: {fileID: 11400000, guid: 8a29abd944c5d004484d72aef946a644, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 50ac7484ee2723446bb8dcd15f5ab319, type: 2}
