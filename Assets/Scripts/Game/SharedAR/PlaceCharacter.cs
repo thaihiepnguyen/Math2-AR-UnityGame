@@ -24,20 +24,20 @@ public class PlaceCharacter : NetworkBehaviour
 
     void Update()
     {
-        //if (AllPlayerDataManager.Instance != default &&
-        //    AllPlayerDataManager.Instance.GetHasPlacerPlaced(NetworkManager.Singleton.LocalClientId)) return;
+        if (AllPlayerDataManager.Instance != default &&
+            AllPlayerDataManager.Instance.GetHasPlacerPlaced(NetworkManager.Singleton.LocalClientId)) return;
 
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                Debug.Log("UI Hit was recognized");
-                return;
-            }
-            TouchToRay(Input.mousePosition);
-        }
-#endif
+//#if UNITY_EDITOR
+//        if (Input.GetMouseButtonDown(0))
+//        {
+//            if (EventSystem.current.IsPointerOverGameObject())
+//            {
+//                Debug.Log("UI Hit was recognized");
+//                return;
+//            }
+//            TouchToRay(Input.mousePosition);
+//        }
+//#endif
 #if UNITY_IOS || UNITY_ANDROID
 
         if (Input.touchCount > 0 && Input.touchCount < 2 &&
@@ -94,6 +94,6 @@ public class PlaceCharacter : NetworkBehaviour
 
         characterNetworkObject.SpawnWithOwnership(callerID);
 
-        //AllPlayerDataManager.Instance.AddPlacedPlayer(callerID);
+        AllPlayerDataManager.Instance.AddPlacedPlayer(callerID);
     }
 }

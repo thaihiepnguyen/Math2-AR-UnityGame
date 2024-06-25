@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 951935392594187804}
   - component: {fileID: 4116651606531023013}
   m_Layer: 0
-  m_Name: MeshChunk
+  m_Name: SharedArMeshChunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -77,12 +77,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Game/NumberRunnerGame.unity
     guid: 97480d4868d95754bb1ce812b3dfe9ba
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game/NumberConnect.unity
     guid: a652ad17d99ee534da30cb396db8f7f3
   - enabled: 1
     path: Assets/Scenes/Game/SharedAr.unity
     guid: a6f46da786c8b214e895a1d2d6b6242c
+  - enabled: 1
+    path: Assets/Scripts/Game/SharedAR/Game/Loading.unity
+    guid: ecbbbc7d4c4d27d4eb3f91227169928e
+  - enabled: 1
+    path: Assets/Scenes/Game/ShareAR2.unity
+    guid: 2d4f1f3d6c679d9418c6f9ef1f462974
   m_configObjects:
     Niantic.Lightship.AR.LightshipSettings: {fileID: 11400000, guid: 8a29abd944c5d004484d72aef946a644, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 50ac7484ee2723446bb8dcd15f5ab319, type: 2}
