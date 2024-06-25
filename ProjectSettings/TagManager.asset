@@ -19,6 +19,13 @@ TagManager:
   - ARPlane
   - BallGameXROrigin
   - BallObject
+  - Canvas
+  - Score
+  - BackgroundMusic
+  - WorldCanvas
+  - Bubble
+  - BubbleContainer
+  - BubbleGameTutorial
   layers:
   - Default
   - TransparentFX
@@ -26,9 +33,9 @@ TagManager:
   - 
   - Water
   - UI
+  - Stair
   - 
-  - 
-  - 
+  - Minimap
   - 
   - 
   - 
