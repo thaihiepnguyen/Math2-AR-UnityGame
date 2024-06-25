@@ -13,6 +13,12 @@ TagManager:
   - Arrow
   - Plane
   - Target
+  - RimPart
+  - RimTarget
+  - BallGameManager
+  - ARPlane
+  - BallGameXROrigin
+  - BallObject
   layers:
   - Default
   - TransparentFX
