@@ -127,9 +127,9 @@ public class ArrowGameManager : MonoBehaviour
             Mesh selectedMesh = selectedMeshFilter.mesh;
             var meshAnalyser = selectedMeshFilter.gameObject.GetComponent<MeshAnalyser>();
             // Find the highest vertex in the selected mesh
-            if (!meshAnalyser.IsGround)
+            if (!meshAnalyser || !meshAnalyser.IsGround)
             {
-                return;
+                continue;
             }
             Vector3 highestVertexPosition = selectedMesh.vertices[0];
             foreach (Vector3 vertex in selectedMesh.vertices)
@@ -280,7 +280,7 @@ public class ArrowGameManager : MonoBehaviour
 
     public void OnExit()
     {
-        //SceneHistory.GetInstance().PreviousScene();
+        SceneHistory.GetInstance().PreviousScene();
     }
    public void  NextQuestion()
     {
@@ -333,7 +333,7 @@ public class ArrowGameManager : MonoBehaviour
         var realTimeValue = timer.timeValue / timer.baseTimeValue * 100;
        
         
-        if (realTimeValue >= 50)
+        if (realTimeValue >= 50 && point > 5 )
         {
             bonus = (int)Mathf.Round(timer.timeValue);
         }
@@ -342,14 +342,12 @@ public class ArrowGameManager : MonoBehaviour
             bonus = 0;
         }
         if (point == 0) bonus = 0;
-        reward.text ="+ "+(point + bonus).ToString();
+        reward.text ="+ "+(point*10 + bonus).ToString();
         gameWinMenu.gameObject.SetActive(true);
         overtimeSFX.GetComponent<AudioSource>().Stop();
         if (point > 0)
         {
-            StartCoroutine(PlaySoundAfterSeconds(winSFX, 1f));
-            
-            
+            StartCoroutine(PlaySoundAfterSeconds(winSFX, 1f));           
         }
         else
         {

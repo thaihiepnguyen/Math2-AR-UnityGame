@@ -21,8 +21,8 @@ public class MovingTarget : MonoBehaviour, IHittable
     private bool moveHorizontally = true;
     [SerializeField]
     private float arriveThreshold, movementRadius = 2, speed = 1;
-    [SerializeField]
-    ParticleSystem explose;
+    [SerializeField] public ParticleSystem explose;
+    [SerializeField] public ParticleSystem success;
     [SerializeField] GameObject Item;
     [SerializeField] public TextMeshProUGUI text;
 
@@ -71,7 +71,7 @@ public class MovingTarget : MonoBehaviour, IHittable
        
         
         text.gameObject.SetActive(false);
-        explose.Play();
+        
 
 
     }

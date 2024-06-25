@@ -84,7 +84,14 @@ public class arrowController : MonoBehaviour
                 var temp = collision.gameObject.GetComponent<MovingTarget>();
                 //ArrowGameManager.GetInstance().NextQuestion();
                 StartCoroutine(DelayNextQuestion(1f));
+                var success = collision.gameObject.GetComponent<MovingTarget>().success;
+                success.Play();
                 //temp.GetHit();
+            }
+            else
+            {
+                var explose = collision.gameObject.GetComponent<MovingTarget>().explose;
+                explose.Play();
             }
         }
     }
