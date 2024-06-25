@@ -32,6 +32,12 @@ public class SettingsMenu : MonoBehaviour {
    Vector3 mainButtonPosition ;
    int itemsCount ;
 
+   
+    [SerializeField] Sprite[] TutorialImage;
+    [SerializeField] Image frame;
+    int current = 0;
+
+
    void Start () {
       //add all the items to the menuItems array
       LeanTween.reset();
@@ -101,6 +107,8 @@ public class SettingsMenu : MonoBehaviour {
 				//first button
             
               Debug.Log("Hello");
+            current = 0;
+            frame.sprite = TutorialImage[current];
             welcomePanel.SetActive(open);
               open = !open;
           
@@ -117,4 +125,19 @@ public class SettingsMenu : MonoBehaviour {
       //remove click listener to avoid memory leaks
       mainButton.onClick.RemoveListener (ToggleMenu) ;
    }
+
+       public void Next(){
+      
+        if (current < TutorialImage.Length - 1)
+        frame.sprite= TutorialImage[++current];
+    }
+
+    public void Previous(){
+    
+         if (current > 0)
+        frame.sprite= TutorialImage[--current];
+    }
+
+  
+  
 }
