@@ -7,10 +7,7 @@ using UnityEngine.UI;
 
 public class LessonManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     public static LessonManager instance;
-
 
     public static LessonManager GetInstance(){
         return instance;
@@ -30,7 +27,6 @@ public class LessonManager : MonoBehaviour
         return chapters;
     }
 
-
     private string lessonName ="";
     public string GetLessonName(){
         return lessonName;
@@ -40,20 +36,17 @@ public class LessonManager : MonoBehaviour
         return lessons;
     }
 
-      void Awake()
+    void Awake()
     {
-        if (instance != null){
-          Destroy(gameObject);
-          return;
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
         }
-
-          instance = this;
-         DontDestroyOnLoad(gameObject);
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
-  
-
-
-
+    
     public async void OnClickFirstSemesterButton(){
         semester = 1;
         var lessonBus = new LessonBUS();
@@ -61,12 +54,8 @@ public class LessonManager : MonoBehaviour
         if (dt.data != null){
             chapters = dt.data;
             SceneManager.LoadScene("ChapterList");
-        }
-     
-    
-       
-    }
-
+        }  
+    }    
     
     public async void OnClickSecondSemesterButton(){
         semester = 2;
@@ -78,8 +67,7 @@ public class LessonManager : MonoBehaviour
         }
     }
 
-
-     public void Chapter(int index){
+    public void Chapter(int index){
         
        chapterId = chapters[index].name;
        SceneManager.LoadScene("ChapterScene");
@@ -111,7 +99,4 @@ public class LessonManager : MonoBehaviour
         }
         
     }
-
-
-
 }
