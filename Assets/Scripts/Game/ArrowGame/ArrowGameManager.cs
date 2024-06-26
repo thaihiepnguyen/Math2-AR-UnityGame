@@ -292,13 +292,16 @@ public class ArrowGameManager : MonoBehaviour
    public void  NextQuestion()
     {
         curquestion++;
-        if (curquestion > totalquestions) { curquestion = totalquestions; }
+        if (curquestion + 1 > totalquestions) 
+        { 
+            curquestion = totalquestions; 
+        }
         if(curquestion  == totalquestions)
         {
             OnGameEnd();
-           
+            return;
         }
-        if ((float)curquestion / totalquestions > 0.5f)
+        if ((float)curquestion / totalquestions >= 0.5f)
         {
             var activeTarget = GameObject.FindGameObjectsWithTag("Target");
 
