@@ -18,9 +18,9 @@ public class MovingTarget : MonoBehaviour, IHittable
     //[SerializeField]
     //private AudioSource audioSource;
     [SerializeField]
-    private bool moveHorizontally = true;
+    public bool moveHorizontally = true;
     [SerializeField]
-    private float arriveThreshold, movementRadius = 2, speed = 1;
+    public float arriveThreshold, movementRadius = 2, speed = 1;
     [SerializeField] public ParticleSystem explose;
     [SerializeField] public ParticleSystem success;
     [SerializeField] GameObject Item;
@@ -67,10 +67,7 @@ public class MovingTarget : MonoBehaviour, IHittable
 
     public void GetHit()
     {
-        Item.SetActive(false);
-       
         
-        text.gameObject.SetActive(false);
         
 
 

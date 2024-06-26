@@ -85,8 +85,15 @@ public class ArrowGameManager : MonoBehaviour
             answer = "20,30,40,50",
             right_answer = "40"
         };
+        ExerciseDTO exerciseDTO2 = new ExerciseDTO
+        {
+            question = "20 + 30 =",
+            answer = "20,30,40,50",
+            right_answer = "50"
+        };
         exerciseList.Add(exerciseDTO);
         exerciseList.Add(exerciseDTO1);
+        //exerciseList.Add(exerciseDTO2);
         curhealth = maxhealth;
         updateUI();
         trackables = GameObject.Find("Trackables");
@@ -290,18 +297,24 @@ public class ArrowGameManager : MonoBehaviour
             OnGameEnd();
            
         }
-        var activeTarget = GameObject.FindGameObjectsWithTag("Target");
+        if ((float)curquestion / totalquestions > 0.5f)
+        {
+            var activeTarget = GameObject.FindGameObjectsWithTag("Target");
+
+            foreach (GameObject t in activeTarget)
+            {
+                t.GetComponent<MovingTarget>().speed = 1;
+                t.GetComponent<MovingTarget>().moveHorizontally = Random.value > 0.5f ? true : false;
+
+            }
+        }
         
-        foreach(GameObject t in activeTarget)
-        {
-            Destroy(t);
-        }
-        var curMeshes=trackables.GetComponentsInChildren<MeshFilter>();
-        foreach(var m in curMeshes)
-        {
-            Destroy(m.gameObject);
-        }
-        spawnCount = 4;
+        //var curMeshes=trackables.GetComponentsInChildren<MeshFilter>();
+        //foreach(var m in curMeshes)
+        //{
+        //    Destroy(m.gameObject);
+        //}
+        //spawnCount = 4;
         updateUI();
     }
     public bool CheckAnswer(string answer)
