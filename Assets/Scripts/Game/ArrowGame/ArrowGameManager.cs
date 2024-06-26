@@ -1,6 +1,7 @@
 ﻿using EasyUI.Toast;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -49,7 +50,8 @@ public class ArrowGameManager : MonoBehaviour
         return exerciseList[curquestion].right_answer;
     }
 
-    private List<ExerciseDTO> exerciseList = new List<ExerciseDTO>();
+    private List<GameData> exerciseList = new List<GameData>();
+    private GameDTO gameDTO;
     private GameObject trackables;
     private Mesh arMesh;
     private Timer timer;
@@ -60,6 +62,7 @@ public class ArrowGameManager : MonoBehaviour
     [SerializeField] AudioClip winSFX;
     [SerializeField] AudioClip gameoverSFX;
     private AudioSource audioSource;
+    private GameBUS gameBUS= new GameBUS();
     bool isGameOver=false;
     bool isOverTime=false;
     int correctAnswer = 0;
@@ -71,35 +74,24 @@ public class ArrowGameManager : MonoBehaviour
         }
     }
 
-    void Start()
+    async void Start()
     {
-        ExerciseDTO exerciseDTO = new ExerciseDTO
-        {
-            question = "10 + 20 =",
-            answer = "10,20,30,40",
-            right_answer = "30"
-        };
-        ExerciseDTO exerciseDTO1 = new ExerciseDTO
-        {
-            question = "20 + 20 =",
-            answer = "20,30,40,50",
-            right_answer = "40"
-        };
-        ExerciseDTO exerciseDTO2 = new ExerciseDTO
-        {
-            question = "20 + 30 =",
-            answer = "20,30,40,50",
-            right_answer = "50"
-        };
-        exerciseList.Add(exerciseDTO);
-        exerciseList.Add(exerciseDTO1);
-        //exerciseList.Add(exerciseDTO2);
         curhealth = maxhealth;
-        updateUI();
+        
         trackables = GameObject.Find("Trackables");
         timer=GetComponent<Timer>();
         meshManager.meshesChanged += OnMeshesChanged;
-        audioSource=GetComponent<AudioSource>(); 
+        audioSource=GetComponent<AudioSource>();
+        var lessonId = int.Parse(LessonList.GetLessonId());
+        if (lessonId == null) return;
+        var gameResponse = await gameBUS.GetGameDataByLessonId(lessonId);
+        if (gameResponse.isSuccessful)
+        {
+            Debug.Log(gameResponse.data.gameConfig.game_type_name);
+            gameDTO = gameResponse.data;
+            exerciseList = gameDTO.gameData.ToList();
+        }
+        updateUI();
     }
 
     private void OnMeshesChanged(ARMeshesChangedEventArgs obj)

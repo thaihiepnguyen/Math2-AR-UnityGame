@@ -3379,7 +3379,7 @@ MonoBehaviour:
   MainUI: {fileID: 1719556763}
   WaitingUI: {fileID: 1704273466}
   gameWinMenu: {fileID: 548021628}
-  timeText: {fileID: 0}
+  timeText: {fileID: 725919952}
   yourScore: {fileID: 270625506}
   yourHighestScore: {fileID: 1922970975}
   reward: {fileID: 1335777810}
