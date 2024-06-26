@@ -292,6 +292,7 @@ public class ArrowGameManager : MonoBehaviour
    public void  NextQuestion()
     {
         curquestion++;
+        if (curquestion > totalquestions) { curquestion = totalquestions; }
         if(curquestion  == totalquestions)
         {
             OnGameEnd();
