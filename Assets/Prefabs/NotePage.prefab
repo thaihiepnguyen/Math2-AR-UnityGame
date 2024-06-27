@@ -291,16 +291,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8206448170627405061}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0000026066}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5397442270022623405}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.15238655, y: 0.06051183}
-  m_AnchorMax: {x: 0.8836279, y: 0.71151185}
-  m_AnchoredPosition: {x: -5.041748, y: -0.8121338}
-  m_SizeDelta: {x: 13.596031, y: 0.87265015}
+  m_AnchorMin: {x: 0, y: 0.023234602}
+  m_AnchorMax: {x: 1, y: 0.8733254}
+  m_AnchoredPosition: {x: 0.16900635, y: -6.299286}
+  m_SizeDelta: {x: 0.2899933, y: 5.802597}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5981957125295036311
 CanvasRenderer:
@@ -330,7 +330,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "N\u1ED9i dung ghi ch\xFA"
+  m_text: "\tCh\xE2n tr\u1EDDi \n\ts\xE1ng t\u1EA1o"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b49c256ab6fd34ab4b1890ebbc40ae1d, type: 2}
   m_sharedMaterial: {fileID: -341581357692149693, guid: b49c256ab6fd34ab4b1890ebbc40ae1d, type: 2}
@@ -364,7 +364,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -425,15 +425,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8704537501072806185}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0000011784}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5397442270022623405}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.15238655, y: 0.75467455}
-  m_AnchorMax: {x: 0.8836279, y: 0.8817901}
-  m_AnchoredPosition: {x: -5.041748, y: 0.50061035}
+  m_AnchorMin: {x: 0.15238655, y: 0.8733254}
+  m_AnchorMax: {x: 0.8836279, y: 1}
+  m_AnchoredPosition: {x: -0.000030517578, y: -1.9499817}
   m_SizeDelta: {x: 13.596008, y: 3.2498016}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7516081555916645347
@@ -464,7 +464,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "T\xEAn b\xE0i h\u1ECDc"
+  m_text: "Ghi ch\xFA c\u1EE7a em"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b49c256ab6fd34ab4b1890ebbc40ae1d, type: 2}
   m_sharedMaterial: {fileID: -341581357692149693, guid: b49c256ab6fd34ab4b1890ebbc40ae1d, type: 2}
@@ -491,7 +491,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 69.85
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

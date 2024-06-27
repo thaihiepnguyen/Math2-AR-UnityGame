@@ -1,3 +1,4 @@
+using EasyUI.Progress;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -46,8 +47,10 @@ public class Lesson : MonoBehaviour
             title.text = lesson.name;
 
         }
-
+        Progress.Show("?ang t?i...", ProgressColor.Orange);
         var gameResponse = await gameBUS.GetGameDataByLessonId(lessonId);
+        Progress.Hide();
+
         if (gameResponse.isSuccessful)
         {
             Debug.Log(gameResponse.data.gameConfig.game_type_name);

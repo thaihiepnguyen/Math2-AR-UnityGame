@@ -9,6 +9,6 @@ public class NoteDAO
 {
     public async Task<BaseDTO<List<NoteDTO>>> GetNotesByUserId()
     {
-        return await API.Get<List<NoteDTO>>($"{GlobalVariable.server_url}/notes");
+        return await API.Get<List<NoteDTO>>($"{GlobalVariable.server_url}/notes/get-all");
     }
 }

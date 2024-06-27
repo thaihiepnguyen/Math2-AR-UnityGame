@@ -53,8 +53,8 @@ public class PanelManager : MonoBehaviour
                 _frameImage.gameObject.SetActive(true);
             }
             _username.text = personalDTO.username;
-            _totalOfAchievement.text = personalDTO.totalAchievement.ToString();
-            _totalOfNote.text = personalDTO.totalNote.ToString();
+            //_totalOfAchievement.text = personalDTO.totalAchievement.ToString();
+            //_totalOfNote.text = personalDTO.totalNote.ToString();
 
             _logoutBtn.onClick.AddListener(OnLogoutCLick);
 
@@ -71,7 +71,6 @@ public class PanelManager : MonoBehaviour
 
 
         dragon.SetActive(false);
-        Debug.Log(width);
         LeanTween.moveLocalX(gameObject, width / 2, 0.5f).setEase(LeanTweenType.easeInOutCirc);
 
     }
