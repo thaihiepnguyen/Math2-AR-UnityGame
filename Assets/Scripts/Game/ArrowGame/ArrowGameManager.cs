@@ -83,7 +83,7 @@ public class ArrowGameManager : MonoBehaviour
         meshManager.meshesChanged += OnMeshesChanged;
         audioSource=GetComponent<AudioSource>();
         var lessonId = int.Parse(LessonList.GetLessonId());
-        if (lessonId == null) return;
+        //if (lessonId == null) return;
         var gameResponse = await gameBUS.GetGameDataByLessonId(lessonId);
         if (gameResponse.isSuccessful)
         {
@@ -334,15 +334,15 @@ public class ArrowGameManager : MonoBehaviour
     public void OnGameEnd()
     {
         timer.isStop = true;
-        
+
         //timeText.text = timer.toTimeString();
-        yourScore.text = (point*100).ToString();
+        yourScore.text = (point * 100).ToString();
         yourHighestScore.text = yourScore.text;
         int bonus = 0;
         var realTimeValue = timer.timeValue / timer.baseTimeValue * 100;
-       
-        
-        if (realTimeValue >= 50 && point > 5 )
+
+
+        if (realTimeValue >= 50 && point > 5)
         {
             bonus = (int)Mathf.Round(timer.timeValue);
         }
@@ -351,20 +351,27 @@ public class ArrowGameManager : MonoBehaviour
             bonus = 0;
         }
         if (point == 0) bonus = 0;
-        reward.text ="+ "+(point*10 + bonus).ToString();
+        reward.text = "+ " + (point * 10 + bonus).ToString();
         gameWinMenu.gameObject.SetActive(true);
         overtimeSFX.GetComponent<AudioSource>().Stop();
         if (point > 0)
         {
-            StartCoroutine(PlaySoundAfterSeconds(winSFX, 1f));           
+            StartCoroutine(PlaySoundAfterSeconds(winSFX, 1f));
         }
         else
         {
             StartCoroutine(PlaySoundAfterSeconds(gameoverSFX, 1f));
         }
-        
+        var activeTarget = GameObject.FindGameObjectsWithTag("Target");
+
+        foreach (GameObject t in activeTarget)
+        {
+            Destroy(t);
+
+
+        }
     }
-    IEnumerator PlaySoundAfterSeconds(AudioClip audioClip, float second)
+        IEnumerator PlaySoundAfterSeconds(AudioClip audioClip, float second)
     {
         yield return new WaitForSeconds(second);
         audioSource.clip = audioClip;
