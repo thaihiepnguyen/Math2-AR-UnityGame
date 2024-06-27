@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -73,29 +74,31 @@ public class AllPlayerDataManager : NetworkBehaviour
     {
         
         NetworkManager.Singleton.OnClientConnectedCallback += AddNewClientToList;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectCallback;
         //BulletData.OnHitPlayer += BulletDataOnOnHitPlayer;
         KillPlayer.OnKillPlayer += KillPlayerOnOnKillPlayer;
         RestartGame.OnRestartGame += RestartGameOnOnRestartGame;
     }
 
-    public override void OnNetworkDespawn()
-    {
-        NetworkManager.Singleton.OnClientConnectedCallback -= AddNewClientToList;
-        //BulletData.OnHitPlayer -= BulletDataOnOnHitPlayer;
-        KillPlayer.OnKillPlayer -= KillPlayerOnOnKillPlayer;
-        RestartGame.OnRestartGame -= RestartGameOnOnRestartGame;
-    }
-    //public void OnDisable()
+    //public override void OnNetworkDespawn()
     //{
-    //    if (IsServer)
-    //    {
-    //        allPlayerData.Clear();
-    //        NetworkManager.Singleton.OnClientConnectedCallback -= AddNewClientToList;
-    //    }
+    //    NetworkManager.Singleton.OnClientConnectedCallback -= AddNewClientToList;
     //    //BulletData.OnHitPlayer -= BulletDataOnOnHitPlayer;
     //    KillPlayer.OnKillPlayer -= KillPlayerOnOnKillPlayer;
     //    RestartGame.OnRestartGame -= RestartGameOnOnRestartGame;
     //}
+    public void OnDisable()
+    {
+        if (IsServer)
+        {
+            allPlayerData.Clear();
+            NetworkManager.Singleton.OnClientConnectedCallback -= AddNewClientToList;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnectCallback;
+        }
+        //BulletData.OnHitPlayer -= BulletDataOnOnHitPlayer;
+        KillPlayer.OnKillPlayer -= KillPlayerOnOnKillPlayer;
+        RestartGame.OnRestartGame -= RestartGameOnOnRestartGame;
+    }
 
 
     private void RestartGameOnOnRestartGame()
@@ -204,7 +207,14 @@ public class AllPlayerDataManager : NetworkBehaviour
     {
         OnPlayerHealthChanged?.Invoke(hitID);
     }
-
+    private void OnClientDisconnectCallback(ulong clientId)
+    {
+        if (!IsHost && clientId == NetworkManager.Singleton.LocalClientId)
+        {
+            Debug.LogError("Failed to connect to the host. The room may not exist or has no host.");
+            // Provide user feedback here (e.g., show a message to the user)
+        }
+    }
     void AddNewClientToList(ulong clientID)
     {
        
