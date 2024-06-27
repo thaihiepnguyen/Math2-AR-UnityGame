@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class book : MonoBehaviour
+public class Book : MonoBehaviour
 {
     [SerializeField] float pageSpeed = 0.5f;
     [SerializeField] List<Transform> pages;
@@ -11,9 +11,16 @@ public class book : MonoBehaviour
     [SerializeField] GameObject backButton;
     [SerializeField] GameObject forwardButton;
 
-    private void Start()
+    NoteBUS noteBus = new NoteBUS();
+    private async void Start()
     {
         InitialState();
+
+        var noteResponse = await noteBus.GetNotesByUserId();
+        if (noteResponse.isSuccessful)
+        {
+            Debug.Log(noteResponse.data[0].note);
+        }
     }
 
     public void InitialState()
@@ -24,7 +31,6 @@ public class book : MonoBehaviour
         }
         pages[0].SetAsLastSibling();
         backButton.SetActive(false);
-
     }
 
     public void RotateForward()
