@@ -58,7 +58,7 @@ public class AutoPlaceOfObjectOnPlane : MonoBehaviour
         if(args.added != null && placedObject == null)
         {
             ARPlane arPlane = args.added[0];
-            // if (arPlane.size.x * arPlane.size.y >)
+             if (arPlane.size.x * arPlane.size.y > 0.1f){
             
             placedObject = Instantiate(placedPrefab, arPlane.transform.position, Quaternion.identity);
       
@@ -67,6 +67,7 @@ public class AutoPlaceOfObjectOnPlane : MonoBehaviour
 
         
             doneSpawn = true;
+             }
 
         }
     }
