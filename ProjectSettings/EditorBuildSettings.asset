@@ -86,6 +86,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Game/EndlessRunner.unity
     guid: 5937e75c814af02448906a2b0721d1e9
+  - enabled: 0
+    path: Assets/Scenes/ARLesson/LineSegment.unity
+    guid: 2ebd24112440bea4e8b72f87001bc622
   m_configObjects:
     Niantic.Lightship.AR.LightshipSettings: {fileID: 11400000, guid: 8a29abd944c5d004484d72aef946a644, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 50ac7484ee2723446bb8dcd15f5ab319, type: 2}

@@ -21,7 +21,7 @@ public class RunnerManager : MonoBehaviour
         gameCompleted = false;
         Time.timeScale = 1;
         isGameStarted = false;
-        // startingText.SetActive(false);
+        startingText.SetActive(false);
    
     }
 
@@ -37,14 +37,16 @@ public class RunnerManager : MonoBehaviour
             Time.timeScale = 0;
         }
 
-        // if (arPlane.doneSpawn){
-        //     startingText.SetActive(true);
-        // }
+        if (arPlane.doneSpawn){
+            startingText.SetActive(true);
+        }
 
 
         if (SwipeManager.tap && startingText!=null && startingText.activeInHierarchy){
             isGameStarted = true;
-            Destroy(startingText);
+
+            // startingText.gameObject.SetActive(false);
+             Destroy(startingText);
         }
     }
 }

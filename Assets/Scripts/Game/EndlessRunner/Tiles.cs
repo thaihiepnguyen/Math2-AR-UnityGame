@@ -18,14 +18,15 @@ public class Tiles : MonoBehaviour
          if (!RunnerManager.isGameStarted || RunnerManager.gameCompleted || RunnerManager.gameOver)
         return;
         // if (other.transform.tag == "Player"){
-            transform.position-= new Vector3(0,0,5f)* Time.fixedDeltaTime;
+            transform.localPosition -= new Vector3(0,0,5f)* Time.fixedDeltaTime;
         // }
     }
 
        void OnTriggerExit(Collider other)
     {
-          tileManager.SpawnTile(Random.Range(0,tileManager.tilePrefabs.Length-2),transform.position + transform.GetChild(transform.childCount-1).transform.localPosition*2,transform.parent.gameObject);
-           Destroy(gameObject,1f);
+
+          tileManager.SpawnTile(Random.Range(0,tileManager.tilePrefabs.Length-2),transform.localPosition + transform.GetChild(transform.childCount-1).transform.localPosition*2,transform.parent.gameObject);
+           Destroy(gameObject,2f);
     }
 
   

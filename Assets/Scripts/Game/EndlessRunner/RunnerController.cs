@@ -27,15 +27,17 @@ public class RunnerController : MonoBehaviour
       int maxHealth = 5;
       int currentHealth;
   
-    // public bool isGrounded;
-    // public LayerMask groundLayer;
-    // public Transform groundCheck;
+    public bool isGrounded;
+    public LayerMask groundLayer;
+    public Transform groundCheck;
 
     void Start()
     {
          controller = GetComponent<CharacterController>();
 
          currentHealth = maxHealth;
+
+         direction = transform.localPosition;
     }
 
          public void ChangeHealth(int amount)
@@ -64,28 +66,25 @@ public class RunnerController : MonoBehaviour
         }
       
 
-
-        if (forwardSpeed < maxSpeed){
-            
-        forwardSpeed += 0.1f * Time.deltaTime;
-        }
-
         animator.SetBool("IsGameStarted",true);
         direction.z = forwardSpeed;
 
-        // isGrounded = Physics.CheckSphere(groundCheck.position, 0.17f, groundLayer);
-        animator.SetBool("IsGrounded", controller.isGrounded);
-        if (controller.isGrounded){
-        
-        direction.y = -1;
+        isGrounded = Physics.CheckSphere(groundCheck.position, 0.17f, groundLayer);
+        animator.SetBool("IsGrounded", isGrounded);
+        if (isGrounded){
+        Debug.Log("Hello");
+     
+  
       
         if(SwipeManager.swipeUp){
            
             Jump();
         }
         }
-        else 
+        else {
+            Debug.Log("no");
         direction.y += gravity * Time.deltaTime;
+        }
         
         if (SwipeManager.swipeDown && !isSliding){
             StartCoroutine(Slide());
@@ -104,7 +103,7 @@ public class RunnerController : MonoBehaviour
             }
         }
 
-        Vector3 targetPosition = transform.position.z*transform.forward + transform.position.y* transform.up;
+        Vector3 targetPosition = transform.localPosition.z*transform.forward + transform.localPosition.y* transform.up;
         if (desiredLane == 0){
             targetPosition+= Vector3.left*laneDistance;
         }
@@ -117,10 +116,10 @@ public class RunnerController : MonoBehaviour
         //  transform.position = Vector3.Lerp(transform.position,targetPosition, 1000 * Time.deltaTime);
         //  controller.center = controller.center;
 
-        if (transform.position == targetPosition )
+        if (transform.localPosition == targetPosition )
             return;
         
-        Vector3 diff = targetPosition - transform.position;
+        Vector3 diff = targetPosition - transform.localPosition;
         Vector3 moveDir = diff.normalized * 25 * Time.deltaTime;
 
         if (moveDir.sqrMagnitude < diff.sqrMagnitude)
@@ -128,7 +127,9 @@ public class RunnerController : MonoBehaviour
         else
             controller.Move(diff);
         
-        
+        //    controller.Move(direction * Time.deltaTime);
+
+
     }
 
    
@@ -154,6 +155,13 @@ public class RunnerController : MonoBehaviour
         }
     }
 
+    //     void OnCollisionEnter(Collision other)
+    // {
+    //     if (other.transform.tag == "Obstacle"){
+    //         Debug.Log("ab");
+    //          RunnerManager.gameOver = true;
+    //     }
+    // }
 
     private IEnumerator Slide(){
         isSliding = true;

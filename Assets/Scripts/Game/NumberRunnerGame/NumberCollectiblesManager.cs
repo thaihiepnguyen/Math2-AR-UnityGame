@@ -6,7 +6,7 @@ public class NumberCollectiblesManager : MonoBehaviour
 {
 
      [SerializeField]
-    private TextMeshProUGUI OverlayText;
+    private TextMeshPro OverlayText;
 
     // [SerializeField]
     // private TextMeshProUGUI OverlayText;
@@ -25,6 +25,8 @@ public class NumberCollectiblesManager : MonoBehaviour
     Transform mainCam;
     Transform unit;
     Transform worldSpaceCanvas;
+
+    Vector3 targetAngle = Vector3.zero;
      
      public Vector3 offset;
 
@@ -64,6 +66,13 @@ public class NumberCollectiblesManager : MonoBehaviour
         // OverlayText.transform.rotation = Camera.main.transform.rotation +  new Vector3(90,0,0);
 
              OverlayText.transform.LookAt(Camera.main.transform);
+
+            //    targetAngle = OverlayText.transform.localEulerAngles;
+            //     targetAngle.x = 0;
+            //     targetAngle.z = 0;
+            //     OverlayText.transform.localEulerAngles = targetAngle;
+
+
           OverlayText.transform.RotateAround(OverlayText.transform.position, OverlayText.transform.up, 180f);
     
         // OverlayText.transform.rotation+= new Vector3(90f,0,0);

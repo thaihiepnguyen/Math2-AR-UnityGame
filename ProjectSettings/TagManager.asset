@@ -19,6 +19,7 @@ TagManager:
   - WorldCanvas
   - Obstacle
   - TileQuiz
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - Stair
   - 
   - Minimap
-  - 
+  - Ground
   - 
   - 
   - 

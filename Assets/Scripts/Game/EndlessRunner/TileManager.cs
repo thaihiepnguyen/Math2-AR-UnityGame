@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class TileManager : MonoBehaviour
 {
-//    private List<GameObject> activeTiles;
+   private List<GameObject> activeTiles;
     public GameObject[] tilePrefabs;
 
-    Vector3 nextSpawnPoint;
-    // public float tileLength = 30;
-    // public int numberOfTiles = 3;
-    // public int totalNumOfTiles = 8;
+    public float tileLength = 30;
+    public int numberOfTiles = 3;
+    public int totalNumOfTiles = 8;
 
-    // public float zSpawn = 0;
+    public float zSpawn = 0;
 
     public Transform playerTransform;
 
@@ -36,49 +35,51 @@ public class TileManager : MonoBehaviour
 
     //     // playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
-    //     SpawnTile(0,new Vector3(0,0,0));
+    //     SpawnTile(0);
 
     // }
 
     private int cur = 0;
 
+    public GameObject parent;
+
     private bool DoneSpawn = false;
-    void Update()
-    {   
-        // if (RunnerManager.gameCompleted || RunnerManager.gameOver || DoneSpawn)
-        // return;
-        //   if (quizManager.checkEnd && !DoneSpawn){
-        //          cur = 0;
-        //           SpawnTile(tilePrefabs.Length-1);
-        //           DoneSpawn = true;
-        //           return;
-        //     }
+    // void Update()
+    // {   
+    //     if (RunnerManager.gameCompleted || RunnerManager.gameOver || DoneSpawn)
+    //     return;
+    //       if (quizManager.checkEnd && !DoneSpawn){
+    //              cur = 0;
+    //               SpawnTile(tilePrefabs.Length-1);
+    //               DoneSpawn = true;
+    //               return;
+    //         }
 
 
-        // if(playerTransform.position.z - 30 >= zSpawn - (numberOfTiles * tileLength))
-        // {
-        //     // int index = Random.Range(0, totalNumOfTiles);
-        //     // while(index == previousIndex)
-        //     //     index = Random.Range(0, totalNumOfTiles);
+    //     if(playerTransform.position.z - 30 >= zSpawn - (numberOfTiles * tileLength))
+    //     {
+    //         // int index = Random.Range(0, totalNumOfTiles);
+    //         // while(index == previousIndex)
+    //         //     index = Random.Range(0, totalNumOfTiles);
           
-        //     if (index == 2)
-        //     {
-        //         SpawnTile(tilePrefabs.Length-2);
+    //         if (cur == 2)
+    //         {
+    //             SpawnTile(tilePrefabs.Length-2);
             
 
-        //         index = 0;
-        //     }
-        //     else{
-        //      SpawnTile(Random.Range(0,tilePrefabs.Length-2));
-        //       index+=1;
-        //     }
-        //      DeleteTile();
+    //             cur = 0;
+    //         }
+    //         else{
+    //          SpawnTile(Random.Range(0,tilePrefabs.Length-2));
+    //           cur+=1;
+    //         }
+    //          DeleteTile();
              
-        //     // SpawnTile(index);
-        // }
+    //         // SpawnTile(index);
+    //     }
 
             
-    }
+    // }
 
     public void SpawnTile(int index, Vector3 position, GameObject parent)
     {
@@ -126,7 +127,8 @@ public class TileManager : MonoBehaviour
         }
 
             go.transform.localPosition = position;
-            go.transform.SetParent(parent.transform);
+            // go.transform.localScale = new Vector3(1,1,1);
+            go.transform.SetParent(parent.transform,false);
         if (go!= null && go.gameObject.CompareTag("TileQuiz")){
                quizManager.QuizStart(go);
         }
@@ -136,6 +138,30 @@ public class TileManager : MonoBehaviour
         //  nextSpawnPoint = go.transform.GetChild(go.transform.childCount-1).transform.localPosition;
     }
 
+    
+    
+    
+   
+
+    // public void SpawnTile(int index = 0)
+    // {
+    //     GameObject tile = Instantiate(tilePrefabs[index]);
+      
+
+    //     tile.transform.position = Vector3.forward * zSpawn;
+    //     tile.transform.rotation = Quaternion.identity;
+    //     tile.transform.SetParent(parent.transform,false);
+
+    //       if (tile!= null && tile.gameObject.CompareTag("TileQuiz")){
+    //            quizManager.QuizStart(tile);
+    //     }
+
+
+    //     activeTiles.Add(tile);
+    //     zSpawn += tileLength;
+    // }
+    
+    
     // private void DeleteTile()
     // {
     //     activeTiles[0].SetActive(false);
