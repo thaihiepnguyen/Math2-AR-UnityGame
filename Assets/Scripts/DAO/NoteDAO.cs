@@ -11,4 +11,8 @@ public class NoteDAO
     {
         return await API.Get<List<NoteDTO>>($"{GlobalVariable.server_url}/notes/get-all");
     }
+    public async Task<BaseDTO<bool>> AddNewNoteWithUserId(int noteId)
+    {
+        return await API.Post<int, bool>($"{GlobalVariable.server_url}/notes/add-new", noteId);
+    }
 }

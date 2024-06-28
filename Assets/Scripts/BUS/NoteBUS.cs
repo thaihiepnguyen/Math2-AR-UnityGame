@@ -13,5 +13,8 @@ public class NoteBUS
     {
         return await _noteDAO.GetNotesByUserId();
     }
-
+    public async Task<BaseDTO<bool>> AddNewNoteWithUserId(int noteId)
+    {
+        return await _noteDAO.AddNewNoteWithUserId(noteId);
+    }
 }

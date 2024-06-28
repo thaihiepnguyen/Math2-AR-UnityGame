@@ -26,6 +26,11 @@ public class Book : MonoBehaviour
 
     public async void InitialState()
     {
+        if (Progress.IsActive)
+        {
+            Progress.Hide();
+
+        }
         Progress.Show("Đang xử lý...", ProgressColor.Orange);
         var noteResponse = await noteBus.GetNotesByUserId();
         Progress.Hide();

@@ -1,4 +1,5 @@
-using EasyUI.Progress;
+﻿using EasyUI.Progress;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,28 +17,65 @@ public class Lesson : MonoBehaviour
     [SerializeField] GameObject doingExercisesButton;
     [SerializeField] GameObject doingExercisesIcon;
 
+    [SerializeField] GameObject NewNoteNotification;
+    private float speed = 800f;
+    private float topY = 1800f;
+    private float bottomY = 1000f;
+    private Vector3 direction = Vector3.down;
+    private AudioSource audioSource;
+    [SerializeField] AudioClip winSound;
+
     LessonBUS lessonBUS = new LessonBUS();
     GameBUS gameBUS = new GameBUS();
+    NoteBUS noteBUS = new NoteBUS();
 
     private static string VideoUrl;
     public static string GetVideoUrl()
     {
         return VideoUrl;
     }
-    
+
     LessonDTO lesson;
     GameDTO game = null;
-    
+
     // Start is called before the first frame update
     async void Start()
     {
-        playGameButton.SetActive(false);
-        playGameIcon.SetActive(false);
-        learningButton.SetActive(false);
-        learningIcon.SetActive(false);
+        Debug.Log(PlayerPrefs.GetInt(GlobalVariable.userID));
+        var noteResponse = await noteBUS.AddNewNoteWithUserId(2);
 
-        int lessonId = int.Parse(LessonList.GetLessonId());
+        //NewNoteNotification.SetActive(false);
+        //string prevScene = SceneHistory.GetInstance().GetLastScene();
+        //Debug.Log(prevScene);
+        //if (prevScene == GlobalVariable.VIDEO_LEARNING_SCENE || prevScene == GlobalVariable.BOOK_LEARNING_SCENE)
+        //{
+        //    OpenNewNoteNotification();
+        //    audioSource = GetComponent<AudioSource>();
+        //    audioSource.clip = winSound;
+        //    audioSource.Play();
+        //}
+        //playGameButton.SetActive(false);
+        //playGameIcon.SetActive(false);
+        //learningButton.SetActive(false);
+        //learningIcon.SetActive(false);
+        //int lessonId = int.Parse(LessonList.GetLessonId());
+        //LoadLessonData(lessonId);
+        //LoadGameData(lessonId);
+       
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    private async void LoadLessonData(int lessonId)
+    {
+
+        Progress.Show(GlobalVariable.LOADIND_TEXT, ProgressColor.Orange);
         var lessonResponse = await lessonBUS.GetVideoByLessonId(lessonId);
+        Progress.Hide();
         if (lessonResponse.data != null)
         {
             learningButton.SetActive(true);
@@ -45,51 +83,91 @@ public class Lesson : MonoBehaviour
             lesson = lessonResponse.data;
             VideoUrl = lesson.video_url;
             title.text = lesson.name;
-
         }
-        Progress.Show("?ang t?i...", ProgressColor.Orange);
+
+
+    }
+
+    private async void LoadGameData(int lessonId)
+    {
+
+        Progress.Show(GlobalVariable.LOADIND_TEXT, ProgressColor.Orange);
         var gameResponse = await gameBUS.GetGameDataByLessonId(lessonId);
         Progress.Hide();
-
         if (gameResponse.isSuccessful)
         {
             Debug.Log(gameResponse.data.gameConfig.game_type_name);
             game = gameResponse.data;
             playGameButton.SetActive(true);
             playGameIcon.SetActive(true);
-            Debug.Log("CC" + game.gameConfig.game_type_name_vi);
             gameName.text = game.gameConfig.game_type_name_vi;
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void OnClickDoingExercise()
     {
         SceneHistory.GetInstance().LoadScene(GlobalVariable.EXERCISES_SCENE);
     }
+
     public void OnClickViewLesson()
     {
         if (lesson.book_url != null)
         {
-            SceneHistory.GetInstance().LoadScene("BookLearningScene");
+            SceneHistory.GetInstance().LoadScene(GlobalVariable.BOOK_LEARNING_SCENE);
         }
         else
         {
-            SceneHistory.GetInstance().LoadScene("VideoLearning");
+            SceneHistory.GetInstance().LoadScene(GlobalVariable.VIDEO_LEARNING_SCENE);
         }
     }
+
     public void OnClickPlayGame()
     {
         if (game != null)
         {
             string sceneGameName = game.gameConfig.game_type_name + "Game";
-                Debug.Log(sceneGameName);
             SceneHistory.GetInstance().LoadScene(sceneGameName);
         }
+    }
+
+    private IEnumerator ShowNewNoteNotification()
+    {
+        NewNoteNotification.SetActive(true);
+        while (true)
+        {
+            NewNoteNotification.transform.Translate(direction * speed * Time.deltaTime);
+            if (NewNoteNotification.transform.position.y <= bottomY)
+            {
+                break;
+            }
+            yield return null;
+        }
+    }
+    private IEnumerator HideNewNoteNotification()
+    {
+        while (true)
+        {
+            NewNoteNotification.transform.Translate(direction * speed * Time.deltaTime);
+            if (NewNoteNotification.transform.position.y >= topY)
+            {
+                NewNoteNotification.SetActive(false);
+                break;
+            }
+            yield return null;
+        }
+    }
+
+    public void GoToNotesScene()
+    {
+        SceneHistory.GetInstance().LoadScene(GlobalVariable.NOTES_SCENE);
+    }
+    public void OpenNewNoteNotification()
+    {
+        StartCoroutine(ShowNewNoteNotification());
+    }
+    public void CloseNewNoteNotification()
+    {
+        StartCoroutine(HideNewNoteNotification());
     }
 }
