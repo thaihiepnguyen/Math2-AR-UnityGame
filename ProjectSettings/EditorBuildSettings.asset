@@ -80,7 +80,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Game/NumberConnect.unity
     guid: a652ad17d99ee534da30cb396db8f7f3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game/EndlessRunnerGame.unity
     guid: 0e736fb384167544d9a3285a14f1ec94
   - enabled: 0
@@ -89,6 +89,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ARLesson/LineSegment.unity
     guid: 2ebd24112440bea4e8b72f87001bc622
+  - enabled: 1
+    path: Assets/Scenes/ARLesson/ARLineSegment.unity
+    guid: 3c7837efb23175444840a70a4fcf08c2
   m_configObjects:
     Niantic.Lightship.AR.LightshipSettings: {fileID: 11400000, guid: 8a29abd944c5d004484d72aef946a644, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 50ac7484ee2723446bb8dcd15f5ab319, type: 2}

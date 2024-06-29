@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 2977929433762581779}
   m_Layer: 0
   m_Name: Point
-  m_TagString: Untagged
+  m_TagString: hasInfo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -375,13 +375,13 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2752570352762970969}
   - {fileID: 5809525588969230378}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &7887870569543317928
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -466,6 +466,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SectionInfo: {fileID: 5809525588969230378}
+  pointName: {fileID: 1007381949835240902}
+  pointInfo: {fileID: 6171711381279920275}
+  IsSelected: 0
 --- !u!114 &2977929433762581779
 MonoBehaviour:
   m_ObjectHideFlags: 0

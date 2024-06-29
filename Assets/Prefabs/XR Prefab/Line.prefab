@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6253560648597642208}
   - component: {fileID: 543136936895307042}
+  - component: {fileID: -3661137772786197218}
   m_Layer: 0
   m_Name: Line
   m_TagString: Untagged
@@ -77,7 +78,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.005
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -131,6 +132,18 @@ LineRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_MaskInteraction: 0
-  m_UseWorldSpace: 0
+  m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-3661137772786197218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4321678878344888995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f69b5c31d49a28b4e92f2725b3a45aab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

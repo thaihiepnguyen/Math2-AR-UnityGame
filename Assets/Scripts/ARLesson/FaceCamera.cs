@@ -16,10 +16,15 @@ public class FaceCamera : MonoBehaviour
    }
 
    void Update(){
-    transform.LookAt(cam);
-    targetAngle = transform.localEulerAngles;
-    targetAngle.x = 0;
-    targetAngle.z = 0;
-    transform.localEulerAngles = targetAngle;
+    // transform.LookAt(cam);
+    // targetAngle = transform.localEulerAngles;
+    // targetAngle.x = 0;
+    // targetAngle.z = 0;
+    // transform.localEulerAngles = targetAngle;
+
+           Vector3 directionToCamera = Camera.main.transform.position - transform.position;
+                    directionToCamera.y = 0; // Keep the target upright
+                    Quaternion lookRotation = Quaternion.LookRotation(-directionToCamera);
+                    transform.rotation = lookRotation;
    }
 }
