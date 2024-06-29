@@ -93,6 +93,7 @@ public class arrowController : MonoBehaviour
                 var explose = collision.gameObject.GetComponent<MovingTarget>().explose;
                 explose.Play();
             }
+            DisplayDistanceToCamera(collision.gameObject);
         }
     }
     IEnumerator StopSoundAfterSecond(float second)
@@ -104,5 +105,17 @@ public class arrowController : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(second);
         ArrowGameManager.GetInstance().NextQuestion();
+    }
+    private void DisplayDistanceToCamera(GameObject target)
+    {
+        Camera arCamera = Camera.main;
+        if (arCamera != null)
+        {
+            float distance = Vector3.Distance(target.transform.position, arCamera.transform.position);
+            Debug.Log($"Distance to target: {distance} meters");
+
+
+            
+        }
     }
 }

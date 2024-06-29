@@ -28,7 +28,7 @@ public class GlobalVariable
     public const string LOADIND_TEXT = "ĐANG TẢI";
 
     //SERVICE CONFIG
-    public const string server_url = "http://localhost:3000";
+    public const string server_url = "https://armath2-be.vercel.app";
     public static int  platform =  1;
     public static FirebaseAuth auth;
     public static PhoneAuthProvider provider;
