@@ -23,7 +23,7 @@ public class BallARPlane : MonoBehaviour
     private readonly int quantity = 3;
     private Vector3 spacing = new (0.7f, 0, 0);
     private bool flag = false;
-    private List<ExerciseDTO> exerciseList;
+    private GameData[] gameDatas;
     void Awake() 
     {
         rims = new GameObject[quantity];
@@ -33,7 +33,7 @@ public class BallARPlane : MonoBehaviour
 
     void Start() {
         ballGameInstance = GameObject.FindGameObjectWithTag("BallGameManager").GetComponent<BallGame>();
-        exerciseList = ballGameInstance.exerciseList;
+        gameDatas = ballGameInstance.gameDto.gameData;
     }
 
     private void PlaneChanged(ARPlanesChangedEventArgs args)
@@ -48,12 +48,12 @@ public class BallARPlane : MonoBehaviour
             }
         
             flag = true;
-            UpdateRims(exerciseList[0]);
+            UpdateRims(gameDatas[0]);
         }
     }
 
-    public void UpdateRims(ExerciseDTO exerciseDTO) {
-        string[] answers = exerciseDTO.answer.Split(",");
+    public void UpdateRims(GameData gameData) {
+        string[] answers = gameData.answer.Split(",");
         for (int i = 0; i < answers.Length; i++) {
             rims[i].GetComponentInChildren<TextMeshProUGUI>().text = answers[i];
         }

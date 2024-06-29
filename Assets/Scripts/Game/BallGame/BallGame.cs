@@ -33,67 +33,28 @@ public class BallGame : MonoBehaviour
     private float MAX_FORCE = 10f;
     public int REMAINING_HEART = 3;
     public int POINT = 0;
-
-    public List<ExerciseDTO> exerciseList = new List<ExerciseDTO>();
     public int currentExerciseIndex = 0;
     [SerializeField] private TextMeshProUGUI question;
     [SerializeField] private GameObject hearts;
     private Image[] heartImages;
     [SerializeField] private TextMeshProUGUI progress;
 
+    public GameDTO gameDto = null;
+
+
     public void Awake() {
-        ExerciseDTO exerciseDTO = new ExerciseDTO
-        {
-            question = "10 + 20 =",
-            answer = "10,20,30",
-            right_answer = "30"
-        };
-        ExerciseDTO exerciseDTO1 = new ExerciseDTO
-        {
-            question = "20 + 20 =",
-            answer = "20,30,40",
-            right_answer = "40"
-        };
-        ExerciseDTO exerciseDTO2 = new ExerciseDTO
-        {
-            question = "40 + 60 =",
-            answer = "100,30,10",
-            right_answer = "100"
-        };
-        ExerciseDTO exerciseDTO3 = new ExerciseDTO
-        {
-            question = "23 + 17 =",
-            answer = "20,40,30",
-            right_answer = "40"
-        };
-        ExerciseDTO exerciseDTO4 = new ExerciseDTO
-        {
-            question = "25 + 17 =",
-            answer = "20,42,30",
-            right_answer = "42"
-        };
-        ExerciseDTO exerciseDTO5 = new ExerciseDTO
-        {
-            question = "23 + 20 =",
-            answer = "20,40,43",
-            right_answer = "43"
-        };
-        ExerciseDTO exerciseDTO6 = new ExerciseDTO
-        {
-            question = "23 + 11 =",
-            answer = "34,40,30",
-            right_answer = "34"
-        };
-        exerciseList.Add(exerciseDTO);
-        exerciseList.Add(exerciseDTO1);
-        exerciseList.Add(exerciseDTO2);
-        exerciseList.Add(exerciseDTO3);
-        exerciseList.Add(exerciseDTO4);
-        exerciseList.Add(exerciseDTO5);
-        exerciseList.Add(exerciseDTO6);
-        if (exerciseList.Count >= 1) {
-            question.text = exerciseList[currentExerciseIndex].question;
-            progress.text = "Câu " + (currentExerciseIndex + 1) + "/" + exerciseList.Count; 
+        gameDto = Lesson.GetGameDto();
+
+        if (gameDto == null) {
+            Toast.Show("Something Error!", 3f);
+            return;
+        }
+
+        var gameData = gameDto.gameData;
+
+        if (gameData.Length >= 1) {
+            question.text = gameData[currentExerciseIndex].question;
+            progress.text = "Câu " + (currentExerciseIndex + 1) + "/" + gameData.Length; 
         }
     }
 
@@ -113,6 +74,9 @@ public class BallGame : MonoBehaviour
     }
 
     public void Start() {
+        if (gameDto == null) {
+            return;
+        }
         currentBall = GenerateBall();
         slider.value = 0;
         var buttonHoldAndRelease = throwBtn.GetComponent<ButtonHoldAndRelease>();
@@ -200,10 +164,10 @@ public class BallGame : MonoBehaviour
             }
         }
 
-        if (currentExerciseIndex < exerciseList.Count) {
-            question.text = exerciseList[currentExerciseIndex].question;
-            ballARPlaneInstance.UpdateRims(exerciseList[currentExerciseIndex]);
-            progress.text = "Câu " + (currentExerciseIndex + 1) + "/" + exerciseList.Count; 
+        if (currentExerciseIndex < gameDto.gameData.Length) {
+            question.text = gameDto.gameData[currentExerciseIndex].question;
+            ballARPlaneInstance.UpdateRims(gameDto.gameData[currentExerciseIndex]);
+            progress.text = "Câu " + (currentExerciseIndex + 1) + "/" + gameDto.gameData.Length; 
         }
         else {
             Toast.Show("Finished! : " + POINT, 3f);

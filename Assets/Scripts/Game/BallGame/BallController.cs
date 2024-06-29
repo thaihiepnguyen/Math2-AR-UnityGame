@@ -23,7 +23,7 @@ public class BallController : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("BallObject")) {
             var answer = gameObject.GetComponentInChildren<TextMeshProUGUI>().text;
-            var rightAnswer = ballGameInstance.exerciseList[ballGameInstance.currentExerciseIndex].right_answer;
+            var rightAnswer = ballGameInstance.gameDto.gameData[ballGameInstance.currentExerciseIndex].right_answer;
 
             if (answer == rightAnswer) {
                 ballGameInstance.POINT++;
