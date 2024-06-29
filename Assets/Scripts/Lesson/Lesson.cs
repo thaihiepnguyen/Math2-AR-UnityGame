@@ -36,8 +36,8 @@ public class Lesson : MonoBehaviour
     }
 
     LessonDTO lesson;
-    GameDTO game = null;
-
+    private static GameDTO game = null;
+    
     // Start is called before the first frame update
     async void Start()
     {
@@ -101,6 +101,7 @@ public class Lesson : MonoBehaviour
     private async void LoadGameData(int lessonId)
     {
         var gameResponse = await gameBUS.GetGameDataByLessonId(lessonId);
+        
         if (gameResponse.isSuccessful)
         {
             Debug.Log(gameResponse.data.gameConfig.game_type_name);
@@ -136,6 +137,10 @@ public class Lesson : MonoBehaviour
             string sceneGameName = game.gameConfig.game_type_name + "Game";
             SceneHistory.GetInstance().LoadScene(sceneGameName);
         }
+    }
+
+    public static GameDTO GetGameDto() {
+        return game;
     }
 
     private IEnumerator ShowNewNoteNotification()

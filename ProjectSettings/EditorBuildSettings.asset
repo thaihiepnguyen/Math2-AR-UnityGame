@@ -78,6 +78,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game/NumberRunnerGame.unity
     guid: 97480d4868d95754bb1ce812b3dfe9ba
   - enabled: 1
+    path: Assets/Scenes/Game/BallGame.unity
+    guid: 58b158d44541f20448798a4883cf89a5
+  - enabled: 1
     path: Assets/Scenes/Game/NumberConnect.unity
     guid: a652ad17d99ee534da30cb396db8f7f3
   - enabled: 1
