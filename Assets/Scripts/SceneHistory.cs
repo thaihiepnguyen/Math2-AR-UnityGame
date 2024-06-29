@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using EasyUI.Progress;
 
 public class SceneHistory : MonoBehaviour
 {
@@ -41,6 +42,7 @@ public class SceneHistory : MonoBehaviour
 
     public void LoadScene(string newScene)
     {
+        Progress.Hide();
         sceneHistory.Add(newScene);
         SceneManager.LoadScene(newScene);
 
@@ -62,7 +64,7 @@ public class SceneHistory : MonoBehaviour
 
     public void PreviousScene()
     {
-
+        Progress.Hide();
         if (sceneHistory.Count >= 2)  //Checking that we have actually switched scenes enough to go back to a previous scene
         {
             lastScene = sceneHistory[sceneHistory.Count - 1];

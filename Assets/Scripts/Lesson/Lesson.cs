@@ -41,27 +41,40 @@ public class Lesson : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-        Debug.Log(PlayerPrefs.GetInt(GlobalVariable.userID));
-        var noteResponse = await noteBUS.AddNewNoteWithUserId(2);
+        NewNoteNotification.SetActive(false);
+        playGameButton.SetActive(false);
+        playGameIcon.SetActive(false);
+        learningButton.SetActive(false);
+        learningIcon.SetActive(false);
 
-        //NewNoteNotification.SetActive(false);
-        //string prevScene = SceneHistory.GetInstance().GetLastScene();
-        //Debug.Log(prevScene);
-        //if (prevScene == GlobalVariable.VIDEO_LEARNING_SCENE || prevScene == GlobalVariable.BOOK_LEARNING_SCENE)
-        //{
-        //    OpenNewNoteNotification();
-        //    audioSource = GetComponent<AudioSource>();
-        //    audioSource.clip = winSound;
-        //    audioSource.Play();
-        //}
-        //playGameButton.SetActive(false);
-        //playGameIcon.SetActive(false);
-        //learningButton.SetActive(false);
-        //learningIcon.SetActive(false);
-        //int lessonId = int.Parse(LessonList.GetLessonId());
-        //LoadLessonData(lessonId);
-        //LoadGameData(lessonId);
-       
+        int lessonId = int.Parse(LessonList.GetLessonId());
+        LoadLessonData(lessonId);
+        LoadGameData(lessonId);
+        HandleAddNote(lessonId);
+    }
+
+    async void HandleAddNote(int lessonId)
+    {
+        string prevScene = SceneHistory.GetInstance().GetLastScene(); ;
+        if (prevScene == GlobalVariable.VIDEO_LEARNING_SCENE || prevScene == GlobalVariable.BOOK_LEARNING_SCENE)
+        {
+            var checkExistRes = await noteBUS.CheckNoteExistsWithUserId(lessonId);
+            if (checkExistRes.isSuccessful)
+            {
+                if (!checkExistRes.data.exists)
+                {
+                    var addNoteRes = await noteBUS.AddNewNoteWithUserId(lessonId);
+                    if (addNoteRes.isSuccessful)
+                    {
+                        OpenNewNoteNotification();
+                        audioSource = GetComponent<AudioSource>();
+                        audioSource.clip = winSound;
+                        audioSource.Play();
+                    }
+                }
+            }
+        }
+        return;
     }
 
     // Update is called once per frame
@@ -72,10 +85,7 @@ public class Lesson : MonoBehaviour
 
     private async void LoadLessonData(int lessonId)
     {
-
-        Progress.Show(GlobalVariable.LOADIND_TEXT, ProgressColor.Orange);
         var lessonResponse = await lessonBUS.GetVideoByLessonId(lessonId);
-        Progress.Hide();
         if (lessonResponse.data != null)
         {
             learningButton.SetActive(true);
@@ -90,10 +100,7 @@ public class Lesson : MonoBehaviour
 
     private async void LoadGameData(int lessonId)
     {
-
-        Progress.Show(GlobalVariable.LOADIND_TEXT, ProgressColor.Orange);
         var gameResponse = await gameBUS.GetGameDataByLessonId(lessonId);
-        Progress.Hide();
         if (gameResponse.isSuccessful)
         {
             Debug.Log(gameResponse.data.gameConfig.game_type_name);

@@ -1,6 +1,7 @@
 ﻿using EasyUI.Progress;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,11 @@ public class Book : MonoBehaviour
     [SerializeField] Button forwardButton;
     [SerializeField] GameObject pagePrefab;
 
+    [SerializeField] GameObject NoteList;
+    [SerializeField] GameObject NoteButtonPrefab;
+    [SerializeField] GameObject[] NoteButtons;
+    [SerializeField] GameObject NoteListContainer;
+
     NoteBUS noteBus = new NoteBUS();
     List<NoteDTO> notes;
     
@@ -22,22 +28,24 @@ public class Book : MonoBehaviour
     private void Start()
     {
         InitialState();
+        backButton.interactable = false;
+        NoteList.SetActive(false);
     }
 
     public async void InitialState()
     {
-        if (Progress.IsActive)
-        {
-            Progress.Hide();
-
-        }
-        Progress.Show("Đang xử lý...", ProgressColor.Orange);
         var noteResponse = await noteBus.GetNotesByUserId();
-        Progress.Hide();
         if (noteResponse.isSuccessful)
         {
             notes = noteResponse.data;
             notes.Insert(0, baseNote);
+            for (int i = 0; i < notes.Count; i++)
+            {
+                var buttonNote = Instantiate(NoteButtonPrefab);
+                buttonNote.transform.SetParent(NoteListContainer.transform);
+                buttonNote.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => OnClickLessNote(buttonNote));
+                buttonNote.transform.GetChild(0).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = notes[i].lesson_name;
+            }
         }
         else
         {
@@ -88,6 +96,34 @@ public class Book : MonoBehaviour
             backButton.interactable = false;
         }
     }
+
+    public void GoToNthNote(int nth)
+    {
+        NoteList.SetActive(false);
+        if (nth == 0) {
+            backButton.interactable = false;
+        }
+        else if (nth == notes.Count - 1)
+        {
+            forwardButton.interactable = false;
+        }
+        index = nth;
+        StartCoroutine(RotateSequence());
+        pagePrefab.transform.GetChild(0).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = notes[index].lesson_name;
+        pagePrefab.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = notes[index].note;
+        if (index == 0)
+        {
+            pagePrefab.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().alignment = TMPro.TextAlignmentOptions.Center;
+        }
+        else
+        {
+            pagePrefab.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().alignment = TMPro.TextAlignmentOptions.Left;
+
+        }
+        
+
+    }
+
     IEnumerator RotateSequence()
     {
         yield return Rotate(180);
@@ -107,5 +143,18 @@ public class Book : MonoBehaviour
         }
 
         pagePrefab.transform.rotation = targetRotation; // Ensure final rotation is set
+    }
+    public void OpenNoteList()
+    {
+        NoteList.SetActive(true);
+    }
+    public void CloseNoteList()
+    {
+        NoteList.SetActive(false);
+    }
+    public void OnClickLessNote(GameObject child)
+    {
+        int siblingIndex = child.transform.GetSiblingIndex();
+        GoToNthNote(siblingIndex);
     }
 }
