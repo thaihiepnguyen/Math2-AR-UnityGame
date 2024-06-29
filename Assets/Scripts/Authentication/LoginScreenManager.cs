@@ -36,16 +36,12 @@ public class LoginScreenManager : MonoBehaviour
     public Toggle RememberMe;
 
 
-    private async  void Awake()
+    private void Awake()
     {
-        var userBus = new UserBUS();
         string token = PlayerPrefs.GetString("token");
-        if (!token.Equals("")) {
-            API.AddToken(token);   
-            var response = await userBus.GetMe();
-            if (response.isSuccessful) {
-                SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
-            }     
+        if (token != "") {
+            API.AddToken(token);
+            SceneManager.LoadScene(GlobalVariable.MAIN_SCENE);
         }
         configuration = new GoogleSignInConfiguration { WebClientId = webClientId, RequestEmail = true, RequestIdToken = true };
         CheckFirebaseDependencies();

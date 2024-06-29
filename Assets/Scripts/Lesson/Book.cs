@@ -1,160 +1,101 @@
-﻿using EasyUI.Progress;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class Book : MonoBehaviour
+public class book : MonoBehaviour
 {
-    [SerializeField] float pageSpeed = 2f;
-    //[SerializeField] List<Transform> pages;
-    int index = 0;
+    [SerializeField] float pageSpeed = 0.5f;
+    [SerializeField] List<Transform> pages;
+    int index = -1;
     bool rotate = false;
-    [SerializeField] Button backButton;
-    [SerializeField] Button forwardButton;
-    [SerializeField] GameObject pagePrefab;
-
-    [SerializeField] GameObject NoteList;
-    [SerializeField] GameObject NoteButtonPrefab;
-    [SerializeField] GameObject[] NoteButtons;
-    [SerializeField] GameObject NoteListContainer;
-
-    NoteBUS noteBus = new NoteBUS();
-    List<NoteDTO> notes;
-    
-    NoteDTO baseNote = new NoteDTO(0,0,"Hãy tạo ra hân trời sáng tạo của riêng mình bằng cách học hỏi chăm chỉ !!","Ghi chú của em");
+    [SerializeField] GameObject backButton;
+    [SerializeField] GameObject forwardButton;
 
     private void Start()
     {
         InitialState();
-        backButton.interactable = false;
-        NoteList.SetActive(false);
     }
 
-    public async void InitialState()
+    public void InitialState()
     {
-        var noteResponse = await noteBus.GetNotesByUserId();
-        if (noteResponse.isSuccessful)
+        for (int i = 0; i < pages.Count; i++)
         {
-            notes = noteResponse.data;
-            notes.Insert(0, baseNote);
-            for (int i = 0; i < notes.Count; i++)
-            {
-                var buttonNote = Instantiate(NoteButtonPrefab);
-                buttonNote.transform.SetParent(NoteListContainer.transform);
-                buttonNote.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => OnClickLessNote(buttonNote));
-                buttonNote.transform.GetChild(0).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = notes[i].lesson_name;
-            }
+            pages[i].transform.rotation = Quaternion.identity;
         }
-        else
-        {
-            SceneHistory.GetInstance().PreviousScene();
-        }
+        pages[0].SetAsLastSibling();
+        backButton.SetActive(false);
+
     }
 
-
-    public void GoToNextNote()
+    public void RotateForward()
     {
-        if (index < notes.Count - 1)
-        {
-            backButton.interactable = true;
-            StartCoroutine(RotateSequence());
-            index++;
-            pagePrefab.transform.GetChild(0).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = notes[index].lesson_name;
-            pagePrefab.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = notes[index].note;
-            pagePrefab.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().alignment = TMPro.TextAlignmentOptions.Left;
-            if (index + 1 >= notes.Count) forwardButton.interactable = false;
-        }
-        else
-        {
-            forwardButton.interactable = false;
-        }
+        if (rotate == true) { return; }
+        index++;
+        float angle = 180; //in order to rotate the page forward, you need to set the rotation by 180 degrees around the y axis
+        ForwardButtonActions();
+        pages[index].SetAsLastSibling();
+        StartCoroutine(Rotate(angle, true));
+
     }
-    public void GoToPrevNote()
+
+    public void ForwardButtonActions()
     {
-        if (index > 0)
+        if (backButton.activeInHierarchy == false)
         {
-            forwardButton.interactable = true;
-            StartCoroutine(RotateSequence());
-            index--;
-            pagePrefab.transform.GetChild(0).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = notes[index].lesson_name;
-            pagePrefab.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = notes[index].note;
-            if (index == 0)
-            {
-                pagePrefab.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().alignment = TMPro.TextAlignmentOptions.Center;
-            }
-            else
-            {
-                pagePrefab.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().alignment = TMPro.TextAlignmentOptions.Left;
-
-            }
-            if (index - 1 < 0) backButton.interactable = false;
+            backButton.SetActive(true); //every time we turn the page forward, the back button should be activated
         }
-        else
+        if (index == pages.Count - 1)
         {
-            backButton.interactable = false;
+            forwardButton.SetActive(false); //if the page is last then we turn off the forward button
         }
     }
 
-    public void GoToNthNote(int nth)
+    public void RotateBack()
     {
-        NoteList.SetActive(false);
-        if (nth == 0) {
-            backButton.interactable = false;
-        }
-        else if (nth == notes.Count - 1)
-        {
-            forwardButton.interactable = false;
-        }
-        index = nth;
-        StartCoroutine(RotateSequence());
-        pagePrefab.transform.GetChild(0).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = notes[index].lesson_name;
-        pagePrefab.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = notes[index].note;
-        if (index == 0)
-        {
-            pagePrefab.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().alignment = TMPro.TextAlignmentOptions.Center;
-        }
-        else
-        {
-            pagePrefab.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().alignment = TMPro.TextAlignmentOptions.Left;
-
-        }
-        
-
+        if (rotate == true) { return; }
+        float angle = 0; //in order to rotate the page back, you need to set the rotation to 0 degrees around the y axis
+        pages[index].SetAsLastSibling();
+        BackButtonActions();
+        StartCoroutine(Rotate(angle, false));
     }
 
-    IEnumerator RotateSequence()
+    public void BackButtonActions()
     {
-        yield return Rotate(180);
-        yield return Rotate(180);
+        if (forwardButton.activeInHierarchy == false)
+        {
+            forwardButton.SetActive(true); //every time we turn the page back, the forward button should be activated
+        }
+        if (index - 1 == -1)
+        {
+            backButton.SetActive(false); //if the page is first then we turn off the back button
+        }
     }
-    IEnumerator Rotate(float angle)
+
+    IEnumerator Rotate(float angle, bool forward)
     {
         float value = 0f;
-        Quaternion startRotation = pagePrefab.transform.rotation;
-        Quaternion targetRotation = startRotation * Quaternion.Euler(0, angle, 0);
-
-        while (value < 1.0f)
+        while (true)
         {
+            rotate = true;
+            Quaternion targetRotation = Quaternion.Euler(0, angle, 0);
             value += Time.deltaTime * pageSpeed;
-            pagePrefab.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, value);
-            yield return null;
-        }
+            pages[index].rotation = Quaternion.Slerp(pages[index].rotation, targetRotation, value); //smoothly turn the page
+            float angle1 = Quaternion.Angle(pages[index].rotation, targetRotation); //calculate the angle between the given angle of rotation and the current angle of rotation
+            if (angle1 < 0.1f)
+            {
+                if (forward == false)
+                {
+                    index--;
+                }
+                rotate = false;
+                break;
 
-        pagePrefab.transform.rotation = targetRotation; // Ensure final rotation is set
+            }
+            yield return null;
+
+        }
     }
-    public void OpenNoteList()
-    {
-        NoteList.SetActive(true);
-    }
-    public void CloseNoteList()
-    {
-        NoteList.SetActive(false);
-    }
-    public void OnClickLessNote(GameObject child)
-    {
-        int siblingIndex = child.transform.GetSiblingIndex();
-        GoToNthNote(siblingIndex);
-    }
+
+
+
 }

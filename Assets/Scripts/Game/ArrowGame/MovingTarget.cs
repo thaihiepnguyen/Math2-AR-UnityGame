@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MovingTarget : MonoBehaviour, IHittable
@@ -18,13 +17,9 @@ public class MovingTarget : MonoBehaviour, IHittable
     //[SerializeField]
     //private AudioSource audioSource;
     [SerializeField]
-    public bool moveHorizontally = true;
+    private bool moveHorizontally = true;
     [SerializeField]
-    public float arriveThreshold, movementRadius = 2, speed = 1;
-    [SerializeField] public ParticleSystem explose;
-    [SerializeField] public ParticleSystem success;
-    [SerializeField] GameObject Item;
-    [SerializeField] public TextMeshProUGUI text;
+    private float arriveThreshold, movementRadius = 2, speed = 1;
 
     private void Awake()
     {
@@ -55,22 +50,20 @@ public class MovingTarget : MonoBehaviour, IHittable
         {
             //audioSource.Play();
             Debug.Log("Target down");
-
         }
-        if(collision.gameObject.CompareTag("Arrow") == true){
-            
-        }
-    }
-    void OnDestroy() {
-       
     }
 
     public void GetHit()
     {
+        health--;
+        if(health <= 0)
+        {
+            rb.isKinematic = false;
+            stopped = true;
+            
+        }
         
         
-
-
     }
 
     private void FixedUpdate()

@@ -1528,7 +1528,7 @@ Transform:
   m_GameObject: {fileID: 749289784}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.463066, y: -9.433919, z: 329.32883}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3418,7 +3418,7 @@ Transform:
   m_GameObject: {fileID: 1473623869}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.463066, y: -9.433919, z: 329.32883}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3455,6 +3455,7 @@ MonoBehaviour:
   placedPrefab: {fileID: 9021331768864174442, guid: 27f96ad21315ef2479540959b2cf38e8, type: 3}
   dismissButton: {fileID: 315359588}
   arPlaneManager: {fileID: 1473623872}
+  doneSpawn: 0
 --- !u!1 &1482454308
 GameObject:
   m_ObjectHideFlags: 0

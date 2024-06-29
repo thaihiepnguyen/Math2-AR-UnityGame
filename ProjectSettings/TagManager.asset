@@ -13,21 +13,14 @@ TagManager:
   - Arrow
   - Plane
   - Target
-  - RimPart
-  - RimTarget
-  - BallGameManager
-  - ARPlane
-  - BallGameXROrigin
-  - BallObject
   - Canvas
   - Score
   - BackgroundMusic
   - WorldCanvas
-  - Bubble
-  - BubbleContainer
-  - BubbleGameTutorial
-  - NotePageContainer
-  - NoteListContainer
+  - Obstacle
+  - TileQuiz
+  - Ground
+  - hasInfo
   layers:
   - Default
   - TransparentFX
@@ -38,7 +31,7 @@ TagManager:
   - Stair
   - 
   - Minimap
-  - 
+  - Ground
   - 
   - 
   - 

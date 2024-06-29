@@ -47,7 +47,6 @@ public class API
             return response;
         } catch (Exception ex)
         {
-            Debug.Log("CC");
             return new BaseDTO<T>
             {
                 message = ex.Message,
