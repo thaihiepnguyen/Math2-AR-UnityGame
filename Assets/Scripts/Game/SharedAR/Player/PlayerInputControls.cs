@@ -12,8 +12,8 @@ public class PlayerInputControls : NetworkBehaviour
 
     public event Action<Vector3> OnMoveInput;
     public event Action OnMoveActionCancelled;
-    public event Action OnShootInput;
-    public event Action OnShootInputCancelled;
+    public event Action<Vector2> OnFlyInput;
+    public event Action OnFlyInputCancelled;
 
     public event Action<Vector2> OnShootAnglePerformed;
 
@@ -29,30 +29,26 @@ public class PlayerInputControls : NetworkBehaviour
             _playerControlsInputAction.PlayerControlsMap.Move.performed += MoveActionPerformed;
             _playerControlsInputAction.PlayerControlsMap.Move.canceled += MoveActionCancelled;
 
-            _playerControlsInputAction.PlayerControlsMap.Shoot.performed += ShootOnperformed;
-            _playerControlsInputAction.PlayerControlsMap.Shoot.canceled += ShootOncanceled;
 
-            _playerControlsInputAction.PlayerControlsMap.ShootAngle.performed += ShootAngleOnperformed;
+            _playerControlsInputAction.PlayerControlsMap.Fly.performed += FlyActionperformed;
+            _playerControlsInputAction.PlayerControlsMap.Fly.performed += FlyActioncanceled;
 
 
         }
     }
 
-    private void ShootAngleOnperformed(InputAction.CallbackContext context)
+    private void FlyActionperformed(InputAction.CallbackContext context)
     {
-        OnShootAnglePerformed?.Invoke(context.ReadValue<Vector2>());
+        OnFlyInput?.Invoke(context.ReadValue<Vector2>());
     }
 
-    private void ShootOncanceled(InputAction.CallbackContext obj)
+    private void FlyActioncanceled(InputAction.CallbackContext obj)
     {
-        OnShootInputCancelled?.Invoke();
+        movementVector = Vector3.zero;
+        OnFlyInputCancelled?.Invoke();
     }
 
-    private void ShootOnperformed(InputAction.CallbackContext obj)
-    {
-        OnShootInput?.Invoke();
-    }
-
+    
     private void MoveActionCancelled(InputAction.CallbackContext context)
     {
         movementVector = Vector3.zero;
@@ -81,8 +77,9 @@ public class PlayerInputControls : NetworkBehaviour
         {
             _playerControlsInputAction.PlayerControlsMap.Move.performed -= MoveActionPerformed;
             _playerControlsInputAction.PlayerControlsMap.Move.canceled -= MoveActionCancelled;
-            _playerControlsInputAction.PlayerControlsMap.Shoot.performed -= ShootOnperformed;
-            _playerControlsInputAction.PlayerControlsMap.Shoot.canceled -= ShootOncanceled;
+            _playerControlsInputAction.PlayerControlsMap.Fly.performed -= FlyActionperformed;
+
+            _playerControlsInputAction.PlayerControlsMap.Fly.canceled -= FlyActioncanceled;
         }
     }
 }

@@ -20,6 +20,8 @@ TagManager:
   - Bubble
   - BubbleContainer
   - BubbleGameTutorial
+  - FlyDow
+  - FlyUp
   layers:
   - Default
   - TransparentFX

@@ -23,21 +23,26 @@ public class PlayerAnimation : NetworkBehaviour
 
             _playerInputControls.OnMoveInput += PlayerInputControlsOnOnMoveInput;
             _playerInputControls.OnMoveActionCancelled += PlayerInputControlsOnOnMoveActionCancelled;
-            _playerInputControls.OnShootInput += PlayerInputControlsOnOnShootInput;
-            _playerInputControls.OnShootInputCancelled += PlayerInputControlsOnOnShootInputCancelled;
+            _playerInputControls.OnFlyInput += PlayerInputControlsOnFlyInput;
+            _playerInputControls.OnFlyInputCancelled += PlayerInputControlsOnFlyCancelled;
 
 
         }
     }
 
-    private void PlayerInputControlsOnOnShootInputCancelled()
+    private void PlayerInputControlsOnFlyCancelled()
     {
         SetOneParameterToTrue("isIdle");
     }
 
-    private void PlayerInputControlsOnOnShootInput()
+    private void PlayerInputControlsOnFlyInput(Vector2 context)
     {
-        SetOneParameterToTrue("isShooting");
+           
+        if(context.magnitude> 0)
+        {
+            SetOneParameterToTrue("isFlying");
+
+        }
     }
 
     private void PlayerInputControlsOnOnMoveActionCancelled()
@@ -77,8 +82,9 @@ public class PlayerAnimation : NetworkBehaviour
         {
             _playerInputControls.OnMoveInput -= PlayerInputControlsOnOnMoveInput;
             _playerInputControls.OnMoveActionCancelled -= PlayerInputControlsOnOnMoveActionCancelled;
-            _playerInputControls.OnShootInput -= PlayerInputControlsOnOnShootInput;
-            _playerInputControls.OnShootInputCancelled -= PlayerInputControlsOnOnShootInputCancelled;
+            _playerInputControls.OnFlyInput -= PlayerInputControlsOnFlyInput;
+            _playerInputControls.OnFlyInputCancelled -= PlayerInputControlsOnFlyCancelled;
         }
     }
+    
 }

@@ -46,7 +46,7 @@ public partial class @PlayerControlInputAction: IInputActionCollection2, IDispos
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ShootAngle"",
+                    ""name"": ""Fly"",
                     ""type"": ""Value"",
                     ""id"": ""ec6517a4-d5a8-4b97-b2a8-7091a55dcff3"",
                     ""expectedControlType"": ""Vector2"",
@@ -140,7 +140,7 @@ public partial class @PlayerControlInputAction: IInputActionCollection2, IDispos
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ShootAngle"",
+                    ""action"": ""Fly"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -153,7 +153,7 @@ public partial class @PlayerControlInputAction: IInputActionCollection2, IDispos
         m_PlayerControlsMap = asset.FindActionMap("PlayerControlsMap", throwIfNotFound: true);
         m_PlayerControlsMap_Move = m_PlayerControlsMap.FindAction("Move", throwIfNotFound: true);
         m_PlayerControlsMap_Shoot = m_PlayerControlsMap.FindAction("Shoot", throwIfNotFound: true);
-        m_PlayerControlsMap_ShootAngle = m_PlayerControlsMap.FindAction("ShootAngle", throwIfNotFound: true);
+        m_PlayerControlsMap_Fly = m_PlayerControlsMap.FindAction("Fly", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -217,14 +217,14 @@ public partial class @PlayerControlInputAction: IInputActionCollection2, IDispos
     private List<IPlayerControlsMapActions> m_PlayerControlsMapActionsCallbackInterfaces = new List<IPlayerControlsMapActions>();
     private readonly InputAction m_PlayerControlsMap_Move;
     private readonly InputAction m_PlayerControlsMap_Shoot;
-    private readonly InputAction m_PlayerControlsMap_ShootAngle;
+    private readonly InputAction m_PlayerControlsMap_Fly;
     public struct PlayerControlsMapActions
     {
         private @PlayerControlInputAction m_Wrapper;
         public PlayerControlsMapActions(@PlayerControlInputAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerControlsMap_Move;
         public InputAction @Shoot => m_Wrapper.m_PlayerControlsMap_Shoot;
-        public InputAction @ShootAngle => m_Wrapper.m_PlayerControlsMap_ShootAngle;
+        public InputAction @Fly => m_Wrapper.m_PlayerControlsMap_Fly;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControlsMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -240,9 +240,9 @@ public partial class @PlayerControlInputAction: IInputActionCollection2, IDispos
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
-            @ShootAngle.started += instance.OnShootAngle;
-            @ShootAngle.performed += instance.OnShootAngle;
-            @ShootAngle.canceled += instance.OnShootAngle;
+            @Fly.started += instance.OnFly;
+            @Fly.performed += instance.OnFly;
+            @Fly.canceled += instance.OnFly;
         }
 
         private void UnregisterCallbacks(IPlayerControlsMapActions instance)
@@ -253,9 +253,9 @@ public partial class @PlayerControlInputAction: IInputActionCollection2, IDispos
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
-            @ShootAngle.started -= instance.OnShootAngle;
-            @ShootAngle.performed -= instance.OnShootAngle;
-            @ShootAngle.canceled -= instance.OnShootAngle;
+            @Fly.started -= instance.OnFly;
+            @Fly.performed -= instance.OnFly;
+            @Fly.canceled -= instance.OnFly;
         }
 
         public void RemoveCallbacks(IPlayerControlsMapActions instance)
@@ -277,6 +277,6 @@ public partial class @PlayerControlInputAction: IInputActionCollection2, IDispos
     {
         void OnMove(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
-        void OnShootAngle(InputAction.CallbackContext context);
+        void OnFly(InputAction.CallbackContext context);
     }
 }

@@ -16,7 +16,10 @@ public class AllPlayerDataManager : NetworkBehaviour
 
     public event Action<ulong> OnPlayerDead;
     public event Action<ulong> OnPlayerHealthChanged;
-
+    public int GetNumberPlayer()
+    {
+        return allPlayerData.Count;
+    }
     private void Awake()
     {
         allPlayerData = new NetworkList<PlayerData>();

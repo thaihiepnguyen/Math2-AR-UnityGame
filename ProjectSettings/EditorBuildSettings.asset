@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/LoginScene.unity
     guid: 14380a3841e0f467f911488ab0d2aa7a
   - enabled: 1
-    path: Assets/Scenes/Main.unity
-    guid: 697daae3b1b25444e955b7b912f48a97
-  - enabled: 1
     path: Assets/Scenes/RegisterScene.unity
     guid: 45a479e0866cec14cbe1fc7b973f6b41
   - enabled: 1
@@ -83,7 +80,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scripts/Game/SharedAR/Game/Loading.unity
     guid: ecbbbc7d4c4d27d4eb3f91227169928e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game/ShareAR2.unity
     guid: 2d4f1f3d6c679d9418c6f9ef1f462974
   m_configObjects:

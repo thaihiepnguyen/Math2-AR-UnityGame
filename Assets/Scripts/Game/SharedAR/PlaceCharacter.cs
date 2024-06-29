@@ -47,7 +47,7 @@ public class PlaceCharacter : NetworkBehaviour
 
             PointerEventData pointerData = new PointerEventData(EventSystem.current);
             pointerData.position = touch.position;
-
+            
             List<RaycastResult> results = new List<RaycastResult>();
 
             EventSystem.current.RaycastAll(pointerData, results);
