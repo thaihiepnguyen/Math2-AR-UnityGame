@@ -1,6 +1,7 @@
 ﻿using EasyUI.Toast;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -49,7 +50,8 @@ public class ArrowGameManager : MonoBehaviour
         return exerciseList[curquestion].right_answer;
     }
 
-    private List<ExerciseDTO> exerciseList = new List<ExerciseDTO>();
+    private List<GameData> exerciseList = new List<GameData>();
+    private GameDTO gameDTO;
     private GameObject trackables;
     private Mesh arMesh;
     private Timer timer;
@@ -60,6 +62,7 @@ public class ArrowGameManager : MonoBehaviour
     [SerializeField] AudioClip winSFX;
     [SerializeField] AudioClip gameoverSFX;
     private AudioSource audioSource;
+    private GameBUS gameBUS= new GameBUS();
     bool isGameOver=false;
     bool isOverTime=false;
     int correctAnswer = 0;
@@ -71,28 +74,24 @@ public class ArrowGameManager : MonoBehaviour
         }
     }
 
-    void Start()
+    async void Start()
     {
-        ExerciseDTO exerciseDTO = new ExerciseDTO
-        {
-            question = "10 + 20 =",
-            answer = "10,20,30,40",
-            right_answer = "30"
-        };
-        ExerciseDTO exerciseDTO1 = new ExerciseDTO
-        {
-            question = "20 + 20 =",
-            answer = "20,30,40,50",
-            right_answer = "40"
-        };
-        exerciseList.Add(exerciseDTO);
-        exerciseList.Add(exerciseDTO1);
         curhealth = maxhealth;
-        updateUI();
+        
         trackables = GameObject.Find("Trackables");
         timer=GetComponent<Timer>();
         meshManager.meshesChanged += OnMeshesChanged;
-        audioSource=GetComponent<AudioSource>(); 
+        audioSource=GetComponent<AudioSource>();
+        var lessonId = int.Parse(LessonList.GetLessonId());
+        //if (lessonId == null) return;
+        var gameResponse = await gameBUS.GetGameDataByLessonId(lessonId);
+        if (gameResponse.isSuccessful)
+        {
+            Debug.Log(gameResponse.data.gameConfig.game_type_name);
+            gameDTO = gameResponse.data;
+            exerciseList = gameDTO.gameData.ToList();
+        }
+        updateUI();
     }
 
     private void OnMeshesChanged(ARMeshesChangedEventArgs obj)
@@ -285,23 +284,33 @@ public class ArrowGameManager : MonoBehaviour
    public void  NextQuestion()
     {
         curquestion++;
+        if (curquestion + 1 > totalquestions) 
+        { 
+            curquestion = totalquestions; 
+        }
         if(curquestion  == totalquestions)
         {
             OnGameEnd();
-           
+            return;
         }
-        var activeTarget = GameObject.FindGameObjectsWithTag("Target");
+        if ((float)curquestion / totalquestions >= 0.5f)
+        {
+            var activeTarget = GameObject.FindGameObjectsWithTag("Target");
+
+            foreach (GameObject t in activeTarget)
+            {
+                t.GetComponent<MovingTarget>().speed = 1;
+                t.GetComponent<MovingTarget>().moveHorizontally = Random.value > 0.5f ? true : false;
+
+            }
+        }
         
-        foreach(GameObject t in activeTarget)
-        {
-            Destroy(t);
-        }
-        var curMeshes=trackables.GetComponentsInChildren<MeshFilter>();
-        foreach(var m in curMeshes)
-        {
-            Destroy(m.gameObject);
-        }
-        spawnCount = 4;
+        //var curMeshes=trackables.GetComponentsInChildren<MeshFilter>();
+        //foreach(var m in curMeshes)
+        //{
+        //    Destroy(m.gameObject);
+        //}
+        //spawnCount = 4;
         updateUI();
     }
     public bool CheckAnswer(string answer)
@@ -325,15 +334,15 @@ public class ArrowGameManager : MonoBehaviour
     public void OnGameEnd()
     {
         timer.isStop = true;
-        
+
         //timeText.text = timer.toTimeString();
-        yourScore.text = (point*100).ToString();
+        yourScore.text = (point * 100).ToString();
         yourHighestScore.text = yourScore.text;
         int bonus = 0;
         var realTimeValue = timer.timeValue / timer.baseTimeValue * 100;
-       
-        
-        if (realTimeValue >= 50 && point > 5 )
+
+
+        if (realTimeValue >= 50 && point > 5)
         {
             bonus = (int)Mathf.Round(timer.timeValue);
         }
@@ -342,20 +351,27 @@ public class ArrowGameManager : MonoBehaviour
             bonus = 0;
         }
         if (point == 0) bonus = 0;
-        reward.text ="+ "+(point*10 + bonus).ToString();
+        reward.text = "+ " + (point * 10 + bonus).ToString();
         gameWinMenu.gameObject.SetActive(true);
         overtimeSFX.GetComponent<AudioSource>().Stop();
         if (point > 0)
         {
-            StartCoroutine(PlaySoundAfterSeconds(winSFX, 1f));           
+            StartCoroutine(PlaySoundAfterSeconds(winSFX, 1f));
         }
         else
         {
             StartCoroutine(PlaySoundAfterSeconds(gameoverSFX, 1f));
         }
-        
+        var activeTarget = GameObject.FindGameObjectsWithTag("Target");
+
+        foreach (GameObject t in activeTarget)
+        {
+            Destroy(t);
+
+
+        }
     }
-    IEnumerator PlaySoundAfterSeconds(AudioClip audioClip, float second)
+        IEnumerator PlaySoundAfterSeconds(AudioClip audioClip, float second)
     {
         yield return new WaitForSeconds(second);
         audioSource.clip = audioClip;

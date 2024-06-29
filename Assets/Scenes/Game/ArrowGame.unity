@@ -3379,7 +3379,7 @@ MonoBehaviour:
   MainUI: {fileID: 1719556763}
   WaitingUI: {fileID: 1704273466}
   gameWinMenu: {fileID: 548021628}
-  timeText: {fileID: 0}
+  timeText: {fileID: 725919952}
   yourScore: {fileID: 270625506}
   yourHighestScore: {fileID: 1922970975}
   reward: {fileID: 1335777810}
@@ -3406,7 +3406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: {fileID: 725919952}
-  timeValue: 1
+  timeValue: 2
   isStop: 1
 --- !u!82 &1382959289
 AudioSource:
@@ -4544,7 +4544,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60.65
+  m_fontSize: 52.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5204,7 +5204,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60.1
+  m_fontSize: 48.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
