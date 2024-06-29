@@ -903,13 +903,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 1837949221
+  NetworkManagerOwner: {fileID: 0}
+  <NetworkObjectId>k__BackingField: 0
+  <OwnerClientId>k__BackingField: 0
   AlwaysReplicateAsRoot: 0
+  <IsPlayerObject>k__BackingField: 0
   SynchronizeTransform: 1
+  <IsSpawned>k__BackingField: 0
+  <DestroyWithScene>k__BackingField: 0
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 1
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SceneOriginHandle: 0
+  NetworkSceneHandle: 0
+  m_SceneOrigin:
+    m_Handle: 0
+  m_CachedParent: {fileID: 0}
+  m_CachedWorldPositionStays: 1
+  m_ChildNetworkBehaviours: []
 --- !u!114 &385205623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -922,7 +935,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bf45e204a8180144ae3086fa9d4a266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <IsLocalPlayer>k__BackingField: 0
+  <IsOwner>k__BackingField: 0
+  <IsServer>k__BackingField: 0
+  <IsClient>k__BackingField: 0
+  <IsHost>k__BackingField: 0
+  <IsOwnedByServer>k__BackingField: 0
+  <IsSpawned>k__BackingField: 0
+  m_NetworkObject: {fileID: 0}
+  <NetworkObjectId>k__BackingField: 0
+  <NetworkBehaviourId>k__BackingField: 0
+  NetworkBehaviourIdCache: 0
+  <OwnerClientId>k__BackingField: 0
+  m_VarInit: 0
+  <m_TargetIdBeingSynchronized>k__BackingField: 0
   placementObject: {fileID: 1238444068895322191, guid: 262016f5cb9b1f24faed10df1e127d50, type: 3}
+  isPlaced: 0
+  mainCam: {fileID: 0}
 --- !u!114 &385205624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -935,6 +964,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b3b2a0818458343b070439c4a16b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <IsLocalPlayer>k__BackingField: 0
+  <IsOwner>k__BackingField: 0
+  <IsServer>k__BackingField: 0
+  <IsClient>k__BackingField: 0
+  <IsHost>k__BackingField: 0
+  <IsOwnedByServer>k__BackingField: 0
+  <IsSpawned>k__BackingField: 0
+  m_NetworkObject: {fileID: 0}
+  <NetworkObjectId>k__BackingField: 0
+  <NetworkBehaviourId>k__BackingField: 0
+  NetworkBehaviourIdCache: 0
+  <OwnerClientId>k__BackingField: 0
+  m_VarInit: 0
+  <m_TargetIdBeingSynchronized>k__BackingField: 0
 --- !u!1 &425550515
 GameObject:
   m_ObjectHideFlags: 0
@@ -2088,6 +2131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593a2fe42fa9d37498c96f9a383b6521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ShuttingDown: 0
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 858786643}
@@ -2125,6 +2169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a7c1e438dc4e689f75a8ff942540a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _emptyMessage: 
+  _serverClient: 0
+  _serverClientHasValidId: 0
+  _isHost: 0
+  _lastNetworkError: 0
 --- !u!1 &865914938
 GameObject:
   m_ObjectHideFlags: 0
@@ -2294,6 +2343,7 @@ MonoBehaviour:
   m_ProtocolType: 0
   m_MaxPacketQueueSize: 128
   m_MaxPayloadSize: 6144
+  m_MaxSendQueueSize: 0
   m_HeartbeatTimeoutMS: 500
   m_ConnectTimeoutMS: 1000
   m_MaxConnectAttempts: 60
@@ -2306,6 +2356,13 @@ MonoBehaviour:
     PacketDelayMS: 0
     PacketJitterMS: 0
     PacketDropRate: 0
+  m_State: 0
+  m_ServerClientId: 0
+  NetworkManager: {fileID: 0}
+  m_ServerPrivateKey: 
+  m_ServerCertificate: 
+  m_ServerCommonName: 
+  m_ClientCaCertificate: 
 --- !u!114 &1056258472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2318,6 +2375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593a2fe42fa9d37498c96f9a383b6521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ShuttingDown: 0
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1056258471}
@@ -3037,13 +3095,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 3340844531
+  NetworkManagerOwner: {fileID: 0}
+  <NetworkObjectId>k__BackingField: 0
+  <OwnerClientId>k__BackingField: 0
   AlwaysReplicateAsRoot: 0
+  <IsPlayerObject>k__BackingField: 0
   SynchronizeTransform: 1
+  <IsSpawned>k__BackingField: 0
+  <DestroyWithScene>k__BackingField: 0
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 1
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SceneOriginHandle: 0
+  NetworkSceneHandle: 0
+  m_SceneOrigin:
+    m_Handle: 0
+  m_CachedParent: {fileID: 0}
+  m_CachedWorldPositionStays: 1
+  m_ChildNetworkBehaviours: []
 --- !u!114 &1303398530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3056,6 +3127,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fec3d8c932dfe06448c6fd4848052e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <IsLocalPlayer>k__BackingField: 0
+  <IsOwner>k__BackingField: 0
+  <IsServer>k__BackingField: 0
+  <IsClient>k__BackingField: 0
+  <IsHost>k__BackingField: 0
+  <IsOwnedByServer>k__BackingField: 0
+  <IsSpawned>k__BackingField: 0
+  m_NetworkObject: {fileID: 0}
+  <NetworkObjectId>k__BackingField: 0
+  <NetworkBehaviourId>k__BackingField: 0
+  NetworkBehaviourIdCache: 0
+  <OwnerClientId>k__BackingField: 0
+  m_VarInit: 0
+  <m_TargetIdBeingSynchronized>k__BackingField: 0
   _meshManager: {fileID: 1303398528}
 --- !u!1 &1308211144
 GameObject:
@@ -3175,6 +3260,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e23dc971fb67d1488f8a083a64746a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <IsLocalPlayer>k__BackingField: 0
+  <IsOwner>k__BackingField: 0
+  <IsServer>k__BackingField: 0
+  <IsClient>k__BackingField: 0
+  <IsHost>k__BackingField: 0
+  <IsOwnedByServer>k__BackingField: 0
+  <IsSpawned>k__BackingField: 0
+  m_NetworkObject: {fileID: 0}
+  <NetworkObjectId>k__BackingField: 0
+  <NetworkBehaviourId>k__BackingField: 0
+  NetworkBehaviourIdCache: 0
+  <OwnerClientId>k__BackingField: 0
+  m_VarInit: 0
+  <m_TargetIdBeingSynchronized>k__BackingField: 0
   CreateGameCanvas: {fileID: 2134755394}
   ControllerCanvas: {fileID: 1742115908}
   RestartQuitCanvas: {fileID: 137733097}
@@ -3970,6 +4069,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ff254eaf2546948b4d416b19299c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <IsLocalPlayer>k__BackingField: 0
+  <IsOwner>k__BackingField: 0
+  <IsServer>k__BackingField: 0
+  <IsClient>k__BackingField: 0
+  <IsHost>k__BackingField: 0
+  <IsOwnedByServer>k__BackingField: 0
+  <IsSpawned>k__BackingField: 0
+  m_NetworkObject: {fileID: 0}
+  <NetworkObjectId>k__BackingField: 0
+  <NetworkBehaviourId>k__BackingField: 0
+  NetworkBehaviourIdCache: 0
+  <OwnerClientId>k__BackingField: 0
+  m_VarInit: 0
+  <m_TargetIdBeingSynchronized>k__BackingField: 0
   QuitGameButton: {fileID: 1648648253}
 --- !u!114 &1830172328
 MonoBehaviour:
@@ -3984,13 +4097,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 102733134
+  NetworkManagerOwner: {fileID: 0}
+  <NetworkObjectId>k__BackingField: 0
+  <OwnerClientId>k__BackingField: 0
   AlwaysReplicateAsRoot: 0
+  <IsPlayerObject>k__BackingField: 0
   SynchronizeTransform: 1
+  <IsSpawned>k__BackingField: 0
+  <DestroyWithScene>k__BackingField: 0
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 1
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SceneOriginHandle: 0
+  NetworkSceneHandle: 0
+  m_SceneOrigin:
+    m_Handle: 0
+  m_CachedParent: {fileID: 0}
+  m_CachedWorldPositionStays: 1
+  m_ChildNetworkBehaviours: []
 --- !u!114 &1830172329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4003,6 +4129,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1701fc6fda478244090fbf48857ec182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <IsLocalPlayer>k__BackingField: 0
+  <IsOwner>k__BackingField: 0
+  <IsServer>k__BackingField: 0
+  <IsClient>k__BackingField: 0
+  <IsHost>k__BackingField: 0
+  <IsOwnedByServer>k__BackingField: 0
+  <IsSpawned>k__BackingField: 0
+  m_NetworkObject: {fileID: 0}
+  <NetworkObjectId>k__BackingField: 0
+  <NetworkBehaviourId>k__BackingField: 0
+  NetworkBehaviourIdCache: 0
+  <OwnerClientId>k__BackingField: 0
+  m_VarInit: 0
+  <m_TargetIdBeingSynchronized>k__BackingField: 0
   restartButton: {fileID: 425550517}
 --- !u!1 &1925303977
 GameObject:
@@ -4059,6 +4199,9 @@ MonoBehaviour:
   _colocalizationType: 1
   _sharedArRootPrefab: {fileID: 4781414300907772666, guid: addffc4d55be14f14b776b2b504b86d6, type: 3}
   _arLocationManager: {fileID: 0}
+  _usingCustomArLocationManager: 0
+  _imageTrackingColocalizedOnce: 0
+  <SharedArOriginObject>k__BackingField: {fileID: 0}
 --- !u!114 &1925303980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4074,9 +4217,11 @@ MonoBehaviour:
   _sharedSpaceManager: {fileID: 1925303979}
   _targetImage: {fileID: 2800000, guid: 1a5fc54c34e0bf24a9cdbd0d1aff22f4, type: 3}
   _targetImageSize: 0.1
+  roomName: TestRoom
   StartGameButton: {fileID: 709437399}
   CreateRoomButton: {fileID: 865914940}
   JoinRoomButton: {fileID: 651454671}
+  isHost: 0
 --- !u!114 &1925303981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4089,6 +4234,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde1f92a1eefc214a900c8d1ac393422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <IsLocalPlayer>k__BackingField: 0
+  <IsOwner>k__BackingField: 0
+  <IsServer>k__BackingField: 0
+  <IsClient>k__BackingField: 0
+  <IsHost>k__BackingField: 0
+  <IsOwnedByServer>k__BackingField: 0
+  <IsSpawned>k__BackingField: 0
+  m_NetworkObject: {fileID: 0}
+  <NetworkObjectId>k__BackingField: 0
+  <NetworkBehaviourId>k__BackingField: 0
+  NetworkBehaviourIdCache: 0
+  <OwnerClientId>k__BackingField: 0
+  m_VarInit: 0
+  <m_TargetIdBeingSynchronized>k__BackingField: 0
   BlitImageUI: {fileID: 1639157414}
   _rectTransform: {fileID: 1639157415}
   _renderTexture: {fileID: 8400000, guid: 56cec33b331f7de4eb158d8b9434ed53, type: 2}
@@ -4106,6 +4265,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RenderTexture: {fileID: 8400000, guid: 56cec33b331f7de4eb158d8b9434ed53, type: 2}
+  m_ARCameraBackground: {fileID: 0}
+  _cameraTexture: {fileID: 0}
+  _textureReady: 0
 --- !u!114 &1925303983
 MonoBehaviour:
   m_ObjectHideFlags: 0

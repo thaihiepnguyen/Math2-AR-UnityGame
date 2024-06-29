@@ -5,81 +5,78 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/LoginScene.unity
     guid: 14380a3841e0f467f911488ab0d2aa7a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 697daae3b1b25444e955b7b912f48a97
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/RegisterScene.unity
     guid: 45a479e0866cec14cbe1fc7b973f6b41
-  - enabled: 0
-    path: Assets/Scenes/PersonalScene.unity
-    guid: 3b887a9147c779a46a535e2514c6cd8f
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Semester.unity
     guid: f4b6a0b0e5876d64da689124fb0a8969
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/ChapterList.unity
     guid: 3df3a1de32d304d3d9b34f2a581972fb
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/ChapterScene.unity
     guid: e68d86a3463114ecc8ddd30bf7022305
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/LessonList.unity
     guid: 34dfe55e547d14482a9d34534aa1255c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/LessonScene.unity
     guid: cfb9ad8b6fc9f426d90abf7ff8d170a7
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Store.unity
     guid: 0745becc196c2d3409810c0b8dce6bca
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Achievement.unity
     guid: ac57eb3f10e608e41bec2c3efa217499
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/ExamScene.unity
     guid: e0cd6ed86074d664cb9c0f56f563351e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/ExamListScene.unity
     guid: e8aac2a180738fc4284fa95364e013ed
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Exercises.unity
     guid: 6bece2daf51a671479b10cbc04038277
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 697daae3b1b25444e955b7b912f48a97
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/DetailExamScene.unity
     guid: c6e96c567f1838741a4d6377a492bb86
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/ReviewExamScene.unity
     guid: a9f7e02b053f8304db266d404023a61e
   - enabled: 0
-    path: Assets/Scenes/TestBundle.unity
-    guid: d94d4039d2560c84e937420cb9695c46
-  - enabled: 0
     path: Assets/Scenes/New Scene.unity
     guid: 895cd06c330456340a07eea0af1292fb
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Avatar.unity
     guid: 059d87c223cb97f40b07265f0664556c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/OTPScene.unity
     guid: 6f7ef049126b8a744afa233a8a15f846
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/VideoLearning.unity
     guid: ca287024364692842a17921ece07c966
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Game/ArrowGame.unity
     guid: 168bd30671e73de4ca56f8359dd7838c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Game/NumberRunnerGame.unity
     guid: 97480d4868d95754bb1ce812b3dfe9ba
   - enabled: 0
     path: Assets/Scenes/Game/NumberConnect.unity
     guid: a652ad17d99ee534da30cb396db8f7f3
+  - enabled: 1
+    path: Assets/Scenes/Game/BubbleGame.unity
+    guid: d3656035373b1e34bbfc9d0e104e791d
   - enabled: 1
     path: Assets/Scenes/Game/SharedAr.unity
     guid: a6f46da786c8b214e895a1d2d6b6242c

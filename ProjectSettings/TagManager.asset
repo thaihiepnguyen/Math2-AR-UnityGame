@@ -17,6 +17,9 @@ TagManager:
   - Score
   - BackgroundMusic
   - WorldCanvas
+  - Bubble
+  - BubbleContainer
+  - BubbleGameTutorial
   layers:
   - Default
   - TransparentFX
