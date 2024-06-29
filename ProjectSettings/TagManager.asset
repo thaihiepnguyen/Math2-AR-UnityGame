@@ -26,6 +26,8 @@ TagManager:
   - Bubble
   - BubbleContainer
   - BubbleGameTutorial
+  - NotePageContainer
+  - NoteListContainer
   layers:
   - Default
   - TransparentFX

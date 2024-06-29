@@ -8,10 +8,10 @@ using UnityEngine.UI;
 
 public class PanelManager : MonoBehaviour
 {
-     [SerializeField]
+    [SerializeField]
     private GameObject container;
 
-       [SerializeField]
+    [SerializeField]
     private Image _skinImage;
 
     [SerializeField]
@@ -32,64 +32,73 @@ public class PanelManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _username;
 
-     [SerializeField]
+    [SerializeField]
     private GameObject dragon;
 
-   
-    public async void Start(){
-          UserBUS userBUS = new();
+
+    public async void Start()
+    {
+        UserBUS userBUS = new();
         var response = await userBUS.GetProfile();
-        if (response.isSuccessful) {
+        if (response.isSuccessful)
+        {
             PersonalDTO personalDTO = response.data;
-            if (personalDTO.imageSkinId != null) {
+            if (personalDTO.imageSkinId != null)
+            {
                 StartCoroutine(LoadImageManager.LoadBinaryImage(_skinImage, personalDTO.imageSkinId));
             }
-            if (personalDTO.imageFrameId!=null){
-                StartCoroutine(LoadImageManager.LoadBinaryImage(_frameImage,personalDTO.imageFrameId));
+            if (personalDTO.imageFrameId != null)
+            {
+                StartCoroutine(LoadImageManager.LoadBinaryImage(_frameImage, personalDTO.imageFrameId));
                 _frameImage.gameObject.SetActive(true);
             }
             _username.text = personalDTO.username;
-            _totalOfAchievement.text = personalDTO.totalAchievement.ToString();
-            _totalOfNote.text = personalDTO.totalNote.ToString();
+            //_totalOfAchievement.text = personalDTO.totalAchievement.ToString();
+            //_totalOfNote.text = personalDTO.totalNote.ToString();
 
             _logoutBtn.onClick.AddListener(OnLogoutCLick);
 
-           
+
         }
     }
 
     // Start is called before the first frame update
- 
+
     public void OnEnable()
     {
-         LeanTween.reset();
+        LeanTween.reset();
         float width = container.gameObject.GetComponent<RectTransform>().rect.width;
 
-  
+
         dragon.SetActive(false);
-        Debug.Log(width);
-         LeanTween.moveLocalX(gameObject, width/2, 0.5f).setEase(LeanTweenType.easeInOutCirc);
-          
+        LeanTween.moveLocalX(gameObject, width / 2, 0.5f).setEase(LeanTweenType.easeInOutCirc);
+
     }
 
 
-    public void Close(){
+    public void Close()
+    {
         LeanTween.reset();
-         float width = container.gameObject.GetComponent<RectTransform>().rect.width;
+        float width = container.gameObject.GetComponent<RectTransform>().rect.width;
 
-       
-         LeanTween.moveLocalX(gameObject, -width/2f, 0.5f).setEase(LeanTweenType.easeInOutCirc).setOnComplete(()=>{
-             dragon.SetActive(true);
+
+        LeanTween.moveLocalX(gameObject, -width / 2f, 0.5f).setEase(LeanTweenType.easeInOutCirc).setOnComplete(() =>
+        {
+            dragon.SetActive(true);
             this.gameObject.SetActive(false);
-         });
-
-          
+        });
     }
 
-    public void UpdateAvatar(){
+    public void UpdateAvatar()
+    {
         SceneHistory.GetInstance().LoadScene("Avatar");
     }
-    public void OnLogoutCLick() {
+    public void ShowNotes()
+    {
+        SceneHistory.GetInstance().LoadScene("NotesScene");
+    }
+    public void OnLogoutCLick()
+    {
         Debug.Log("Click!");
         SceneHistory.GetInstance().OnClickLogoutButton();
     }
