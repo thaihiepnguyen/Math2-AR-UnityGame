@@ -1,6 +1,7 @@
 ﻿using EasyUI.Toast;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -32,7 +33,7 @@ public class ArrowGameManager : MonoBehaviour
     public int point = 0;
     public int totalquestions = 10;
     public int curquestion = 0;
-    private int maxhealth = 3;
+    public int maxhealth = 3;
     public int curhealth { get; set; }
     private const float minDistance = 2f;
     private static ArrowGameManager instance;
@@ -49,7 +50,8 @@ public class ArrowGameManager : MonoBehaviour
         return exerciseList[curquestion].right_answer;
     }
 
-    private List<ExerciseDTO> exerciseList = new List<ExerciseDTO>();
+    private List<GameData> exerciseList = new List<GameData>();
+    private GameDTO gameDTO;
     private GameObject trackables;
     private Mesh arMesh;
     private Timer timer;
@@ -60,9 +62,10 @@ public class ArrowGameManager : MonoBehaviour
     [SerializeField] AudioClip winSFX;
     [SerializeField] AudioClip gameoverSFX;
     private AudioSource audioSource;
+    private GameBUS gameBUS= new GameBUS();
     bool isGameOver=false;
     bool isOverTime=false;
-
+    int correctAnswer = 0;
     private void Awake()
     {
         if (instance == null)
@@ -71,28 +74,24 @@ public class ArrowGameManager : MonoBehaviour
         }
     }
 
-    void Start()
+    async void Start()
     {
-        ExerciseDTO exerciseDTO = new ExerciseDTO
-        {
-            question = "10 + 20 =",
-            answer = "10,20,30,40",
-            right_answer = "30"
-        };
-        ExerciseDTO exerciseDTO1 = new ExerciseDTO
-        {
-            question = "20 + 20 =",
-            answer = "20,30,40,50",
-            right_answer = "40"
-        };
-        exerciseList.Add(exerciseDTO);
-        exerciseList.Add(exerciseDTO1);
         curhealth = maxhealth;
-        updateUI();
+        
         trackables = GameObject.Find("Trackables");
         timer=GetComponent<Timer>();
         meshManager.meshesChanged += OnMeshesChanged;
-        audioSource=GetComponent<AudioSource>(); 
+        audioSource=GetComponent<AudioSource>();
+        var lessonId = int.Parse(LessonList.GetLessonId());
+        //if (lessonId == null) return;
+        var gameResponse = await gameBUS.GetGameDataByLessonId(lessonId);
+        if (gameResponse.isSuccessful)
+        {
+            Debug.Log(gameResponse.data.gameConfig.game_type_name);
+            gameDTO = gameResponse.data;
+            exerciseList = gameDTO.gameData.ToList();
+        }
+        updateUI();
     }
 
     private void OnMeshesChanged(ARMeshesChangedEventArgs obj)
@@ -127,9 +126,9 @@ public class ArrowGameManager : MonoBehaviour
             Mesh selectedMesh = selectedMeshFilter.mesh;
             var meshAnalyser = selectedMeshFilter.gameObject.GetComponent<MeshAnalyser>();
             // Find the highest vertex in the selected mesh
-            if (!meshAnalyser.IsGround)
+            if (!meshAnalyser || !meshAnalyser.IsGround)
             {
-                return;
+                continue;
             }
             Vector3 highestVertexPosition = selectedMesh.vertices[0];
             foreach (Vector3 vertex in selectedMesh.vertices)
@@ -240,6 +239,10 @@ public class ArrowGameManager : MonoBehaviour
             }
            
         }
+        if (correctAnswer > 3)
+        {
+            IncreaseHealth();
+        }
     }
 
     public void DecreaseHealth()
@@ -255,7 +258,8 @@ public class ArrowGameManager : MonoBehaviour
     {
         curhealth += 1;
         curhealth = Mathf.Clamp(curhealth, curhealth, maxhealth);
-        StartCoroutine(PlaySoundAfterSeconds(correctSFX, 0.5f));
+        correctAnswer= 0;
+        //StartCoroutine(PlaySoundAfterSeconds(correctSFX, 0.5f));
         UpdateHeartsUI();
     }
 
@@ -275,69 +279,99 @@ public class ArrowGameManager : MonoBehaviour
 
     public void OnExit()
     {
-        //SceneHistory.GetInstance().PreviousScene();
+        SceneHistory.GetInstance().PreviousScene();
     }
-   public void NextQuestion()
+   public void  NextQuestion()
     {
         curquestion++;
+        if (curquestion + 1 > totalquestions) 
+        { 
+            curquestion = totalquestions; 
+        }
         if(curquestion  == totalquestions)
         {
             OnGameEnd();
             return;
         }
-        var activeTarget = GameObject.FindGameObjectsWithTag("Target");
-        foreach(GameObject t in activeTarget)
+        if ((float)curquestion / totalquestions >= 0.5f)
         {
-            Destroy(t);
+            var activeTarget = GameObject.FindGameObjectsWithTag("Target");
+
+            foreach (GameObject t in activeTarget)
+            {
+                t.GetComponent<MovingTarget>().speed = 1;
+                t.GetComponent<MovingTarget>().moveHorizontally = Random.value > 0.5f ? true : false;
+
+            }
         }
-        var curMeshes=trackables.GetComponentsInChildren<MeshFilter>();
-        foreach(var m in curMeshes)
-        {
-            Destroy(m.gameObject);
-        }
-        spawnCount = 4;
+        
+        //var curMeshes=trackables.GetComponentsInChildren<MeshFilter>();
+        //foreach(var m in curMeshes)
+        //{
+        //    Destroy(m.gameObject);
+        //}
+        //spawnCount = 4;
         updateUI();
     }
-    public void CheckAnswer(string answer)
+    public bool CheckAnswer(string answer)
     {
         if (exerciseList[curquestion].right_answer==answer)
         {
             point++;
-            IncreaseHealth();
-            NextQuestion();
+            //IncreaseHealth();
+            correctAnswer++;
+            StartCoroutine(PlaySoundAfterSeconds(correctSFX,1f));
+              
+            return true;
         }
         else
         {
+            correctAnswer = 0;
            DecreaseHealth();
+            return false;
         }
     }
     public void OnGameEnd()
     {
         timer.isStop = true;
-        
-        timeText.text = timer.toTimeString();
-        yourScore.text = (point*100).ToString();
+
+        //timeText.text = timer.toTimeString();
+        yourScore.text = (point * 100).ToString();
         yourHighestScore.text = yourScore.text;
-       
-        var realTimeValue = timer.baseTimeValue - timer.timeValue;
-        if (point == 0) realTimeValue = 0;
-        reward.text ="+ "+(point*10 + (int)Mathf.Round(Mathf.Clamp(realTimeValue, 0, realTimeValue))*10).ToString();
+        int bonus = 0;
+        var realTimeValue = timer.timeValue / timer.baseTimeValue * 100;
+
+
+        if (realTimeValue >= 50 && point > 5)
+        {
+            bonus = (int)Mathf.Round(timer.timeValue);
+        }
+        else
+        {
+            bonus = 0;
+        }
+        if (point == 0) bonus = 0;
+        reward.text = "+ " + (point * 10 + bonus).ToString();
         gameWinMenu.gameObject.SetActive(true);
         overtimeSFX.GetComponent<AudioSource>().Stop();
         if (point > 0)
         {
-            audioSource.clip = winSFX;
-            audioSource.Play();
-            
+            StartCoroutine(PlaySoundAfterSeconds(winSFX, 1f));
         }
         else
         {
-            audioSource.clip = gameoverSFX;
-            audioSource.Play();
+            StartCoroutine(PlaySoundAfterSeconds(gameoverSFX, 1f));
         }
-        
+        var activeTarget = GameObject.FindGameObjectsWithTag("Target");
+
+        foreach (GameObject t in activeTarget)
+        {
+            Destroy(t);
+
+
+        }
     }
-    IEnumerator PlaySoundAfterSeconds(AudioClip audioClip, float second)
+        IEnumerator PlaySoundAfterSeconds(AudioClip audioClip, float second)
     {
         yield return new WaitForSeconds(second);
         audioSource.clip = audioClip;
