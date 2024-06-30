@@ -34,7 +34,7 @@ public class TutorialManager : MonoBehaviour
         if (currentImage < tutorialSprites.Length - 1)
         {
             tutorialImage.sprite = tutorialSprites[++currentImage];
-            if (currentImage + 1 >= tutorialSprites.Length - 1)
+            if (currentImage  >= tutorialSprites.Length - 1)
             {
                 nextButton.interactable = false;
             }
@@ -47,7 +47,7 @@ public class TutorialManager : MonoBehaviour
         if (currentImage > 0)
         {
             tutorialImage.sprite = tutorialSprites[--currentImage];
-            if (currentImage - 1 <= 0)
+            if (currentImage  <= 0)
             {
                 prevButton.interactable = false;
             }

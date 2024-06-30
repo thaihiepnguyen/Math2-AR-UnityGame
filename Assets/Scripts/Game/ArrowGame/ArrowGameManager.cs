@@ -66,6 +66,7 @@ public class ArrowGameManager : MonoBehaviour
     bool isGameOver=false;
     bool isOverTime=false;
     int correctAnswer = 0;
+    [SerializeField] GameObject tutorialScreen;
     private void Awake()
     {
         if (instance == null)
@@ -76,6 +77,7 @@ public class ArrowGameManager : MonoBehaviour
 
     async void Start()
     {
+        ShowTutorial();
         curhealth = maxhealth;
         
         trackables = GameObject.Find("Trackables");
@@ -376,5 +378,19 @@ public class ArrowGameManager : MonoBehaviour
         yield return new WaitForSeconds(second);
         audioSource.clip = audioClip;
         audioSource.Play();
+    }
+    public void Exit()
+    {
+        SceneHistory.GetInstance().PreviousScene();
+    }
+    public void ShowTutorial()
+    {
+        tutorialScreen.SetActive(true);
+        meshManager.gameObject.SetActive(false);
+    }
+    public void HideTutorial()
+    {
+        tutorialScreen.SetActive(false);
+        meshManager.gameObject.SetActive(true);
     }
 }
