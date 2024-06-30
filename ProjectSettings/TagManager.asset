@@ -13,6 +13,12 @@ TagManager:
   - Arrow
   - Plane
   - Target
+  - RimPart
+  - RimTarget
+  - BallGameManager
+  - ARPlane
+  - BallGameXROrigin
+  - BallObject
   - Canvas
   - Score
   - BackgroundMusic
@@ -20,6 +26,8 @@ TagManager:
   - Bubble
   - BubbleContainer
   - BubbleGameTutorial
+  - NotePageContainer
+  - NoteListContainer
   - FlyDow
   - FlyUp
   layers:
