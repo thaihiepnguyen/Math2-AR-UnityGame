@@ -25,36 +25,26 @@ public partial class ReviewManager : MonoBehaviour
     ExerciseBUS exerciseBUS;
     QuestionResultBUS questionResultBUS;
     TestResultDTO testResult;
-    //DragDrop Result Object
 
-    //Multiple Choices Result Object
-
-    //Input Result Object
-
-    //[SerializeField] private Button RedoBtn;
-    //[SerializeField] private Button ReviewBtn;
-    //[SerializeField] private Button ExitBtn;
-    // Start is called before the first frame update
-
-     async void Start()
+    async void Start()
     {
         if (DetailExamManager.GetisReview())
         {
-            exerciseBUS= new ExerciseBUS();
-            testResultBUS= new TestResultBUS();
-            questionResultBUS= new QuestionResultBUS();
-            var exerciseResponse= await exerciseBUS.GetExerciseByTestId(ExamListManager.GetTestID());
-            int userId = PlayerPrefs.GetInt(GlobalVariable.userID);
-            var testResultResponse = await testResultBUS.GetByUserIdAndTestId(userId, ExamListManager.GetTestID());
-            
-            if(exerciseResponse.data != null)
+            exerciseBUS = new ExerciseBUS();
+            testResultBUS = new TestResultBUS();
+            questionResultBUS = new QuestionResultBUS();
+            var exerciseResponse = await exerciseBUS.GetExerciseByTestId(ExamListManager.GetTestID());
+
+            var testResultResponse = await testResultBUS.GetByUserIdAndTestId(ExamListManager.GetTestID());
+
+            if (exerciseResponse.data != null)
             {
                 exercises = exerciseResponse.data;
             }
             if (testResultResponse.data != null)
             {
-                testResult= testResultResponse.data;
-               
+                testResult = testResultResponse.data;
+
             }
             var questionResultResponse = await questionResultBUS.GetQuestionResultByTestResultId(testResultResponse.data.test_result_id);
             if (questionResultResponse.data != null)
@@ -64,7 +54,7 @@ public partial class ReviewManager : MonoBehaviour
                 resultText.text = $"Bạn đã trả lời đúng {testResult.point} câu trong {testResult.completed_time}";
                 updateUI();
             }
-           
+
         }
         else
         {
@@ -78,26 +68,30 @@ public partial class ReviewManager : MonoBehaviour
                 updateUI();
             }
         }
-       
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(currentQuestion + 1 >=questionResults.Count)
+        if (questionResults != null)
         {
-            progress.gameObject.SetActive(false);
-            backToResultBtn.gameObject.SetActive(true);
+            if (currentQuestion + 1 >= questionResults.Count)
+            {
+                progress.gameObject.SetActive(false);
+                backToResultBtn.gameObject.SetActive(true);
+            }
+            else
+            {
+                progress.gameObject.SetActive(true);
+                backToResultBtn.gameObject.SetActive(false);
+            }
         }
-        else
-        {
-            progress.gameObject.SetActive(true  );
-            backToResultBtn.gameObject.SetActive(false);
-        }
+
     }
-   
-   
-    
+
+
+
     void updateUI()
     {
         progress.text = string.Format("{0:00}/{1:00}", currentQuestion + 1, questionResults.Count);
@@ -144,10 +138,10 @@ public partial class ReviewManager : MonoBehaviour
     public void NextQuestion()
     {
         currentQuestion++;
-        
+
         if (currentQuestion >= questionResults.Count)
         {
-            currentQuestion= questionResults.Count - 1;
+            currentQuestion = questionResults.Count - 1;
             return;
         }
         updateUI();
@@ -155,10 +149,10 @@ public partial class ReviewManager : MonoBehaviour
     public void PreviousQuestion()
     {
         currentQuestion--;
-        
+
         if (currentQuestion < 0)
         {
-            currentQuestion= 0;
+            currentQuestion = 0;
             return;
         }
         updateUI();

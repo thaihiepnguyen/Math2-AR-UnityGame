@@ -31,7 +31,7 @@ public class ExamListManager : MonoBehaviour
         int uid = PlayerPrefs.GetInt(GlobalVariable.userID);
         Debug.Log(uid);
         //var testPurchase_response= await testPurchaseBUS.GetByUserId(36);
-        var testPurchase_response= await testPurchaseBUS.GetByUserId(uid);
+        var testPurchase_response= await testPurchaseBUS.GetByUserId();
         if (test_response.data != null)
         {
             testList= test_response.data;
@@ -51,7 +51,7 @@ public class ExamListManager : MonoBehaviour
     }
     private void UpdateUI()
     {
-        if (testPurchaseList.Count > 0 && testList.Count > 0)
+        if ( testList.Count > 0)
         {
             for (int i = 1; i < testList.Count; i++)
             {

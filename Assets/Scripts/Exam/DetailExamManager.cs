@@ -1,4 +1,5 @@
-﻿using EasyUI.Toast;
+﻿using EasyUI.Progress;
+using EasyUI.Toast;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,7 +10,7 @@ public class DetailExamManager : MonoBehaviour
     // Start is called before the first frame update
     TestBUS testBus;
     TestDTO test;
-    TestResultBUS testresultBus;
+    TestResultBUS testresultBus = new TestResultBUS();
     TestResultDTO testResultDTO;
     [SerializeField]  public TextMeshProUGUI title;
     static public string titleText;
@@ -25,11 +26,13 @@ public class DetailExamManager : MonoBehaviour
     }
     async void Start()
     {
-        testresultBus= new TestResultBUS();
+        
         testBus = new TestBUS();
+        Progress.Show("Đang tải",ProgressColor.Orange);
         var response= await testBus.GetById(ExamListManager.GetTestID());
-        int uid = PlayerPrefs.GetInt(GlobalVariable.userID);
-        var testResultResponse = await testresultBus.GetByUserIdAndTestId(uid, ExamListManager.GetTestID());
+        
+        var testResultResponse = await testresultBus.GetByUserIdAndTestId(ExamListManager.GetTestID());
+        Progress.Hide();
         if (response.data != null)
         {
             test=response.data;
@@ -40,11 +43,13 @@ public class DetailExamManager : MonoBehaviour
         {
             testResultDTO= testResultResponse.data;
             Debug.Log(testResultDTO.date);
+            if (testResultDTO.completed_time == null)
+            {
+                canReview = false;
+            }
+
         }
-        else
-        {
-            canReview= false;
-        }
+       
         
     }
 
@@ -53,9 +58,10 @@ public class DetailExamManager : MonoBehaviour
     {
         
     }
-    public void onStartExam()
+    public  void onStartExam()
     {
         isReview = false;
+        
         SceneHistory.GetInstance().LoadScene("ExamScene");
     }
     public void onReviewExam()
