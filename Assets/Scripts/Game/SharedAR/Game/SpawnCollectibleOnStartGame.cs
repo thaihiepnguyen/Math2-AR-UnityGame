@@ -12,14 +12,17 @@ public class SpawnCollectibleOnStartGame : NetworkBehaviour
     [SerializeField] private GameObject collectiblePrefab;
     [SerializeField] private GameObject collectibles;
     List<Vector3> spawnPositions= new List<Vector3>();
-    private int spawnCount = 4;
+    public int spawnCount = 0;
     private float minDistance = 0.5f;
     
     void Start()
     {
         
     }
-
+    public override void OnNetworkSpawn()
+    {
+        spawnCount = 4;
+    }
     // Update is called once per frame
     void Update()
     {

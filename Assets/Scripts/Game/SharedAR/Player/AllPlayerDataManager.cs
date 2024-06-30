@@ -11,7 +11,7 @@ public class AllPlayerDataManager : NetworkBehaviour
     public static AllPlayerDataManager Instance;
 
     private NetworkList<PlayerData> allPlayerData;
-    private const int LIFEPOINTS = 4;
+    private const int LIFEPOINTS = 3;
     private const int LIFEPOINTS_TO_REDUCE = 1;
 
     public event Action<ulong> OnPlayerDead;

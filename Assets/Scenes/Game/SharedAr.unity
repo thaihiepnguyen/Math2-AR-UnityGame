@@ -3909,6 +3909,7 @@ GameObject:
   - component: {fileID: 1742115908}
   - component: {fileID: 1742115907}
   - component: {fileID: 1742115906}
+  - component: {fileID: 1742115909}
   m_Layer: 5
   m_Name: PlayerControl
   m_TagString: Untagged
@@ -4004,6 +4005,21 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1742115909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742115904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63890d031fd4ea14ab8e6e440e328048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progress: {fileID: 1975795176}
+  question: {fileID: 1658767142}
+  collectibles: {fileID: 1076597394}
 --- !u!1 &1760790361
 GameObject:
   m_ObjectHideFlags: 0
