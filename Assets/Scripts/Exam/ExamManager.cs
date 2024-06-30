@@ -96,12 +96,7 @@ public class ExamManager : MonoBehaviour
         questionResultBus = new QuestionResultBUS();
         testResultBus = new TestResultBUS();
         testBus = new TestBUS();
-        testResult = new TestResultDTO()
-        {
-            test_id = test_id,
-            //user_id = 38,
-            user_id = PlayerPrefs.GetInt(GlobalVariable.userID),
-        };
+        
         //var testResultResponse= await testResultBus.GetById(1);
         
         var testResponse = await testBus.GetById(test_id);
@@ -206,9 +201,14 @@ public class ExamManager : MonoBehaviour
                     currentRightAnswer += 1;
                 }
             }
-            testResult.point = $"{currentRightAnswer}/{totalQuestion}";
-            testResult.completed_time = timer.toTimeString();
-            testResult.date = System.DateTime.Now.ToString();
+            testResult = new TestResultDTO()
+            {
+                test_id=ExamListManager.GetTestID(),
+                point = $"{currentRightAnswer}/{totalQuestion}",
+                completed_time = timer.toTimeString(),
+                date = System.DateTime.Now.ToString(),
+            };
+            
             
             var testResultResponse = await testResultBus.AddTestResult(testResult);
             if (testResultResponse.data != null)
@@ -322,7 +322,7 @@ public class ExamManager : MonoBehaviour
         var temp = new QuestionResultDTO()
         {
             exercise_id = exercises[currentQuestion].exercise_id,
-            test_result_id = testResult.test_result_id,
+           
             user_answer = user_answer,
         };
 
@@ -394,7 +394,7 @@ public class ExamManager : MonoBehaviour
             var temp = new QuestionResultDTO()
             {
                 exercise_id = exercises[currentQuestion].exercise_id,
-                test_result_id=testResult.test_result_id,
+                
                 user_answer= user_answer,
             };
             questionResultList.Add(temp);
@@ -479,7 +479,6 @@ public class ExamManager : MonoBehaviour
                 var temp = new QuestionResultDTO()
                 {
                     exercise_id = exercises[currentQuestion].exercise_id,
-                    test_result_id = testResult.test_result_id,
                     user_answer = user_answer,
                 };
                 questionResultList.Add(temp);

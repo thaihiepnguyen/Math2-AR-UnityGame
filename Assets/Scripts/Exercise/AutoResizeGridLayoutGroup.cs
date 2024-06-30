@@ -20,7 +20,7 @@ public class AutoResizeGridLayoutGroup : MonoBehaviour
     {
         float width= container.rect.width-44;
         float oldHeigth = container.rect.height-44;
-        Debug.Log(transform.name+" oldHeigh " + container.rect.width+","+ container.rect.height);
+        
         gridlayout.cellSize = new Vector2(width, oldHeigth);
     }
     public static void resizeGridLayout(GridLayoutGroup gridlayout)

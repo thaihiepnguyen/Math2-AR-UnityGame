@@ -28,6 +28,8 @@ TagManager:
   - BubbleGameTutorial
   - NotePageContainer
   - NoteListContainer
+  - FlyDow
+  - FlyUp
   layers:
   - Default
   - TransparentFX
