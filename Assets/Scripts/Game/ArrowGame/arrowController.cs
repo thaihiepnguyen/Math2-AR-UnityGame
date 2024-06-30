@@ -19,10 +19,12 @@ public class arrowController : MonoBehaviour
     [SerializeField] AudioClip objectHit;
     [SerializeField] AudioClip targetHit;
     AudioSource audioSource;
+    [SerializeField] private ParticleSystem particleSystem;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         audioSource= GetComponent<AudioSource>();
+        
     }
     private void Update()
     {
@@ -43,6 +45,7 @@ public class arrowController : MonoBehaviour
         }
         rb.isKinematic = true;
         myCollider.isTrigger = true;
+        
         if (collision.gameObject.CompareTag("Target"))
         {
             audioSource.clip = targetHit;
@@ -74,7 +77,23 @@ public class arrowController : MonoBehaviour
         }
         else
         {
-            ArrowGameManager.GetInstance().CheckAnswer(collision.gameObject.GetComponentInChildren<TextMeshProUGUI>().text);
+            var text = collision.gameObject.GetComponentInChildren<MovingTarget>().text;
+            var result=ArrowGameManager.GetInstance().CheckAnswer(text.text);
+            if (result)
+            {
+                var temp = collision.gameObject.GetComponent<MovingTarget>();
+                //ArrowGameManager.GetInstance().NextQuestion();
+                StartCoroutine(DelayNextQuestion(1f));
+                var success = collision.gameObject.GetComponent<MovingTarget>().success;
+                success.Play();
+                //temp.GetHit();
+            }
+            else
+            {
+                var explose = collision.gameObject.GetComponent<MovingTarget>().explose;
+                explose.Play();
+            }
+            DisplayDistanceToCamera(collision.gameObject);
         }
     }
     IEnumerator StopSoundAfterSecond(float second)
@@ -82,5 +101,21 @@ public class arrowController : MonoBehaviour
         yield return new WaitForSecondsRealtime(second);
         audioSource.Stop();
     }
-   
+    IEnumerator DelayNextQuestion(float second)
+    {
+        yield return new WaitForSecondsRealtime(second);
+        ArrowGameManager.GetInstance().NextQuestion();
+    }
+    private void DisplayDistanceToCamera(GameObject target)
+    {
+        Camera arCamera = Camera.main;
+        if (arCamera != null)
+        {
+            float distance = Vector3.Distance(target.transform.position, arCamera.transform.position);
+            Debug.Log($"Distance to target: {distance} meters");
+
+
+            
+        }
+    }
 }
