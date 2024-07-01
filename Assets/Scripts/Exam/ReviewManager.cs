@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using EasyUI.Progress;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -33,10 +34,11 @@ public partial class ReviewManager : MonoBehaviour
             exerciseBUS = new ExerciseBUS();
             testResultBUS = new TestResultBUS();
             questionResultBUS = new QuestionResultBUS();
+            Progress.Show("Đang tải",ProgressColor.Orange);
             var exerciseResponse = await exerciseBUS.GetExerciseByTestId(ExamListManager.GetTestID());
 
             var testResultResponse = await testResultBUS.GetByUserIdAndTestId(ExamListManager.GetTestID());
-
+            Progress.Hide();
             if (exerciseResponse.data != null)
             {
                 exercises = exerciseResponse.data;
@@ -133,7 +135,7 @@ public partial class ReviewManager : MonoBehaviour
     }
     public void onExit()
     {
-        SceneManager.LoadScene(GlobalVariable.EXAM_LIST_SCENE);
+        SceneHistory.GetInstance().PreviousScene();
     }
     public void NextQuestion()
     {

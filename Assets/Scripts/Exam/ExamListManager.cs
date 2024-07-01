@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using EasyUI.Progress;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -26,12 +27,10 @@ public class ExamListManager : MonoBehaviour
     {
         semester=Semester.GetSemester();
         title.text = $"Đề Kiểm Tra Học Kỳ {semester}";
-        var test_response = await testBUS.GetTestsBySemester(semester);
-        //var test_response = await testBUS.GetTestsBySemester(1);
-        int uid = PlayerPrefs.GetInt(GlobalVariable.userID);
-        Debug.Log(uid);
-        //var testPurchase_response= await testPurchaseBUS.GetByUserId(36);
+        Progress.Show("Đang tải", ProgressColor.Orange);
+        var test_response = await testBUS.GetTestsBySemester(semester);      
         var testPurchase_response= await testPurchaseBUS.GetByUserId();
+        Progress.Hide();
         if (test_response.data != null)
         {
             testList= test_response.data;

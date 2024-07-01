@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using EasyUI;
 using EasyUI.Toast;
 using System.Security.Cryptography;
+using EasyUI.Progress;
 
 public class ExamManager : MonoBehaviour
 {
@@ -96,9 +97,9 @@ public class ExamManager : MonoBehaviour
         questionResultBus = new QuestionResultBUS();
         testResultBus = new TestResultBUS();
         testBus = new TestBUS();
-        
+
         //var testResultResponse= await testResultBus.GetById(1);
-        
+        Progress.Show("Đang tải", ProgressColor.Orange);
         var testResponse = await testBus.GetById(test_id);
         if(testResponse.data != null)
         {
@@ -110,7 +111,7 @@ public class ExamManager : MonoBehaviour
         //{
         //    type = GlobalVariable.MULTIPLE_CHOICE_TYPE
         //});
-
+        Progress.Hide();
         if (response.data != null)
         {
             exercises = response.data;
@@ -158,7 +159,7 @@ public class ExamManager : MonoBehaviour
                     }
                     currentQuestion= totalQuestion;
                     NextQuestion();
-                    ShowReviewUI();
+                    //ShowReviewUI();
                 }
                 
                 return;
@@ -208,8 +209,11 @@ public class ExamManager : MonoBehaviour
                 completed_time = timer.toTimeString(),
                 date = System.DateTime.Now.ToString(),
             };
-            
-            
+            timer.isStop = true;
+            ShowReviewUI();
+
+
+            Progress.Show("Đang tải", ProgressColor.Orange);
             var testResultResponse = await testResultBus.AddTestResult(testResult);
             if (testResultResponse.data != null)
             {
@@ -220,9 +224,9 @@ public class ExamManager : MonoBehaviour
                 questionResultList[i].test_result_id = testResult.test_result_id;
                 var response = await questionResultBus.AddQuestionResult(questionResultList[i]);
             }
-            Debug.Log($"Your result is: {currentRightAnswer}/{totalQuestion}");
-            timer.isStop= true;
-            ShowReviewUI();
+            Progress.Hide();
+            
+            
         }
         else
         {
