@@ -24,6 +24,7 @@ public class StartGameAR : MonoBehaviour
     public static event Action OnJoinSharedSpaceClient;
     public static event Action OnStartGame;
     public static event Action OnStartSharedSpace;
+    public static event Action OnStartHost;
 
     private void Awake()
     {
@@ -76,7 +77,7 @@ public class StartGameAR : MonoBehaviour
         if (isHost)
         {
             NetworkManager.Singleton.StartHost();
-            Debug.Log("host");
+            OnStartHost?.Invoke();
         }
         else
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class SpawnCollectibleOnStartGame : NetworkBehaviour
     [SerializeField] private GameObject collectiblePrefab;
     [SerializeField] private GameObject collectibles;
     List<Vector3> spawnPositions= new List<Vector3>();
-    public int spawnCount = 0;
+    [SerializeField] private int spawnCount = 0;
     private float minDistance = 0.5f;
     
     void Start()
@@ -21,24 +22,30 @@ public class SpawnCollectibleOnStartGame : NetworkBehaviour
     }
     public override void OnNetworkSpawn()
     {
-        spawnCount = 4;
+        StartGameAR.OnStartHost += OnStartGame;
     }
+    public override void OnNetworkDespawn()
+    {
+        StartGameAR.OnStartHost -= OnStartGame;
+    }
+
+    private void OnStartGame()
+    {
+        spawnCount = 4;
+        
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (spawnCount > 0 && IsHost)
         {
+            Debug.Log("Spawn");
             SpawnTarget();
         }
     }
     void SpawnTarget()
     {
-        if (spawnCount <= 0)
-        {
-            return;
-        }
-        
-
         // Lấy tất cả các lưới hiện tại
         IList<MeshFilter> meshes = meshManager.meshes;
 
@@ -89,16 +96,10 @@ public class SpawnCollectibleOnStartGame : NetworkBehaviour
             if (isValid)
             {
                 spawnPositions.Add(worldPosition);
-                var target = Instantiate(collectiblePrefab, worldPosition, Quaternion.identity);
-                var arCamera = Camera.main;
-                if (arCamera != null)
-                {
-                    Vector3 directionToCamera = arCamera.transform.position - target.transform.position;
-                    directionToCamera.y = 0; // Keep the target upright
-                    Quaternion lookRotation = Quaternion.LookRotation(-directionToCamera);
-                    target.transform.rotation = lookRotation;
-                }
-                target.transform.SetParent(collectibles.transform, true);
+                SpawnCollectServerRpc(worldPosition, Quaternion.identity, NetworkManager.Singleton.LocalClientId);
+                //var target = Instantiate(collectiblePrefab, worldPosition, Quaternion.identity,collectibles.transform);
+               
+                //target.transform.SetParent(collectibles.transform, true);
                 validPositionFound = true;
                 spawnCount--;
                 if (spawnCount == 0)
@@ -115,8 +116,29 @@ public class SpawnCollectibleOnStartGame : NetworkBehaviour
 
 
     }
-    void updateUI()
+    [ServerRpc(RequireOwnership = false)]
+    void SpawnCollectServerRpc(Vector3 positon, Quaternion rotation, ulong callerID)
     {
+        GameObject character = Instantiate(collectiblePrefab, positon, rotation, collectibles.transform);
 
+        var arCamera = Camera.main;
+        if (arCamera != null)
+        {
+            Vector3 directionToCamera = arCamera.transform.position - character.transform.position;
+            directionToCamera.y = 0; // Keep the target upright
+            Quaternion lookRotation = Quaternion.LookRotation(-directionToCamera);
+            character.transform.rotation = lookRotation;
+        }
+        NetworkObject characterNetworkObject = character.GetComponent<NetworkObject>();
+
+        characterNetworkObject.SpawnWithOwnership(callerID);
+
+        
     }
+
+void updateUI()
+    {
+        Debug.Log("update ui");
+    }
+
 }

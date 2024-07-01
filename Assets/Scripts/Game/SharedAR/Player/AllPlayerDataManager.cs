@@ -16,6 +16,7 @@ public class AllPlayerDataManager : NetworkBehaviour
 
     public event Action<ulong> OnPlayerDead;
     public event Action<ulong> OnPlayerHealthChanged;
+    public event Action<ulong> OnPlayerScoreChanged;
     public int GetNumberPlayer()
     {
         return allPlayerData.Count;
@@ -81,6 +82,8 @@ public class AllPlayerDataManager : NetworkBehaviour
         //BulletData.OnHitPlayer += BulletDataOnOnHitPlayer;
         KillPlayer.OnKillPlayer += KillPlayerOnOnKillPlayer;
         RestartGame.OnRestartGame += RestartGameOnOnRestartGame;
+        PlayerScore.OnPlayerScoreIncrease += PlayerHitCorrectCollectible;
+        PlayerScore.OnPlayerHealthDescrease += BulletDataOnOnHitPlayer;
     }
 
     //public override void OnNetworkDespawn()
@@ -101,6 +104,8 @@ public class AllPlayerDataManager : NetworkBehaviour
         //BulletData.OnHitPlayer -= BulletDataOnOnHitPlayer;
         KillPlayer.OnKillPlayer -= KillPlayerOnOnKillPlayer;
         RestartGame.OnRestartGame -= RestartGameOnOnRestartGame;
+        PlayerScore.OnPlayerScoreIncrease -= PlayerHitCorrectCollectible;
+        PlayerScore.OnPlayerHealthDescrease -= BulletDataOnOnHitPlayer;
     }
 
 
@@ -148,7 +153,6 @@ public class AllPlayerDataManager : NetworkBehaviour
     private void KillPlayerOnOnKillPlayer(ulong id)
     {
         (ulong, ulong) fromTO = new(555, id);
-        Debug.Log("cc");
         BulletDataOnOnHitPlayer(fromTO);
     }
 
@@ -159,6 +163,18 @@ public class AllPlayerDataManager : NetworkBehaviour
             if (allPlayerData[i].clientID == id)
             {
                 return allPlayerData[i].lifePoints;
+            }
+        }
+
+        return default;
+    }
+    public int GetPlayerScore(ulong id)
+    {
+        for (int i = 0; i < allPlayerData.Count; i++)
+        {
+            if (allPlayerData[i].clientID == id)
+            {
+                return allPlayerData[i].score;
             }
         }
 
@@ -204,11 +220,48 @@ public class AllPlayerDataManager : NetworkBehaviour
 
         SyncReducePlayerHealthClientRpc(ids.to);
     }
+    private void PlayerHitCorrectCollectible(ulong id)
+    {
+        if (IsServer)
+        {
+            
+                for (int i = 0; i < allPlayerData.Count; i++)
+                {
+                    if (allPlayerData[i].clientID == id)
+                    {
+                        int lifePointsToReduce = allPlayerData[i].lifePoints == 0 ? 0 : LIFEPOINTS_TO_REDUCE;
 
+                        PlayerData newData = new PlayerData(
+                            allPlayerData[i].clientID,
+                            allPlayerData[i].score + 1,
+                            allPlayerData[i].lifePoints,
+                            allPlayerData[i].playerPlaced
+                        );
+
+
+
+         
+
+
+
+                        Debug.Log("Player " + id + " hit correct collectible => Score: " + newData.score);
+
+                        allPlayerData[i] = newData;
+                        break;
+                    }
+                }
+            SyncReducePlayerScoreClientRpc(id);
+        }
+    }
     [ClientRpc]
     void SyncReducePlayerHealthClientRpc(ulong hitID)
     {
         OnPlayerHealthChanged?.Invoke(hitID);
+    }
+    [ClientRpc]
+    void SyncReducePlayerScoreClientRpc(ulong hitID)
+    {
+        OnPlayerScoreChanged?.Invoke(hitID);
     }
     private void OnClientDisconnectCallback(ulong clientId)
     {

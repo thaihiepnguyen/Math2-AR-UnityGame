@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,20 +20,12 @@ public class PlayerMovement : NetworkBehaviour
     private GameObject FlyUpButton;
     private GameObject FlyDownButton;
     Vector3 startPos;
+    
+
     private void Start()
     {
-        FlyUpButton = GameObject.FindGameObjectWithTag("FlyUp");
-        FlyDownButton = GameObject.FindGameObjectWithTag("FlyDow");
-        var flyUp=FlyUpButton.GetComponent<ButtonHoldAndRelease>();
-        flyUp.OnButtonDownEvent += OnFlyUpDown;
-        flyUp.OnButtonHoldEvent += OnFlyUpHold;
-        flyUp.OnButtonDownEvent += OnFlyUpUp;
-
-        var flyDown=FlyDownButton.GetComponent<ButtonHoldAndRelease>();
-        flyDown.OnButtonDownEvent += OnFlyDownDown;
-        flyDown.OnButtonHoldEvent += OnFlyDownHold;
-        flyDown.OnButtonDownEvent += OnFlyDownUp;
-        startPos = transform.position;
+        
+        
     }
 
     private void OnFlyUpDown()
@@ -82,6 +75,18 @@ public class PlayerMovement : NetworkBehaviour
             _playerInputControls.OnMoveInput += PlayerInputControlsOnOnMoveInput;
             _playerInputControls.OnShootAnglePerformed += PlayerInputControlsOnShootInput;
             _playerInputControls.OnFlyInput += PlayerInputControlsOnFlyPerformed;
+            FlyUpButton = GameObject.FindGameObjectWithTag("FlyUp");
+            FlyDownButton = GameObject.FindGameObjectWithTag("FlyDow");
+            var flyUp = FlyUpButton.GetComponent<ButtonHoldAndRelease>();
+            flyUp.OnButtonDownEvent += OnFlyUpDown;
+            flyUp.OnButtonHoldEvent += OnFlyUpHold;
+            flyUp.OnButtonDownEvent += OnFlyUpUp;
+
+            var flyDown = FlyDownButton.GetComponent<ButtonHoldAndRelease>();
+            flyDown.OnButtonDownEvent += OnFlyDownDown;
+            flyDown.OnButtonHoldEvent += OnFlyDownHold;
+            flyDown.OnButtonDownEvent += OnFlyDownUp;
+            startPos = transform.position;
         }
     }
 
@@ -130,22 +135,16 @@ public class PlayerMovement : NetworkBehaviour
             _playerInputControls.OnMoveInput -= PlayerInputControlsOnOnMoveInput;
             _playerInputControls.OnShootAnglePerformed -= PlayerInputControlsOnShootInput;
             _playerInputControls.OnFlyInput -= PlayerInputControlsOnFlyPerformed;
-        }
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (IsHost)
-        {
-            if (collision.collider.CompareTag("Arrow") == true)
-            {
-                Debug.Log("Host hit");
-                Destroy(collision.gameObject);
-            }
+            var flyUp = FlyUpButton.GetComponent<ButtonHoldAndRelease>();
+            flyUp.OnButtonDownEvent -= OnFlyUpDown;
+            flyUp.OnButtonHoldEvent -= OnFlyUpHold;
+            flyUp.OnButtonDownEvent -= OnFlyUpUp;
 
-        }
-        else
-        {
-            Debug.Log("Client Hit");
+            var flyDown = FlyDownButton.GetComponent<ButtonHoldAndRelease>();
+            flyDown.OnButtonDownEvent -= OnFlyDownDown;
+            flyDown.OnButtonHoldEvent -= OnFlyDownHold;
+            flyDown.OnButtonDownEvent -= OnFlyDownUp;
         }
     }
+    
 }
